@@ -362,6 +362,33 @@ class GoogleDriveConnector(BaseConnector):
 
         return action_result.set_status(phantom.APP_SUCCESS, "Successfully added new file to Drive")
 
+    def _handle_create_folder(self, param):
+        action_result = self.add_action_result(ActionResult(dict(param)))
+        scopes = ['https://www.googleapis.com/auth/drive']
+        login_email = param.get('email', self._login_email)
+
+        ret_val, service = self._create_service(action_result, scopes, "drive", "v3", login_email)
+        if phantom.is_fail(ret_val):
+            return ret_val
+
+        file_metadata = {
+            'name': param['name'],
+            'mimeType': 'application/vnd.google-apps.folder'
+        }
+
+        folder_id = param.get('folder_id')
+        if folder_id:
+            file_metadata['parents'] = [folder_id]
+
+        try:
+            resp = service.files().create(body=file_metadata, fields='id').execute()
+        except Exception as e:
+            return action_result.set_status(phantom.APP_ERROR, "Error adding folder to drive", e)
+
+        action_result.update_summary({'new_folder_id': resp['id']})
+
+        return action_result.set_status(phantom.APP_SUCCESS, "Successfully added new folder to Drive")
+
     def _handle_delete_file(self, param):
         action_result = self.add_action_result(ActionResult(dict(param)))
         scopes = ['https://www.googleapis.com/auth/drive']
@@ -408,6 +435,9 @@ class GoogleDriveConnector(BaseConnector):
 
         elif action_id == 'create_file':
             ret_val = self._handle_create_file(param)
+
+        elif action_id == 'create_folder':
+            ret_val = self._handle_create_folder(param)
 
         elif action_id == 'delete_file':
             ret_val = self._handle_delete_file(param)
