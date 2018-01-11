@@ -369,9 +369,9 @@
             }
         },
         {
-            "action": "add file",
+            "action": "upload file",
             "identifier": "create_file",
-            "description": "Add a file from the Vault to Drive",
+            "description": "Upload a file from the Vault to Drive",
             "type": "generic",
             "read_only": false,
             "parameters": {
@@ -415,9 +415,17 @@
                 "convert": {
                     "description": "Attempt to convert file to native Drive type. Will only have an effect if dest_mime_type is not set",
                     "data_type": "boolean",
-                    "order": 4,
+                    "order": 5,
                     "default": true,
                     "required": false
+                },
+                "folder_id": {
+                    "description": "Place the file into this folder",
+                    "data_type": "string",
+                    "order": 4,
+                    "contains": [
+                        "drive file id"
+                    ]
                 }
             },
             "output": [
@@ -451,6 +459,13 @@
                     "data_type": "string",
                     "contains": [
                         "email"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.folder_id",
+                    "data_type": "string",
+                    "contains": [
+                        "drive file id"
                     ]
                 },
                 {
@@ -1128,6 +1143,7 @@
             "action": "list files",
             "identifier": "list_files",
             "description": "Get the list of files",
+            "verbose": "You can use the <b>query</b> parameter to filter the results. The full documentation on this parameter can be read about <a href=\"https://developers.google.com/drive/v3/web/search-parameters\">here</a>. Here are some examples:<ul><li><b>mimeType='application/vnd.google-apps.folder'</b>: show only folders</li><li><b>modifiedTime > '2018-01-05T12:00:00' and mimeType='application/vnd.google-apps.document'</b>: Show only documents which have been modified since the date</li></ul>",
             "type": "investigate",
             "read_only": true,
             "parameters": {
@@ -1149,6 +1165,11 @@
                     "description": "Next Page Token",
                     "data_type": "string",
                     "order": 2
+                },
+                "query": {
+                    "description": "Query",
+                    "data_type": "string",
+                    "order": 3
                 }
             },
             "output": [
@@ -1175,6 +1196,10 @@
                 },
                 {
                     "data_path": "action_result.parameter.next_page_token",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.query",
                     "data_type": "string"
                 },
                 {

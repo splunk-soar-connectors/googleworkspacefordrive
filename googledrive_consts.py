@@ -12,7 +12,7 @@
 #
 # --
 
-LIST_RESP_FIELDS = "nextPageToken, files(id, name, kind, mimeType, webContentLink, webViewLink)"
+LIST_RESP_FIELDS = "nextPageToken, files(id, name, kind, mimeType, webContentLink, webViewLink, parents)"
 
 # The API is supposed to return all the metadeta, but my experience has been it only returning id, name, kind and mimeType
 ALL_FILE_FIELDS = "kind, id, name, mimeType, description, starred, trashed, explicitlyTrashed, "\

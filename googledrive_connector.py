@@ -203,6 +203,10 @@ class GoogleDriveConnector(BaseConnector):
 
         kwargs = {'orderBy': 'name', 'pageSize': max_results, 'fields': LIST_RESP_FIELDS}
 
+        query = param.get('query')
+        if (query):
+            kwargs.update({'q': query})
+
         page_token = param.get('page_token')
         if (page_token):
             kwargs.update({'pageToken': page_token})
@@ -336,6 +340,10 @@ class GoogleDriveConnector(BaseConnector):
             updated_mime_type = MIME_TYPE_MAPPINGS.get(mime_type)
             if updated_mime_type:
                 file_metadata['mimeType'] = updated_mime_type
+
+        folder_id = param.get('folder_id')
+        if folder_id:
+            file_metadata['parents'] = [folder_id]
 
         media = MediaFileUpload(
             vault_file_metadata['path'],
