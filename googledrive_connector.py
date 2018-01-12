@@ -186,7 +186,7 @@ class GoogleDriveConnector(BaseConnector):
 
         return action_result.set_status(
             phantom.APP_SUCCESS, 'Successfully retrieved {} user{}'.format(
-                num_users, 's' if num_users > 1 else ''
+                num_users, '' if num_users == 1 else 's'
             )
         )
 
@@ -228,7 +228,7 @@ class GoogleDriveConnector(BaseConnector):
 
         return action_result.set_status(
             phantom.APP_SUCCESS, 'Successfully retrieved {} file{}'.format(
-                num_files, 's' if num_files > 1 else ''
+                num_files, '' if num_files == 1 else 's'
             )
         )
 
