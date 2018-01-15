@@ -519,10 +519,16 @@
                         "drive file id"
                     ]
                 },
+                "file_name": {
+                    "description": "Set the file name in Drive",
+                    "data_type": "string",
+                    "order": 5,
+                    "required": false
+                },
                 "convert": {
                     "description": "Attempt to convert file to native Drive type. Will only have an effect if dest_mime_type is not set",
                     "data_type": "boolean",
-                    "order": 5,
+                    "order": 6,
                     "default": true,
                     "required": false
                 }
@@ -559,6 +565,10 @@
                     "contains": [
                         "email"
                     ]
+                },
+                {
+                    "data_path": "action_result.parameter.file_name",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.parameter.folder_id",

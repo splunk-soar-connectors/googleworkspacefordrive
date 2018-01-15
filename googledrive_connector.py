@@ -325,8 +325,10 @@ class GoogleDriveConnector(BaseConnector):
 
         mime_type = mime.from_file(vault_file_metadata['path'])
 
+        name = param.get('file_name') or vault_file_metadata['name']
+
         file_metadata = {
-            'name': vault_file_metadata['name']
+            'name': name
         }
 
         source_mime_type = param.get('source_mime_type')
