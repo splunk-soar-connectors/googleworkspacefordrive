@@ -1,0 +1,1386 @@
+{
+    "appid": "f091ded1-3d9e-4402-aaa2-1f92fae51e96",
+    "name": "G Suite for Drive",
+    "description": "This app allows various file manipulation actions to be performed on Google Drive",
+    "type": "devops",
+    "product_vendor": "Google",
+    "logo": "logo_googledrive.svg",
+    "logo_dark": "logo_googledrive_dark.svg",
+    "product_name": "Google Drive",
+    "product_version_regex": ".*",
+    "publisher": "Phantom",
+    "license": "Copyright (c) Phantom Cyber Corporation, 2018",
+    "app_version": "1.0.0",
+    "utctime_updated": "2018-01-05T00:41:00.662389Z",
+    "package_name": "phantom_googledrive",
+    "main_module": "googledrive_connector.pyc",
+    "min_phantom_version": "3.0.251",
+    "app_wizard_version": "1.0.0",
+    "configuration": {
+        "login_email": {
+            "description": "Login (Admin) email",
+            "data_type": "string",
+            "required": true,
+            "order": 0
+        },
+        "key_json": {
+            "description": "Contents of Service Account JSON file",
+            "data_type": "password",
+            "required": true,
+            "order": 1
+        }
+    },
+    "actions": [
+        {
+            "action": "test connectivity",
+            "identifier": "test_connectivity",
+            "description": "Validate the asset configuration for connectivity using supplied configuration",
+            "verbose": "",
+            "type": "test",
+            "read_only": true,
+            "parameters": {},
+            "output": [],
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "list users",
+            "identifier": "list_users",
+            "description": "Get the list of users",
+            "verbose": "Action uses the Admin SDK API to get a list of users. Requires authorization with the following scope:<ul><li>https://www.googleapis.com/auth/admin.directory.user</li></ul><br>The action will limit the number of users returned to <b>max_items</b> or (if not specified) 500. If the system has any more users, a next page token will be returned in <b>action_result.summary.next_page_token</b>. Use this value as input to <b>page_token</b> in subsequent calls to <b>list users</b>.",
+            "type": "investigate",
+            "read_only": true,
+            "parameters": {},
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "column_name": "status",
+                    "column_order": 0,
+                    "example_values": [
+                        "success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.agreedToTerms",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.changePasswordAtNextLogin",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.creationTime",
+                    "data_type": "string",
+                    "example_values": [
+                        "2017-05-11T21:35:38.000Z"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.customerId",
+                    "data_type": "string",
+                    "example_values": [
+                        "C02eisxhx"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.emails.*.address",
+                    "data_type": "string",
+                    "example_values": [
+                        "admin@hermancorp.biz"
+                    ],
+                    "contains": [
+                        "email"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.emails.*.primary",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.etag",
+                    "data_type": "string",
+                    "example_values": [
+                        "\"Slw4z1WwXVNuSGyQ8doYqfYCm3s/F2uDjNoukDRgPx6dvH-7j-A7NgQ\""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.id",
+                    "data_type": "string",
+                    "example_values": [
+                        "113211632970586460828"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.includeInGlobalAddressList",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.ipWhitelisted",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.isAdmin",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.isDelegatedAdmin",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.isEnforcedIn2Sv",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.isEnrolledIn2Sv",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.isMailboxSetup",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.kind",
+                    "data_type": "string",
+                    "example_values": [
+                        "admin#directory#user"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.lastLoginTime",
+                    "data_type": "string",
+                    "example_values": [
+                        "2018-01-06T01:11:49.000Z"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.name.familyName",
+                    "data_type": "string",
+                    "example_values": [
+                        "Edwards"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.name.fullName",
+                    "data_type": "string",
+                    "example_values": [
+                        "Herman Edwards"
+                    ],
+                    "column_name": "Full Name",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.data.*.name.givenName",
+                    "data_type": "string",
+                    "example_values": [
+                        "Herman"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.nonEditableAliases",
+                    "data_type": "string",
+                    "example_values": [
+                        "tim.drake@hermancorp.biz.test-google-a.com"
+                    ],
+                    "contains": [
+                        "email"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.orgUnitPath",
+                    "data_type": "string",
+                    "example_values": [
+                        "/"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.primaryEmail",
+                    "data_type": "string",
+                    "example_values": [
+                        "admin@hermancorp.biz"
+                    ],
+                    "contains": [
+                        "email"
+                    ],
+                    "column_name": "Email",
+                    "column_order": 1
+                },
+                {
+                    "data_path": "action_result.data.*.suspended",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.total_users_returned",
+                    "data_type": "numeric",
+                    "example_values": [
+                        6
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Successfully retrieved 6 users"
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "delete file",
+            "identifier": "delete_file",
+            "description": "Delete a file",
+            "type": "contain",
+            "read_only": false,
+            "parameters": {
+                "email": {
+                    "description": "Email (use this drive)",
+                    "data_type": "string",
+                    "order": 0,
+                    "contains": [
+                        "email"
+                    ],
+                    "required": false
+                },
+                "id": {
+                    "description": "File ID",
+                    "data_type": "string",
+                    "contains": [
+                        "drive file id"
+                    ],
+                    "required": true,
+                    "primary": true,
+                    "order": 1
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.email",
+                    "data_type": "string",
+                    "contains": [
+                        "email"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.id",
+                    "data_type": "string",
+                    "contains": [
+                        "drive file id"
+                    ],
+                    "example_values": [
+                        "12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt-vSJaLo1fA"
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "File doesn't exist or has already been deleted",
+                        "Successfully delete file from Drive"
+                    ],
+                    "column_name": "Message",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                }
+            ],
+            "versions": "EQ(*)",
+            "render": {
+                "type": "table"
+            }
+        },
+        {
+            "action": "create folder",
+            "identifier": "create_folder",
+            "description": "Create a new folder",
+            "type": "generic",
+            "read_only": false,
+            "parameters": {
+                "email": {
+                    "description": "Email (use this drive)",
+                    "data_type": "string",
+                    "order": 0,
+                    "contains": [
+                        "email"
+                    ],
+                    "required": false
+                },
+                "name": {
+                    "description": "Name of the new folder",
+                    "data_type": "string",
+                    "order": 1,
+                    "required": true
+                },
+                "folder_id": {
+                    "description": "ID of the parent folder",
+                    "data_type": "string",
+                    "order": 2,
+                    "contains": [
+                        "drive file id"
+                    ]
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.email",
+                    "data_type": "string",
+                    "contains": [
+                        "email"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.folder_id",
+                    "data_type": "string",
+                    "contains": [
+                        "drive file id"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.name",
+                    "data_type": "string",
+                    "example_values": [
+                        "NewFolder1"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.new_folder_id",
+                    "data_type": "string",
+                    "example_values": [
+                        "1OPjWKnOCGlrePZ3cnLD0lnW5mlLE2x8D"
+                    ],
+                    "contains": [
+                        "drive file id"
+                    ],
+                    "column_name": "New Folder",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Successfully added new folder to Drive"
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                }
+            ],
+            "versions": "EQ(*)",
+            "render": {
+                "type": "table"
+            }
+        },
+        {
+            "action": "upload file",
+            "identifier": "create_file",
+            "description": "Upload a file from the Vault to Drive",
+            "type": "generic",
+            "read_only": false,
+            "parameters": {
+                "email": {
+                    "description": "Email (use this drive)",
+                    "data_type": "string",
+                    "order": 0,
+                    "contains": [
+                        "email"
+                    ],
+                    "required": false
+                },
+                "vault_id": {
+                    "description": "Vault ID",
+                    "data_type": "string",
+                    "order": 1,
+                    "contains": [
+                        "vault id",
+                        "sha1"
+                    ],
+                    "required": true
+                },
+                "source_mime_type": {
+                    "description": "MIME type of file in vault",
+                    "data_type": "string",
+                    "order": 2,
+                    "required": false,
+                    "contains": [
+                        "mime type"
+                    ]
+                },
+                "dest_mime_type": {
+                    "description": "MIME type of new Drive file (will disable convert)",
+                    "data_type": "string",
+                    "order": 3,
+                    "required": false,
+                    "contains": [
+                        "mime type"
+                    ]
+                },
+                "folder_id": {
+                    "description": "ID of the parent folder",
+                    "data_type": "string",
+                    "order": 4,
+                    "contains": [
+                        "drive file id"
+                    ]
+                },
+                "convert": {
+                    "description": "Attempt to convert file to native Drive type. Will only have an effect if dest_mime_type is not set",
+                    "data_type": "boolean",
+                    "order": 5,
+                    "default": true,
+                    "required": false
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.convert",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.dest_mime_type",
+                    "data_type": "string",
+                    "example_values": [
+                        "application/vnd.google-apps.spreadsheet"
+                    ],
+                    "contains": [
+                        "mime type"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.email",
+                    "data_type": "string",
+                    "contains": [
+                        "email"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.folder_id",
+                    "data_type": "string",
+                    "contains": [
+                        "drive file id"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.source_mime_type",
+                    "data_type": "string",
+                    "contains": [
+                        "mime type"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.vault_id",
+                    "data_type": "string",
+                    "example_values": [
+                        "82cbbb588ce83b5527e2f9f1d3bcba24f60c92cc"
+                    ],
+                    "contains": [
+                        "vault id",
+                        "sha1"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.new_file_id",
+                    "data_type": "string",
+                    "example_values": [
+                        "12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt-vSJaLo1fA"
+                    ],
+                    "contains": [
+                        "drive file id"
+                    ],
+                    "column_name": "New File",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Successfully added new file to Drive"
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                }
+            ],
+            "versions": "EQ(*)",
+            "render": {
+                "type": "table"
+            }
+        },
+        {
+            "action": "get file",
+            "identifier": "get_file",
+            "description": "Download a file to the vault",
+            "type": "generic",
+            "read_only": false,
+            "parameters": {
+                "email": {
+                    "description": "Email (use this drive)",
+                    "data_type": "string",
+                    "order": 0,
+                    "contains": [
+                        "email"
+                    ],
+                    "required": false
+                },
+                "id": {
+                    "description": "File ID",
+                    "data_type": "string",
+                    "contains": [
+                        "drive file id"
+                    ],
+                    "required": true,
+                    "primary": true,
+                    "order": 1
+                },
+                "mime_type": {
+                    "description": "MIME Type for exported file. This will only have an effect if the original document is file type that needs to be exported (i.e. Google Docs / Sheets / Slides files)",
+                    "data_type": "string",
+                    "required": false,
+                    "order": 2,
+                    "contains": [
+                        "mime type"
+                    ]
+                },
+                "file_name": {
+                    "description": "Set a new name for the file before adding it to the vault",
+                    "data_type": "string",
+                    "required": false,
+                    "order": 3
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "failed",
+                        "success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.email",
+                    "data_type": "string",
+                    "contains": [
+                        "email"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.file_name",
+                    "data_type": "string",
+                    "example_values": [
+                        "file.pdf"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.id",
+                    "data_type": "string",
+                    "contains": [
+                        "drive file id"
+                    ],
+                    "example_values": [
+                        "12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt-vSJaLo1fA"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.mime_type",
+                    "data_type": "string",
+                    "example_values": [
+                        "application/pdf"
+                    ],
+                    "contains": [
+                        "mime type"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.capabilities.canAddChildren",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.capabilities.canChangeViewersCanCopyContent",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.capabilities.canComment",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.capabilities.canCopy",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.capabilities.canDelete",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.capabilities.canDownload",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.capabilities.canEdit",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.capabilities.canListChildren",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.capabilities.canMoveItemIntoTeamDrive",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.capabilities.canReadRevisions",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.capabilities.canRemoveChildren",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.capabilities.canRename",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.capabilities.canShare",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.capabilities.canTrash",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.capabilities.canUntrash",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.createdTime",
+                    "data_type": "string",
+                    "example_values": [
+                        "2018-01-10T01:17:40.409Z"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.explicitlyTrashed",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.hasThumbnail",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.iconLink",
+                    "data_type": "string",
+                    "example_values": [
+                        "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.spreadsheet"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.id",
+                    "data_type": "string",
+                    "example_values": [
+                        "12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt-vSJaLo1fA"
+                    ],
+                    "contains": [
+                        "drive file id"
+                    ],
+                    "column_name": "ID",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.data.*.isAppAuthorized",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.kind",
+                    "data_type": "string",
+                    "example_values": [
+                        "drive#file"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.lastModifyingUser.displayName",
+                    "data_type": "string",
+                    "example_values": [
+                        "Herman Edwards"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.lastModifyingUser.emailAddress",
+                    "data_type": "string",
+                    "example_values": [
+                        "admin@hermancorp.biz"
+                    ],
+                    "contains": [
+                        "email"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.lastModifyingUser.kind",
+                    "data_type": "string",
+                    "example_values": [
+                        "drive#user"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.lastModifyingUser.me",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.lastModifyingUser.permissionId",
+                    "data_type": "string",
+                    "example_values": [
+                        "03385014771683713179"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.mimeType",
+                    "data_type": "string",
+                    "example_values": [
+                        "application/vnd.google-apps.spreadsheet"
+                    ],
+                    "contains": [
+                        "mime type"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modifiedByMe",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modifiedByMeTime",
+                    "data_type": "string",
+                    "example_values": [
+                        "2018-01-10T01:17:41.700Z"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.modifiedTime",
+                    "data_type": "string",
+                    "example_values": [
+                        "2018-01-10T01:17:41.700Z"
+                    ],
+                    "column_name": "Last Modified",
+                    "column_order": 2
+                },
+                {
+                    "data_path": "action_result.data.*.name",
+                    "data_type": "string",
+                    "example_values": [
+                        "Untitled.xlsx"
+                    ],
+                    "column_name": "Name",
+                    "column_order": 1
+                },
+                {
+                    "data_path": "action_result.data.*.ownedByMe",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.*.displayName",
+                    "data_type": "string",
+                    "example_values": [
+                        "Herman Edwards"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.*.emailAddress",
+                    "data_type": "string",
+                    "example_values": [
+                        "admin@hermancorp.biz"
+                    ],
+                    "contains": [
+                        "email"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.*.kind",
+                    "data_type": "string",
+                    "example_values": [
+                        "drive#user"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.*.me",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.owners.*.permissionId",
+                    "data_type": "string",
+                    "example_values": [
+                        "03385014771683713179"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.parents",
+                    "data_type": "string",
+                    "example_values": [
+                        "0AHSKAcU2T6x2Uk9PVA"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.permissionIds",
+                    "data_type": "string",
+                    "example_values": [
+                        "03385014771683713179"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.permissions.*.deleted",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.permissions.*.displayName",
+                    "data_type": "string",
+                    "example_values": [
+                        "Herman Edwards"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.permissions.*.emailAddress",
+                    "data_type": "string",
+                    "example_values": [
+                        "admin@hermancorp.biz"
+                    ],
+                    "contains": [
+                        "email"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.permissions.*.id",
+                    "data_type": "string",
+                    "example_values": [
+                        "03385014771683713179"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.permissions.*.kind",
+                    "data_type": "string",
+                    "example_values": [
+                        "drive#permission"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.permissions.*.role",
+                    "data_type": "string",
+                    "example_values": [
+                        "owner"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.permissions.*.type",
+                    "data_type": "string",
+                    "example_values": [
+                        "user"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.quotaBytesUsed",
+                    "data_type": "string",
+                    "example_values": [
+                        "0"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.shared",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.spaces",
+                    "data_type": "string",
+                    "example_values": [
+                        "drive"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.starred",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.thumbnailLink",
+                    "data_type": "string",
+                    "example_values": [
+                        "https://docs.google.com/a/hermancorp.biz/feeds/vt?gd=true&id=12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt-vSJaLo1fA&v=1&s=AMedNnoAAAAAWlWZqdpxKYbzlZb-ko4BLBo5QZYPyz8c&sz=s220"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.thumbnailVersion",
+                    "data_type": "string",
+                    "example_values": [
+                        "1"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.trashed",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.version",
+                    "data_type": "string",
+                    "example_values": [
+                        "6"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.viewedByMe",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.viewedByMeTime",
+                    "data_type": "string",
+                    "example_values": [
+                        "2018-01-10T01:17:48.669Z"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.viewersCanCopyContent",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.webContentLink",
+                    "data_type": "string",
+                    "example_values": [
+                        "https://drive.google.com/a/hermancorp.biz/uc?id=12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt-vSJaLo1fA&export=download"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.webViewLink",
+                    "data_type": "string",
+                    "example_values": [
+                        "https://docs.google.com/a/hermancorp.biz/spreadsheets/d/12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt-vSJaLo1fA/edit?usp=drivesdk"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.writersCanShare",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.vault_id",
+                    "data_type": "string",
+                    "example_values": [
+                        "2fd639e7bdeffe563d13770c2519f99a19bbeef3"
+                    ],
+                    "contains": [
+                        "sha1",
+                        "vault id"
+                    ],
+                    "column_name": "Vault ID",
+                    "column_order": 3
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Failed to get file. Error string: '<HttpError 400 when requesting https://www.googleapis.com/drive/v3/files/12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt-vSJaLo1fA?fields=all&alt=json returned \"Invalid field selection all\">'",
+                        "Successfully retrieved file and added to vault"
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0,
+                        1
+                    ]
+                }
+            ],
+            "versions": "EQ(*)",
+            "render": {
+                "type": "table"
+            }
+        },
+        {
+            "action": "list files",
+            "identifier": "list_files",
+            "description": "Get the list of files",
+            "verbose": "You can use the <b>query</b> parameter to filter the results. The full documentation on this parameter can be read <a href=\"https://developers.google.com/drive/v3/web/search-parameters\">here</a>. Here are some examples:<ul><li><b>mimeType='application/vnd.google-apps.folder'</b>: show only folders</li><li><b>modifiedTime > '2018-01-05T12:00:00' and mimeType='application/vnd.google-apps.document'</b>: Show only documents which have been modified since the date</li></ul>",
+            "type": "investigate",
+            "read_only": true,
+            "parameters": {
+                "email": {
+                    "description": "Email (use this drive)",
+                    "data_type": "string",
+                    "order": 0,
+                    "contains": [
+                        "email"
+                    ],
+                    "required": false
+                },
+                "max_results": {
+                    "description": "Max Results",
+                    "data_type": "numeric",
+                    "order": 1
+                },
+                "next_page_token": {
+                    "description": "Next Page Token",
+                    "data_type": "string",
+                    "order": 2
+                },
+                "query": {
+                    "description": "Query",
+                    "data_type": "string",
+                    "order": 3
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.email",
+                    "data_type": "string",
+                    "contains": [
+                        "email"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.max_results",
+                    "data_type": "string",
+                    "example_values": [
+                        "2"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.next_page_token",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.query",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.id",
+                    "data_type": "string",
+                    "example_values": [
+                        "1PJZ_cZKMbIZWOJdQQe3r41vdGj8"
+                    ],
+                    "contains": [
+                        "drive file id"
+                    ],
+                    "column_name": "ID",
+                    "column_order": 1
+                },
+                {
+                    "data_path": "action_result.data.*.kind",
+                    "data_type": "string",
+                    "example_values": [
+                        "drive#file"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.mimeType",
+                    "data_type": "string",
+                    "example_values": [
+                        "application/vnd.google-apps.map"
+                    ],
+                    "contains": [
+                        "mime type"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.name",
+                    "data_type": "string",
+                    "example_values": [
+                        "Dublin Center"
+                    ],
+                    "column_name": "Name",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.summary.next_page_token",
+                    "data_type": "string",
+                    "example_values": [
+                        "~!!~AI9FV7RCbmvPCnWK0UIxnjniVz68Lt8ZOsGim7uc5YxlceqS4ovMelh229zAeFmpmw1aoBTI4ZmcjNxMdAPHEE5nW8BKEx7TI4LzYmLlvpBGoKnyf3lPFenef25jRS7FSMDBb1prqjMEFzRlvZtfX4X9kZuYVDk_dwUcjiKDkEXC2DUPCPcKctAg2HN-VH9FGcSAcSBftVBfbrLwZu9AgnfHvz-8wkDK1PpwE4l1H_mkfvRm_Ckvq9dnLCFSu5W-YzF6nXuZSgmJx5WWMO-IHSLILAf8OXPwbxJbTqM_YCdLeYD71IeqEu_idn54UhYNUCBi3mxeQJzzfp4vHJa3q1wN4uUuCNshqkXvLDwuVIk4cYHHVcJ2-A4GJhPGkQ2SfuMrIigi0nGKEk8pTmJaeD5C825ALevDLf574abZ385Hu7d0NTpJxfDdJti0JdcyL66qYis2l_zxMZZ-ZcSFpl_FKuhip3AP97VIk0QUiYlh9nH55tCvjkw="
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.total_files_returned",
+                    "data_type": "numeric",
+                    "example_values": [
+                        2
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Successfully retrieved 2 users"
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                }
+            ],
+            "versions": "EQ(*)",
+            "render": {
+                "type": "table"
+            }
+        }
+    ]
+}
