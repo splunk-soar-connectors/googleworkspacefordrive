@@ -297,6 +297,7 @@
                     "description": "Email (use this drive)",
                     "data_type": "string",
                     "order": 0,
+                    "primary": true,
                     "contains": [
                         "email"
                     ],
@@ -379,6 +380,7 @@
                     "description": "Email (use this drive)",
                     "data_type": "string",
                     "order": 0,
+                    "primary": true,
                     "contains": [
                         "email"
                     ],
@@ -478,6 +480,7 @@
                     "description": "Email (use this drive)",
                     "data_type": "string",
                     "order": 0,
+                    "primary": true,
                     "contains": [
                         "email"
                     ],
@@ -645,6 +648,7 @@
                     "description": "Email (use this drive)",
                     "data_type": "string",
                     "order": 0,
+                    "primary": true,
                     "contains": [
                         "email"
                     ],
@@ -1262,6 +1266,7 @@
                     "description": "Email (use this drive)",
                     "data_type": "string",
                     "order": 0,
+                    "primary": true,
                     "contains": [
                         "email"
                     ],
