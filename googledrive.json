@@ -16,6 +16,46 @@
     "main_module": "googledrive_connector.pyc",
     "min_phantom_version": "3.0.251",
     "app_wizard_version": "1.0.0",
+    "pip_dependencies": {
+        "wheel": [
+            {
+                "module": "oauth2client",
+                "input_file": "wheels/oauth2client_wheel/oauth2client-4.1.2-py2.py3-none-any.whl"
+            },
+            {
+                "module": "rsa",
+                "input_file": "wheels/oauth2client_wheel/rsa-3.4.2-py2.py3-none-any.whl"
+            },
+            {
+                "module": "pyasn1_modules",
+                "input_file": "wheels/oauth2client_wheel/pyasn1_modules-0.1.1-py2.py3-none-any.whl"
+            },
+            {
+                "module": "httplib2",
+                "input_file": "wheels/httplib2_wheel/httplib2-0.9.2-py2-none-any.whl"
+            },
+            {
+                "module": "google-auth",
+                "input_file": "wheels/google-auth/google_auth-1.1.1-py2.py3-none-any.whl"
+            },
+            {
+                "module": "google-auth-httplib2",
+                "input_file": "wheels/google-auth/google_auth_httplib2-0.0.2-py2.py3-none-any.whl"
+            },
+            {
+                "module": "cachetools",
+                "input_file": "wheels/cachetools/cachetools-2.0.1-py2.py3-none-any.whl"
+            },
+            {
+                "module": "google-api-python-client",
+                "input_file": "wheels/googleapiclient_wheel/google_api_python_client-1.6.4-py2.py3-none-any.whl"
+            },
+            {
+                "module": "uritemplate",
+                "input_file": "wheels/uritemplate_wheel/uritemplate-3.0.0-py2.py3-none-any.whl"
+            }
+        ]
+    },
     "configuration": {
         "login_email": {
             "description": "Login (Admin) email",
@@ -640,7 +680,7 @@
         {
             "action": "get file",
             "identifier": "get_file",
-            "description": "Download a file to the vault",
+            "description": "Get information about a file or download it to the Vault",
             "type": "generic",
             "read_only": false,
             "parameters": {
@@ -664,11 +704,22 @@
                     "primary": true,
                     "order": 1
                 },
+                "download_file": {
+                    "description": "Download the file to the Vault",
+                    "data_type": "boolean",
+                    "required": false,
+                    "order": 2,
+                    "default": false
+                },
+                "ph": {
+                    "data_type": "ph",
+                    "order": 3
+                },
                 "mime_type": {
                     "description": "MIME Type for exported file. This will only have an effect if the original document is file type that needs to be exported (i.e. Google Docs / Sheets / Slides files)",
                     "data_type": "string",
                     "required": false,
-                    "order": 2,
+                    "order": 4,
                     "contains": [
                         "mime type"
                     ]
@@ -677,7 +728,7 @@
                     "description": "Set a new name for the file before adding it to the vault",
                     "data_type": "string",
                     "required": false,
-                    "order": 3
+                    "order": 5
                 }
             },
             "output": [
@@ -687,6 +738,14 @@
                     "example_values": [
                         "failed",
                         "success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.download_file",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
                     ]
                 },
                 {
