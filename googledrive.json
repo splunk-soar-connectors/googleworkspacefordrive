@@ -680,7 +680,7 @@
         {
             "action": "get file",
             "identifier": "get_file",
-            "description": "Download a file to the vault",
+            "description": "Get information about a file or download it to the Vault",
             "type": "generic",
             "read_only": false,
             "parameters": {
@@ -704,11 +704,22 @@
                     "primary": true,
                     "order": 1
                 },
+                "download_file": {
+                    "description": "Download the file to the Vault",
+                    "data_type": "boolean",
+                    "required": false,
+                    "order": 2,
+                    "default": false
+                },
+                "ph": {
+                    "data_type": "ph",
+                    "order": 3
+                },
                 "mime_type": {
                     "description": "MIME Type for exported file. This will only have an effect if the original document is file type that needs to be exported (i.e. Google Docs / Sheets / Slides files)",
                     "data_type": "string",
                     "required": false,
-                    "order": 2,
+                    "order": 4,
                     "contains": [
                         "mime type"
                     ]
@@ -717,7 +728,7 @@
                     "description": "Set a new name for the file before adding it to the vault",
                     "data_type": "string",
                     "required": false,
-                    "order": 3
+                    "order": 5
                 }
             },
             "output": [
@@ -727,6 +738,14 @@
                     "example_values": [
                         "failed",
                         "success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.download_file",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
                     ]
                 },
                 {

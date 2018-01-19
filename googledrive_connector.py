@@ -248,22 +248,8 @@ class GoogleDriveConnector(BaseConnector):
 
         return RetVal2(phantom.APP_SUCCESS, resp['exportFormats'][mime_type][0])
 
-    def _handle_get_file(self, param):
-        action_result = self.add_action_result(ActionResult(dict(param)))
-        scopes = ['https://www.googleapis.com/auth/drive']
-
-        login_email = param.get('email', self._login_email)
-
+    def _save_file_to_vault(self, action_result, service, param, file_metadata):
         file_id = param['id']
-
-        ret_val, service = self._create_service(action_result, scopes, "drive", "v3", login_email)
-        if phantom.is_fail(ret_val):
-            return ret_val
-
-        try:
-            file_metadata = service.files().get(fileId=file_id, fields=ALL_FILE_FIELDS).execute()
-        except Exception as e:
-            return action_result.set_status(phantom.APP_ERROR, "Failed to get file", e)
 
         if file_metadata['mimeType'].startswith('application/vnd.google-'):
             # We will need to export this type of file
@@ -298,9 +284,44 @@ class GoogleDriveConnector(BaseConnector):
         action_result.update_summary({
             'vault_id': resp['vault_id']
         })
+
+        return phantom.APP_SUCCESS
+
+    def _handle_get_file(self, param):
+        action_result = self.add_action_result(ActionResult(dict(param)))
+        scopes = ['https://www.googleapis.com/auth/drive']
+
+        login_email = param.get('email', self._login_email)
+
+        file_id = param['id']
+
+        ret_val, service = self._create_service(action_result, scopes, "drive", "v3", login_email)
+        if phantom.is_fail(ret_val):
+            return ret_val
+
+        try:
+            file_metadata = service.files().get(fileId=file_id, fields=ALL_FILE_FIELDS).execute()
+        except Exception as e:
+            return action_result.set_status(phantom.APP_ERROR, "Failed to get file metadata", e)
+
+        if param.get('download_file'):
+            ret_val = self._save_file_to_vault(
+                action_result,
+                service,
+                param,
+                file_metadata
+            )
+            if phantom.is_fail(ret_val):
+                return ret_val
+
         action_result.add_data(file_metadata)
 
-        return action_result.set_status(phantom.APP_SUCCESS, "Successfully retrieved file and added to vault")
+        return action_result.set_status(
+            phantom.APP_SUCCESS,
+            "Successfully retrieved file information{}".format(
+                " and added to vault" if param.get('download_file') else ""
+            )
+        )
 
     def _convert_mime_types(self, file_metadata, mime_type):
         updated_mime_type = MIME_TYPE_MAPPINGS.get(mime_type)
