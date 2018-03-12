@@ -436,6 +436,7 @@
                     "description": "ID of the parent folder",
                     "data_type": "string",
                     "order": 2,
+                    "primary": true,
                     "contains": [
                         "drive file id"
                     ]
@@ -558,6 +559,7 @@
                     "description": "ID of the parent folder",
                     "data_type": "string",
                     "order": 4,
+                    "primary": true,
                     "contains": [
                         "drive file id"
                     ]
@@ -1397,10 +1399,20 @@
                     ]
                 },
                 {
+                    "data_path": "action_result.data.*.md5Checksum",
+                    "data_type": "string",
+                    "example_values": [
+                        "b99abc7a0e9da88f8636f0c48f924f63"
+                    ],
+                    "contains": [
+                        "md5"
+                    ]
+                },
+                {
                     "data_path": "action_result.data.*.mimeType",
                     "data_type": "string",
                     "example_values": [
-                        "application/vnd.google-apps.map"
+                        "application/vnd.google-apps.folder"
                     ],
                     "contains": [
                         "mime type"
@@ -1410,10 +1422,37 @@
                     "data_path": "action_result.data.*.name",
                     "data_type": "string",
                     "example_values": [
-                        "Dublin Center"
+                        "/"
                     ],
                     "column_name": "Name",
                     "column_order": 0
+                },
+                {
+                    "data_path": "action_result.data.*.parents",
+                    "data_type": "string",
+                    "example_values": [
+                        "0AHSKAcU2T6x2Uk9PVA"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.webContentLink",
+                    "data_type": "string",
+                    "example_values": [
+                        "https://drive.google.com/a/hermancorp.biz/uc?id=1pF6FMUwRkTl2Bs15-CzWQVHa5LyuFIpSFlPFOxzD-Nw&export=download"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.webViewLink",
+                    "data_type": "string",
+                    "example_values": [
+                        "https://drive.google.com/drive/folders/1tfCbCKJ9d3dPRFSHxuVyDCx0a29dzJ-B"
+                    ],
+                    "contains": [
+                        "url"
+                    ]
                 },
                 {
                     "data_path": "action_result.summary.next_page_token",
@@ -1426,14 +1465,14 @@
                     "data_path": "action_result.summary.total_files_returned",
                     "data_type": "numeric",
                     "example_values": [
-                        2
+                        47
                     ]
                 },
                 {
                     "data_path": "action_result.message",
                     "data_type": "string",
                     "example_values": [
-                        "Successfully retrieved 2 users"
+                        "Successfully retrieved 47 files"
                     ]
                 },
                 {
