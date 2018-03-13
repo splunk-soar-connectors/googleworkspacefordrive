@@ -86,7 +86,7 @@
             "action": "list users",
             "identifier": "list_users",
             "description": "Get the list of users",
-            "verbose": "Action uses the Admin SDK API to get a list of users. Requires authorization with the following scope:<ul><li>https://www.googleapis.com/auth/admin.directory.user</li></ul><br>The action will limit the number of users returned to <b>max_items</b> or (if not specified) 500. If the system has any more users, a next page token will be returned in <b>action_result.summary.next_page_token</b>. Use this value as input to <b>page_token</b> in subsequent calls to <b>list users</b>.",
+            "verbose": "Action uses the Admin SDK API to get a list of users. Requires authorization with the following scope:<ul><li>https://www.googleapis.com/auth/admin.directory.user</li></ul>",
             "type": "investigate",
             "read_only": true,
             "parameters": {},
