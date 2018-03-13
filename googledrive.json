@@ -14,7 +14,7 @@
     "utctime_updated": "2018-03-13T00:46:48.000000Z",
     "package_name": "phantom_googledrive",
     "main_module": "googledrive_connector.pyc",
-    "min_phantom_version": "3.0.251",
+    "min_phantom_version": "3.0.284",
     "app_wizard_version": "1.0.0",
     "pip_dependencies": {
         "wheel": [
