@@ -134,7 +134,7 @@
                     "data_path": "action_result.data.*.emails.*.address",
                     "data_type": "string",
                     "example_values": [
-                        "admin@hermancorp.biz"
+                        "herman@phantom.us"
                     ],
                     "contains": [
                         "email"
@@ -259,7 +259,7 @@
                     "data_path": "action_result.data.*.nonEditableAliases",
                     "data_type": "string",
                     "example_values": [
-                        "tim.drake@hermancorp.biz.test-google-a.com"
+                        "herman@phantom.us"
                     ],
                     "contains": [
                         "email"
@@ -276,7 +276,7 @@
                     "data_path": "action_result.data.*.primaryEmail",
                     "data_type": "string",
                     "example_values": [
-                        "admin@hermancorp.biz"
+                        "herman@phantom.us"
                     ],
                     "contains": [
                         "email"
@@ -975,7 +975,7 @@
                     "data_path": "action_result.data.*.lastModifyingUser.emailAddress",
                     "data_type": "string",
                     "example_values": [
-                        "admin@hermancorp.biz"
+                        "herman@phantom.us"
                     ],
                     "contains": [
                         "email"
@@ -1065,7 +1065,7 @@
                     "data_path": "action_result.data.*.owners.*.emailAddress",
                     "data_type": "string",
                     "example_values": [
-                        "admin@hermancorp.biz"
+                        "herman@phantom.us"
                     ],
                     "contains": [
                         "email"
@@ -1126,7 +1126,7 @@
                     "data_path": "action_result.data.*.permissions.*.emailAddress",
                     "data_type": "string",
                     "example_values": [
-                        "admin@hermancorp.biz"
+                        "herman@phantom.us"
                     ],
                     "contains": [
                         "email"
@@ -1194,7 +1194,7 @@
                     "data_path": "action_result.data.*.thumbnailLink",
                     "data_type": "string",
                     "example_values": [
-                        "https://docs.google.com/a/hermancorp.biz/feeds/vt?gd=true&id=12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt-vSJaLo1fA&v=1&s=AMedNnoAAAAAWlWZqdpxKYbzlZb-ko4BLBo5QZYPyz8c&sz=s220"
+                        "https://drive.google.com/a/phantom.us/&v=1&s=AMedNnoAAAAAWlWZqdpxKYbzlZb-ko4BLBo5QZYPyz8c&sz=s220?ddrp=1#"
                     ],
                     "contains": [
                         "url"
@@ -1249,7 +1249,7 @@
                     "data_path": "action_result.data.*.webContentLink",
                     "data_type": "string",
                     "example_values": [
-                        "https://drive.google.com/a/hermancorp.biz/uc?id=12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt-vSJaLo1fA&export=download"
+                        "https://drive.google.com/a/phantom.us/uc?id=12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt-vSJaLo1fA&export=download"
                     ],
                     "contains": [
                         "url"
@@ -1259,7 +1259,7 @@
                     "data_path": "action_result.data.*.webViewLink",
                     "data_type": "string",
                     "example_values": [
-                        "https://docs.google.com/a/hermancorp.biz/spreadsheets/d/12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt-vSJaLo1fA/edit?usp=drivesdk"
+                        "https://docs.google.com/a/phantom.us/spreadsheets/d/12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt-vSJaLo1fA/edit?usp=drivesdk"
                     ],
                     "contains": [
                         "url"
@@ -1438,7 +1438,7 @@
                     "data_path": "action_result.data.*.webContentLink",
                     "data_type": "string",
                     "example_values": [
-                        "https://drive.google.com/a/hermancorp.biz/uc?id=1pF6FMUwRkTl2Bs15-CzWQVHa5LyuFIpSFlPFOxzD-Nw&export=download"
+                        "https://drive.google.com/a/phantom.us/uc?id=1pF6FMUwRkTl2Bs15-CzWQVHa5LyuFIpSFlPFOxzD-Nw&export=download"
                     ],
                     "contains": [
                         "url"
@@ -1448,7 +1448,7 @@
                     "data_path": "action_result.data.*.webViewLink",
                     "data_type": "string",
                     "example_values": [
-                        "https://drive.google.com/drive/folders/1tfCbCKJ9d3dPRFSHxuVyDCx0a29dzJ-B"
+                        "https://drive.google.com/drive/folders/1tfCbCKJ3d122RFSHxuVyDCx0a29dzJ-B"
                     ],
                     "contains": [
                         "url"
