@@ -270,8 +270,11 @@ class GoogleDriveConnector(BaseConnector):
         tmp = tempfile.NamedTemporaryFile(dir="/opt/phantom/vault/tmp/", delete=False)
         downloader = MediaIoBaseDownload(tmp, file_req)
         done = False
-        while done is False:
-            status, done = downloader.next_chunk()
+        try:
+            while done is False:
+                status, done = downloader.next_chunk()
+        except Exception as e:
+            return action_result.set_status(phantom.APP_ERROR, "Error downloading file", e)
 
         file_name = param.get('file_name') or file_metadata['name']
 
