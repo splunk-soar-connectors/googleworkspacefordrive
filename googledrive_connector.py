@@ -164,7 +164,7 @@ class GoogleDriveConnector(BaseConnector):
 
         kwargs = {'domain': self._domain, 'maxResults': max_users, 'orderBy': 'email', 'sortOrder': 'ASCENDING'}
 
-        page_token = param.get('page_token')
+        page_token = param.get('next_page_token')
         if (page_token):
             kwargs.update({'pageToken': page_token})
 
@@ -207,7 +207,7 @@ class GoogleDriveConnector(BaseConnector):
         if (query):
             kwargs.update({'q': query})
 
-        page_token = param.get('page_token')
+        page_token = param.get('next_page_token')
         if (page_token):
             kwargs.update({'pageToken': page_token})
 
