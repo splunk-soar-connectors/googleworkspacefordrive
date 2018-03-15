@@ -86,10 +86,23 @@
             "action": "list users",
             "identifier": "list_users",
             "description": "Get the list of users",
-            "verbose": "Action uses the Admin SDK API to get a list of users. Requires authorization with the following scope:<ul><li>https://www.googleapis.com/auth/admin.directory.user</li></ul>",
+            "verbose": "Action uses the Admin SDK API to get a list of users. Requires authorization with the following scope:<ul><li>https://www.googleapis.com/auth/admin.directory.user</li></ul><br>The action will limit the number of users returned to <b>max_items</b> or (if not specified) 500. If the system has any more users, a next page token will be returned in <b>action_result.summary.next_page_token</b>. Use this value as input to <b>next_page_token</b> in subsequent calls to <b>list users</b>.",
             "type": "investigate",
             "read_only": true,
-            "parameters": {},
+            "parameters": {
+                "max_items": {
+                    "description": "Maximum number of users to return",
+                    "data_type": "numeric",
+                    "required": false,
+                    "default": 500,
+                    "order": 0
+                },
+                "next_page_token": {
+                    "description": "Next Page Token",
+                    "data_type": "string",
+                    "order": 2
+                }
+            },
             "output": [
                 {
                     "data_path": "action_result.status",
@@ -99,6 +112,14 @@
                     "example_values": [
                         "success"
                     ]
+                },
+                {
+                    "data_path": "action_result.parameter.max_items",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.parameter.next_page_token",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.agreedToTerms",
@@ -283,7 +304,7 @@
                     ],
                     "column_name": "Email",
                     "column_order": 1
-                },
+                }
                 {
                     "data_path": "action_result.data.*.suspended",
                     "data_type": "boolean",
@@ -291,6 +312,10 @@
                         true,
                         false
                     ]
+                },
+                {
+                    "data_path": "action_result.summary.next_page_token",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.summary.total_users_returned",
@@ -378,6 +403,14 @@
                     "example_values": [
                         "12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt-vSJaLo1fA"
                     ]
+                },
+                {
+                    "data_path": "action_result.data",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.message",
@@ -470,6 +503,10 @@
                     "example_values": [
                         "NewFolder1"
                     ]
+                },
+                {
+                    "data_path": "action_result.data",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.summary.new_folder_id",
@@ -639,6 +676,10 @@
                         "vault id",
                         "sha1"
                     ]
+                },
+                {
+                    "data_path": "action_result.data",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.summary.new_file_id",
