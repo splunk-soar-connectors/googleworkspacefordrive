@@ -304,7 +304,7 @@
                     ],
                     "column_name": "Email",
                     "column_order": 1
-                }
+                },
                 {
                     "data_path": "action_result.data.*.suspended",
                     "data_type": "boolean",
@@ -551,6 +551,7 @@
             "action": "upload file",
             "identifier": "create_file",
             "description": "Upload a file from the Vault to Drive",
+            "verbose": "If the Drive API does not support the conversion from the files original MIME type to dest_mime_type, the uploaded file will become a native Google Drive type (e.g. a Google document).",
             "type": "generic",
             "read_only": false,
             "parameters": {
