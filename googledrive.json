@@ -551,7 +551,7 @@
             "action": "upload file",
             "identifier": "create_file",
             "description": "Upload a file from the Vault to Drive",
-            "verbose": "If the Drive API does not support the conversion from the files original MIME type to dest_mime_type, the uploaded file will become a native Google Drive type (e.g. a Google document).",
+            "verbose": "If the Drive API does not support the conversion from the files original MIME type to <b>dest_mime_type</b>, the uploaded file will become a native Google Drive type (e.g. a Google document).",
             "type": "generic",
             "read_only": false,
             "parameters": {
