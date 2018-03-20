@@ -33,10 +33,9 @@ Once the service account has been created and APIs enabled, the next step is to 
 <p>
 Both <b>upload file</b> and <b>get file</b> support specifying MIME types in their parameters. While these are optional,
 they can be used to convert files when importing/exporting to Drive.
-For example, if you are adding an Excel file to Drive, you can specify the <b>dest_mime_type</b> to be
+For example, if you are adding an Excel file to Drive, you can specify the <b>source_mime_type</b> to be <b>application/vnd.ms-excel</b> and <b>dest_mime_type</b> to be
 <b>application/vnd.google-apps.spreadsheet</b> (this is the type of Google's Sheet files). This will convert the Excel file,
-and make it editable in Drive. The app will attempt to deduce the correct MIME type of the added file. <b>source_mime_type</b> can be used to
-fix any errors during this. For example, a JSON file would automatically be assigned the MIME type of <b>text/plain</b>, as opposed to
+and make it editable in Drive. In the case where the <b>source_mime_type</b> is not supplied, the app will attempt to deduce the correct MIME type of the added file, though <b>source_mime_type</b> can be used to fix any errors. For example, a JSON file would automatically be assigned the MIME type of <b>text/plain</b>, as opposed to
 <b>application/json</b>.
 </p>
 <p>
