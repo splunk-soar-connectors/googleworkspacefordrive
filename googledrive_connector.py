@@ -436,7 +436,7 @@ class GoogleDriveConnector(BaseConnector):
         except Exception as e:
             return action_result.set_status(phantom.APP_ERROR, "Error deleting file", e)
 
-        return action_result.set_status(phantom.APP_SUCCESS, "Successfully delete file from Drive")
+        return action_result.set_status(phantom.APP_SUCCESS, "Successfully deleted file from Drive")
 
     def handle_action(self, param):
 
