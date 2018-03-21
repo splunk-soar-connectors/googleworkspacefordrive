@@ -1,0 +1,47 @@
+<!--
+    File: readme.html
+
+    Copyright (c) Phantom Cyber Corporation, 2018
+
+    This unpublished material is proprietary to Phantom Cyber.
+    All rights reserved. The methods and
+    techniques described herein are considered trade secrets
+    and/or confidential. Reproduction or distribution, in whole
+    or in part, is forbidden except by express written permission
+    of Phantom Cyber.
+-->
+
+<h3>Service Account</h3>
+<p>
+This app requires a pre-configured service account to operate. Please follow the procedure outlined at <a href="https://support.google.com/a/answer/7378726?hl=en">this link</a> to create a service account.<br>The following APIs will need to be enabled:<ul><li>AdminSDK</li><li>Drive API</li></ul> At the end of the creation process, the admin console should ask you to save the config as a JSON file. Copy the contents of the JSON file in the clipboard and paste it as the value of the "Contents of Service Account JSON file" asset configuration parameter.
+</p>
+<h3>Scopes</h3>
+<p>
+Once the service account has been created and APIs enabled, the next step is to configure scopes on these APIs to allow the App to access them. Every action requires different scopes to operate, these are listed in the action documentation.<br>To enable scopes please complete the following steps:
+<ul>
+<li>Go to your G Suite domain’s <a href="http://admin.google.com/">Admin console.</a></li>
+<li>Select <b>Security</b> from the list of controls. If you don't see <b>Security</b> listed, select <b>More controls</b> from the gray bar at the bottom of the page, then select <b>Security</b> from the list of controls. If you can't see the controls, make sure you're signed in as an administrator for the domain.</li>
+<li>Select <b>Show more</b> and then <b>Advanced settings</b> from the list of options.</li>
+<li>Select <b>Manage API client access</b> in the <b>Authentication</b> section.</li>
+<li>In the <b>Client Name</b> field enter the service account's <b>Client ID</b>. You can find your service account's client ID in the <a href="https://console.developers.google.com/permissions/serviceaccounts">Service accounts page</a> or in the service account JSON file (key named <b>client_id</b>).</li>
+<li>In the <b>One or More API Scopes</b> field enter the list of scopes that you wish to grant access to the App. For example, to enable all the scopes required by this app enter: https://www.googleapis.com/auth/admin.directory.user, https://www.googleapis.com/auth/drive</li>
+<li>Click <b>Authorize</b>.</li>
+</ul>
+</p>
+
+<h3>MIME Types</h3>
+<p>
+Both <b>upload file</b> and <b>get file</b> support specifying MIME types in their parameters. While these are optional,
+they can be used to convert files when importing/exporting to Drive.
+For example, if you are adding an Excel file to Drive, you can specify the <b>source_mime_type</b> to be <b>application/vnd.ms-excel</b> and <b>dest_mime_type</b> to be
+<b>application/vnd.google-apps.spreadsheet</b> (this is the type of Google's Sheet files). This will convert the Excel file,
+and make it editable in Drive. In the case where the <b>source_mime_type</b> is not supplied, the app will attempt to deduce the correct MIME type of the added file, though <b>source_mime_type</b> can be used to fix any errors. For example, a JSON file would automatically be assigned the MIME type of <b>text/plain</b>, as opposed to
+<b>application/json</b>.
+</p>
+<p>
+When downloading a file from Drive, the same thing applies. When attempting to download a file which is native to Drive (Sheet, Doc, Slide), the app will export their Microsoft Office equivalents (Excel, Word, PowerPoint). By specifying the <b>mime_type</b> you can change this behavior. For example, setting it to <b>text/csv</b> will cause a Sheet file to export to a CSV file, as opposed to Excel.
+</p>
+<p>
+A full list of Google Drive's own MIME types can be found at this link:
+<a href="https://developers.google.com/drive/v3/web/mime-types">https://developers.google.com/drive/v3/web/mime-types</a>
+</p>
