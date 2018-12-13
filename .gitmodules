@@ -1,24 +1,24 @@
 [submodule "wheels/cachetools"]
 	path = wheels/cachetools
-	url = ssh://git@prod-bb-1.phantom.local:7999/per/cachetools.git
+	url = ssh://git@bitbucket.phantom.us:7999/per/cachetools.git
 	ignore = dirty
 [submodule "wheels/google-auth"]
 	path = wheels/google-auth
-	url = ssh://git@prod-bb-1.phantom.local:7999/per/google-auth.git
+	url = ssh://git@bitbucket.phantom.us:7999/per/google-auth.git
 	ignore = dirty
 [submodule "wheels/googleapiclient_wheel"]
 	path = wheels/googleapiclient_wheel
-	url = ssh://git@prod-bb-1.phantom.local:7999/per/googleapiclient_wheel.git
+	url = ssh://git@bitbucket.phantom.us:7999/per/googleapiclient_wheel.git
 	ignore = dirty
 [submodule "wheels/httplib2_wheel"]
 	path = wheels/httplib2_wheel
-	url = ssh://git@prod-bb-1.phantom.local:7999/per/httplib2_wheel.git
+	url = ssh://git@bitbucket.phantom.us:7999/per/httplib2_wheel.git
 	ignore = dirty
 [submodule "wheels/oauth2client_wheel"]
 	path = wheels/oauth2client_wheel
-	url = ssh://git@prod-bb-1.phantom.local:7999/per/oauth2client_wheel.git
+	url = ssh://git@bitbucket.phantom.us:7999/per/oauth2client_wheel.git
 	ignore = dirty
 [submodule "wheels/uritemplate_wheel"]
 	path = wheels/uritemplate_wheel
-	url = ssh://git@prod-bb-1.phantom.local:7999/per/uritemplate_wheel.git
+	url = ssh://git@bitbucket.phantom.us:7999/per/uritemplate_wheel.git
 	ignore = dirty
