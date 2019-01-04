@@ -9,7 +9,7 @@
     "product_name": "Google Drive",
     "product_version_regex": ".*",
     "publisher": "Phantom",
-    "license": "Copyright (c) 2018 Splunk Inc.",
+    "license": "Copyright (c) 2018-2019 Splunk Inc.",
     "app_version": "1.0.10",
     "utctime_updated": "2018-12-20T02:50:29.000000Z",
     "package_name": "phantom_googledrive",
@@ -95,12 +95,18 @@
                     "data_type": "numeric",
                     "required": false,
                     "default": 500,
-                    "order": 0
+                    "order": 0,
+                    "example_values": [
+                        "5"
+                    ]
                 },
                 "next_page_token": {
                     "description": "Next Page Token",
                     "data_type": "string",
-                    "order": 2
+                    "order": 2,
+                    "example_values": [
+                        "Invalid"
+                    ]
                 }
             },
             "output": [
@@ -115,14 +121,28 @@
                 },
                 {
                     "data_path": "action_result.parameter.max_items",
-                    "data_type": "numeric"
+                    "data_type": "numeric",
+                    "example_values": [
+                        "2"
+                    ]
                 },
                 {
                     "data_path": "action_result.parameter.next_page_token",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": [
+                        "Invalid"
+                    ]
                 },
                 {
                     "data_path": "action_result.data.*.agreedToTerms",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.archived",
                     "data_type": "boolean",
                     "example_values": [
                         true,
@@ -155,7 +175,8 @@
                     "data_path": "action_result.data.*.emails.*.address",
                     "data_type": "string",
                     "example_values": [
-                        "herman@phantom.us"
+                        "test@phantom.us",
+                        "admin@testcorp.biz"
                     ],
                     "contains": [
                         "email"
@@ -173,7 +194,8 @@
                     "data_path": "action_result.data.*.etag",
                     "data_type": "string",
                     "example_values": [
-                        "\"Slw4z1WwXVNuSGyQ8doYqfYCm3s/F2uDjNoukDRgPx6dvH-7j-A7NgQ\""
+                        "\"Slw4z1WwXVNuSGyQ8doYqfYCm3s/F2uDjNoukDRgPx6dvH-7j-A7NgQ\"",
+                        "\"TN30oD80QTVK45AAxvl_wbzs4vs/D4MZJnyRZA2U6cG1jvGCCGquz4M\""
                     ]
                 },
                 {
@@ -250,7 +272,8 @@
                     "data_path": "action_result.data.*.lastLoginTime",
                     "data_type": "string",
                     "example_values": [
-                        "2018-01-06T01:11:49.000Z"
+                        "2018-01-06T01:11:49.000Z",
+                        "2018-12-20T20:37:16.000Z"
                     ]
                 },
                 {
@@ -264,7 +287,7 @@
                     "data_path": "action_result.data.*.name.fullName",
                     "data_type": "string",
                     "example_values": [
-                        "Herman Edwards"
+                        "test Edwards"
                     ],
                     "column_name": "Full Name",
                     "column_order": 0
@@ -273,14 +296,15 @@
                     "data_path": "action_result.data.*.name.givenName",
                     "data_type": "string",
                     "example_values": [
-                        "Herman"
+                        "test"
                     ]
                 },
                 {
                     "data_path": "action_result.data.*.nonEditableAliases",
                     "data_type": "string",
                     "example_values": [
-                        "herman@phantom.us"
+                        "test@phantom.us",
+                        "test.sample@testcorp.biz.test-google-a.com"
                     ],
                     "contains": [
                         "email"
@@ -297,7 +321,8 @@
                     "data_path": "action_result.data.*.primaryEmail",
                     "data_type": "string",
                     "example_values": [
-                        "herman@phantom.us"
+                        "test@phantom.us",
+                        "admin@testcorp.biz"
                     ],
                     "contains": [
                         "email"
@@ -315,7 +340,10 @@
                 },
                 {
                     "data_path": "action_result.summary.next_page_token",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": [
+                        "~!!~AI9FV7RCbmvPCnWK0UIxnjniVz68Lt8ZOsGim7uc5YxlceqS4ovMelh229zAeFmpmw1aoBTI4ZmcjNxMdAPHEE5nW8BKEx7TI4LzYmLlvpBGoKnyf3lPFenef25jRS7FSMDBb1prqjMEFzRlvZtfX4X9kZuYVDk_dwUcjiKDkEXC2DUPCPcKctAg2HN-VH9FGcSAcSBftVBfbrLwZu9AgnfHvz-8wkDK1PpwE4l1H_mkfvRm_Ckvq9dnLCFSu5W-YzF6nXuZSgmJx5WWMO-IHSLILAf8OXPwbxJbTqM_YCdLeYD71IeqEu_idn54UhYNUCBi3mxeQJzzfp4vHJa3q1wN4uUuCNshqkXvLDwuVIk4cYHHVcJ2-A4GJhPGkQ2SfuMrIigi0nGKEk8pTmJaeD5C825ALevDLf574abZ385Hu7d0NTpJxfDdJti0JdcyL66qYis2l_zxMZZ-ZcSFpl_FKuhip3AP97VIk0QUiYlh9nH55tCvjkw="
+                    ]
                 },
                 {
                     "data_path": "action_result.summary.total_users_returned",
@@ -392,6 +420,9 @@
                     "data_type": "string",
                     "contains": [
                         "email"
+                    ],
+                    "example_values": [
+                        "abc@gmail.com"
                     ]
                 },
                 {
@@ -401,7 +432,8 @@
                         "drive file id"
                     ],
                     "example_values": [
-                        "12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt-vSJaLo1fA"
+                        "12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt-vSJaLo1fA",
+                        "1GR9Ww4_AFxqmRRRSDi_EP5sPp8PLX7Te"
                     ]
                 },
                 {
@@ -417,7 +449,8 @@
                     "data_type": "string",
                     "example_values": [
                         "File doesn't exist or has already been deleted",
-                        "Successfully delete file from Drive"
+                        "Successfully delete file from Drive",
+                        "Successfully deleted file from Drive"
                     ],
                     "column_name": "Message",
                     "column_order": 0
@@ -472,6 +505,9 @@
                     "primary": true,
                     "contains": [
                         "drive file id"
+                    ],
+                    "example_values": [
+                        "1OPjWKnOCGlrePZ3cnLD0lnW5mlLE2x8D"
                     ]
                 }
             },
@@ -488,6 +524,9 @@
                     "data_type": "string",
                     "contains": [
                         "email"
+                    ],
+                    "example_values": [
+                        "abc@gmail.com"
                     ]
                 },
                 {
@@ -495,6 +534,9 @@
                     "data_type": "string",
                     "contains": [
                         "drive file id"
+                    ],
+                    "example_values": [
+                        "1OPjWKnOCGlrePZ3cnLD0lnW5mlLE2x8D"
                     ]
                 },
                 {
@@ -582,6 +624,9 @@
                     "required": false,
                     "contains": [
                         "mime type"
+                    ],
+                    "example_values": [
+                        "application/vnd.google-apps.spreadsheet"
                     ]
                 },
                 "dest_mime_type": {
@@ -591,6 +636,9 @@
                     "required": false,
                     "contains": [
                         "mime type"
+                    ],
+                    "example_values": [
+                        "application/vnd.google-apps.spreadsheet"
                     ]
                 },
                 "folder_id": {
@@ -600,6 +648,9 @@
                     "primary": true,
                     "contains": [
                         "drive file id"
+                    ],
+                    "example_values": [
+                        "1OPjWKnOCGlrePZ3cnLD0lnW5mlLE2x8D"
                     ]
                 },
                 "file_name": {
@@ -647,17 +698,26 @@
                     "data_type": "string",
                     "contains": [
                         "email"
+                    ],
+                    "example_values": [
+                        "abc@gmail.com"
                     ]
                 },
                 {
                     "data_path": "action_result.parameter.file_name",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": [
+                        "file1"
+                    ]
                 },
                 {
                     "data_path": "action_result.parameter.folder_id",
                     "data_type": "string",
                     "contains": [
                         "drive file id"
+                    ],
+                    "example_values": [
+                        "1OPjWKnOCGlrePZ3cnLD0lnW5mlLE2x8D"
                     ]
                 },
                 {
@@ -665,6 +725,9 @@
                     "data_type": "string",
                     "contains": [
                         "mime type"
+                    ],
+                    "example_values": [
+                        "application/vnd.google-apps.spreadsheet"
                     ]
                 },
                 {
@@ -736,7 +799,10 @@
                     "contains": [
                         "email"
                     ],
-                    "required": false
+                    "required": false,
+                    "example_values": [
+                        "abc@gmai.com"
+                    ]
                 },
                 "id": {
                     "description": "File ID",
@@ -797,6 +863,9 @@
                     "data_type": "string",
                     "contains": [
                         "email"
+                    ],
+                    "example_values": [
+                        "abc@gmail.com"
                     ]
                 },
                 {
@@ -813,7 +882,9 @@
                         "drive file id"
                     ],
                     "example_values": [
-                        "12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt-vSJaLo1fA"
+                        "12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt-vSJaLo1fA",
+                        "1_x--TqEi4liLds9ZXjSHpVXoPuKEI2tUU9t4enGvOps",
+                        "1S09PXDLSIi4RiE7j5C86aB6Aj7ZeRR2z"
                     ]
                 },
                 {
@@ -828,6 +899,14 @@
                 },
                 {
                     "data_path": "action_result.data.*.capabilities.canAddChildren",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.capabilities.canChangeCopyRequiresWriterPermission",
                     "data_type": "boolean",
                     "example_values": [
                         true,
@@ -950,7 +1029,9 @@
                     "data_path": "action_result.data.*.createdTime",
                     "data_type": "string",
                     "example_values": [
-                        "2018-01-10T01:17:40.409Z"
+                        "2018-01-10T01:17:40.409Z",
+                        "2018-12-21T07:26:11.898Z",
+                        "2018-12-21T07:26:16.188Z"
                     ]
                 },
                 {
@@ -962,6 +1043,20 @@
                     ]
                 },
                 {
+                    "data_path": "action_result.data.*.fileExtension",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.fullFileExtension",
+                    "data_type": "string",
+                    "example_values": [
+                        ""
+                    ]
+                },
+                {
                     "data_path": "action_result.data.*.hasThumbnail",
                     "data_type": "boolean",
                     "example_values": [
@@ -970,10 +1065,19 @@
                     ]
                 },
                 {
+                    "data_path": "action_result.data.*.headRevisionId",
+                    "data_type": "string",
+                    "example_values": [
+                        "0B3SKAcU2T6x2ZlNyRm40eHNlS245VWZiTnp3QXh4OFFZRSt3PQ"
+                    ]
+                },
+                {
                     "data_path": "action_result.data.*.iconLink",
                     "data_type": "string",
                     "example_values": [
-                        "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.spreadsheet"
+                        "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.spreadsheet",
+                        "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.document",
+                        "https://drive-thirdparty.googleusercontent.com/16/type/text/plain"
                     ],
                     "contains": [
                         "url"
@@ -983,7 +1087,9 @@
                     "data_path": "action_result.data.*.id",
                     "data_type": "string",
                     "example_values": [
-                        "12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt-vSJaLo1fA"
+                        "12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt-vSJaLo1fA",
+                        "1_x--TqEi4liLds9ZXjSHpVXoPuKEI2tUU9t4enGvOps",
+                        "1S09PXDLSIi4RiE7j5C86aB6Aj7ZeRR2z"
                     ],
                     "contains": [
                         "drive file id"
@@ -1010,14 +1116,15 @@
                     "data_path": "action_result.data.*.lastModifyingUser.displayName",
                     "data_type": "string",
                     "example_values": [
-                        "Herman Edwards"
+                        "test Edwards"
                     ]
                 },
                 {
                     "data_path": "action_result.data.*.lastModifyingUser.emailAddress",
                     "data_type": "string",
                     "example_values": [
-                        "herman@phantom.us"
+                        "test@phantom.us",
+                        "admin@testcorp.biz"
                     ],
                     "contains": [
                         "email"
@@ -1046,10 +1153,22 @@
                     ]
                 },
                 {
+                    "data_path": "action_result.data.*.md5Checksum",
+                    "data_type": "string",
+                    "example_values": [
+                        "ccdf997e20b103b9215082dcd07a86fc"
+                    ],
+                    "contains": [
+                        "md5"
+                    ]
+                },
+                {
                     "data_path": "action_result.data.*.mimeType",
                     "data_type": "string",
                     "example_values": [
-                        "application/vnd.google-apps.spreadsheet"
+                        "application/vnd.google-apps.spreadsheet",
+                        "application/vnd.google-apps.document",
+                        "text/plain"
                     ],
                     "contains": [
                         "mime type"
@@ -1067,14 +1186,18 @@
                     "data_path": "action_result.data.*.modifiedByMeTime",
                     "data_type": "string",
                     "example_values": [
-                        "2018-01-10T01:17:41.700Z"
+                        "2018-01-10T01:17:41.700Z",
+                        "2018-12-21T07:26:14.638Z",
+                        "2018-12-21T07:26:16.188Z"
                     ]
                 },
                 {
                     "data_path": "action_result.data.*.modifiedTime",
                     "data_type": "string",
                     "example_values": [
-                        "2018-01-10T01:17:41.700Z"
+                        "2018-01-10T01:17:41.700Z",
+                        "2018-12-21T07:26:14.638Z",
+                        "2018-12-21T07:26:16.188Z"
                     ],
                     "column_name": "Last Modified",
                     "column_order": 2
@@ -1083,10 +1206,19 @@
                     "data_path": "action_result.data.*.name",
                     "data_type": "string",
                     "example_values": [
-                        "Untitled.xlsx"
+                        "Untitled.xlsx",
+                        "New Google Document",
+                        "New Plain Text"
                     ],
                     "column_name": "Name",
                     "column_order": 1
+                },
+                {
+                    "data_path": "action_result.data.*.originalFilename",
+                    "data_type": "string",
+                    "example_values": [
+                        "New Plain Text"
+                    ]
                 },
                 {
                     "data_path": "action_result.data.*.ownedByMe",
@@ -1100,14 +1232,15 @@
                     "data_path": "action_result.data.*.owners.*.displayName",
                     "data_type": "string",
                     "example_values": [
-                        "Herman Edwards"
+                        "test Edwards"
                     ]
                 },
                 {
                     "data_path": "action_result.data.*.owners.*.emailAddress",
                     "data_type": "string",
                     "example_values": [
-                        "herman@phantom.us"
+                        "test@phantom.us",
+                        "admin@testcorp.biz"
                     ],
                     "contains": [
                         "email"
@@ -1139,7 +1272,8 @@
                     "data_path": "action_result.data.*.parents",
                     "data_type": "string",
                     "example_values": [
-                        "0AHSKAcU2T6x2Uk9PVA"
+                        "0AHSKAcU2T6x2Uk9PVA",
+                        "1GR9Ww4_AFxqmRRRSDi_EP5sPp8PLX7Te"
                     ]
                 },
                 {
@@ -1161,14 +1295,15 @@
                     "data_path": "action_result.data.*.permissions.*.displayName",
                     "data_type": "string",
                     "example_values": [
-                        "Herman Edwards"
+                        "test Edwards"
                     ]
                 },
                 {
                     "data_path": "action_result.data.*.permissions.*.emailAddress",
                     "data_type": "string",
                     "example_values": [
-                        "herman@phantom.us"
+                        "test@phantom.us",
+                        "admin@testcorp.biz"
                     ],
                     "contains": [
                         "email"
@@ -1206,7 +1341,8 @@
                     "data_path": "action_result.data.*.quotaBytesUsed",
                     "data_type": "string",
                     "example_values": [
-                        "0"
+                        "0",
+                        "48"
                     ]
                 },
                 {
@@ -1215,6 +1351,13 @@
                     "example_values": [
                         true,
                         false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.size",
+                    "data_type": "string",
+                    "example_values": [
+                        "48"
                     ]
                 },
                 {
@@ -1236,7 +1379,9 @@
                     "data_path": "action_result.data.*.thumbnailLink",
                     "data_type": "string",
                     "example_values": [
-                        "https://drive.google.com/a/acme.com/&v=1&s=AMedNnoAAAAAWlWZqdpxKYbzlZb-ko4BLBo5QZYPyz8c&sz=s220?ddrp=1#"
+                        "https://drive.google.com/a/acme.com/&v=1&s=AMedNnoAAAAAWlWZqdpxKYbzlZb-ko4BLBo5QZYPyz8c&sz=s220?ddrp=1#",
+                        "https://docs.google.com/a/testcorp.biz/feeds/vt?gd=true&id=1_x--TqEi4liLds9ZXjSHpVXoPuKEI2tUU9t4enGvOps&v=1&s=AMedNnoAAAAAXByxw2buVBlu4JyZ3PAtCNKDXRCoXvkM&sz=s220",
+                        "https://lh3.googleusercontent.com/FhnFtKecgZ1fCEMgJASrrS9nh2eKWlONj_QGbuGkeFSbiLYmnJVspaw-sKkstgJpLnmo8SYDjd4=s220"
                     ],
                     "contains": [
                         "url"
@@ -1261,7 +1406,9 @@
                     "data_path": "action_result.data.*.version",
                     "data_type": "string",
                     "example_values": [
-                        "6"
+                        "6",
+                        "5",
+                        "3"
                     ]
                 },
                 {
@@ -1276,7 +1423,9 @@
                     "data_path": "action_result.data.*.viewedByMeTime",
                     "data_type": "string",
                     "example_values": [
-                        "2018-01-10T01:17:48.669Z"
+                        "2018-01-10T01:17:48.669Z",
+                        "2018-12-21T07:26:14.638Z",
+                        "2018-12-21T07:26:20.302Z"
                     ]
                 },
                 {
@@ -1291,7 +1440,8 @@
                     "data_path": "action_result.data.*.webContentLink",
                     "data_type": "string",
                     "example_values": [
-                        "https://drive.google.com/a/acme.com/uc?id=12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt-vSJaLo1fA&export=download"
+                        "https://drive.google.com/a/acme.com/uc?id=12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt-vSJaLo1fA&export=download",
+                        "https://drive.google.com/a/testcorp.biz/uc?id=1S09PXDLSIi4RiE7j5C86aB6Aj7ZeRR2z&export=download"
                     ],
                     "contains": [
                         "url"
@@ -1301,7 +1451,9 @@
                     "data_path": "action_result.data.*.webViewLink",
                     "data_type": "string",
                     "example_values": [
-                        "https://docs.google.com/a/acme.com/spreadsheets/d/12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt-vSJaLo1fA/edit?usp=drivesdk"
+                        "https://docs.google.com/a/acme.com/spreadsheets/d/12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt-vSJaLo1fA/edit?usp=drivesdk",
+                        "https://docs.google.com/document/d/1_x--TqEi4liLds9ZXjSHpVXoPuKEI2tUU9t4enGvOps/edit?usp=drivesdk",
+                        "https://drive.google.com/a/testcorp.biz/file/d/1S09PXDLSIi4RiE7j5C86aB6Aj7ZeRR2z/view?usp=drivesdk"
                     ],
                     "contains": [
                         "url"
@@ -1319,7 +1471,8 @@
                     "data_path": "action_result.summary.vault_id",
                     "data_type": "string",
                     "example_values": [
-                        "2fd639e7bdeffe563d13770c2519f99a19bbeef3"
+                        "2fd639e7bdeffe563d13770c2519f99a19bbeef3",
+                        "88cc2571feeaafc30d8c5c11c1d512d3be7b25fa"
                     ],
                     "contains": [
                         "sha1",
@@ -1333,14 +1486,17 @@
                     "data_type": "string",
                     "example_values": [
                         "Failed to get file. Error string: '<HttpError 400 when requesting https://www.googleapis.com/drive/v3/files/12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt-vSJaLo1fA?fields=all&alt=json returned \"Invalid field selection all\">'",
-                        "Successfully retrieved file and added to vault"
+                        "Successfully retrieved file and added to vault",
+                        "Successfully retrieved file information and added to vault",
+                        "Successfully retrieved file information"
                     ]
                 },
                 {
                     "data_path": "summary.total_objects",
                     "data_type": "numeric",
                     "example_values": [
-                        1
+                        1,
+                        3
                     ]
                 },
                 {
@@ -1348,7 +1504,8 @@
                     "data_type": "numeric",
                     "example_values": [
                         0,
-                        1
+                        1,
+                        3
                     ]
                 }
             ],
@@ -1378,17 +1535,26 @@
                 "max_results": {
                     "description": "Max Results",
                     "data_type": "numeric",
-                    "order": 1
+                    "order": 1,
+                    "example_values": [
+                        "2"
+                    ]
                 },
                 "next_page_token": {
                     "description": "Next Page Token",
                     "data_type": "string",
-                    "order": 2
+                    "order": 2,
+                    "example_values": [
+                        "~!!~AI9FV7RCbmvPCnWK0UIxnjniVz68Lt8ZOsGim7uc5YxlceqS4ovMelh229zAeFmpmw1aoBTI4ZmcjNxMdAPHEE5nW8BKEx7TI4LzYmLlvpBGoKnyf3lPFenef25jRS7FSMDBb1prqjMEFzRlvZtfX4X9kZuYVDk_dwUcjiKDkEXC2DUPCPcKctAg2HN-VH9FGcSAcSBftVBfbrLwZu9AgnfHvz-8wkDK1PpwE4l1H_mkfvRm_Ckvq9dnLCFSu5W-YzF6nXuZSgmJx5WWMO-IHSLILAf8OXPwbxJbTqM_YCdLeYD71IeqEu_idn54UhYNUCBi3mxeQJzzfp4vHJa3q1wN4uUuCNshqkXvLDwuVIk4cYHHVcJ2-A4GJhPGkQ2SfuMrIigi0nGKEk8pTmJaeD5C825ALevDLf574abZ385Hu7d0NTpJxfDdJti0JdcyL66qYis2l_zxMZZ-ZcSFpl_FKuhip3AP97VIk0QUiYlh9nH55tCvjkw="
+                    ]
                 },
                 "query": {
                     "description": "Query",
                     "data_type": "string",
-                    "order": 3
+                    "order": 3,
+                    "example_values": [
+                        "modifiedTime > '2012-06-04T12:00:00'"
+                    ]
                 }
             },
             "output": [
@@ -1404,22 +1570,31 @@
                     "data_type": "string",
                     "contains": [
                         "email"
+                    ],
+                    "example_values": [
+                        "abc@gmail.com"
                     ]
                 },
                 {
                     "data_path": "action_result.parameter.max_results",
-                    "data_type": "string",
+                    "data_type": "numeric",
                     "example_values": [
                         "2"
                     ]
                 },
                 {
                     "data_path": "action_result.parameter.next_page_token",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": [
+                        "~!!~AI9FV7RCbmvPCnWK0UIxnjniVz68Lt8ZOsGim7uc5YxlceqS4ovMelh229zAeFmpmw1aoBTI4ZmcjNxMdAPHEE5nW8BKEx7TI4LzYmLlvpBGoKnyf3lPFenef25jRS7FSMDBb1prqjMEFzRlvZtfX4X9kZuYVDk_dwUcjiKDkEXC2DUPCPcKctAg2HN-VH9FGcSAcSBftVBfbrLwZu9AgnfHvz-8wkDK1PpwE4l1H_mkfvRm_Ckvq9dnLCFSu5W-YzF6nXuZSgmJx5WWMO-IHSLILAf8OXPwbxJbTqM_YCdLeYD71IeqEu_idn54UhYNUCBi3mxeQJzzfp4vHJa3q1wN4uUuCNshqkXvLDwuVIk4cYHHVcJ2-A4GJhPGkQ2SfuMrIigi0nGKEk8pTmJaeD5C825ALevDLf574abZ385Hu7d0NTpJxfDdJti0JdcyL66qYis2l_zxMZZ-ZcSFpl_FKuhip3AP97VIk0QUiYlh9nH55tCvjkw="
+                    ]
                 },
                 {
                     "data_path": "action_result.parameter.query",
-                    "data_type": "string"
+                    "data_type": "string",
+                    "example_values": [
+                        "modifiedTime > '2012-06-04T12:00:00'"
+                    ]
                 },
                 {
                     "data_path": "action_result.data.*.id",
