@@ -1,5 +1,5 @@
 # File: googledrive_connector.py
-# Copyright (c) 2018-2019 Splunk Inc.
+# Copyright (c) 2018-2020 Splunk Inc.
 #
 # SPLUNK CONFIDENTIAL - Use or disclosure of this material in whole or in part
 # without a valid written license from Splunk Inc. is PROHIBITED.
@@ -163,7 +163,9 @@ class GoogleDriveConnector(BaseConnector):
         try:
             users_resp = service.users().list(**kwargs).execute()
         except Exception as e:
-            return action_result.set_status(phantom.APP_ERROR, "Failed to get users.", e)
+            error_message = str(e)
+            self.debug_print("Exception message: {}".format(error_message))
+            return action_result.set_status(phantom.APP_ERROR, "Failed to get users.")
 
         users = users_resp.get('users', [])
         num_users = len(users)
@@ -206,7 +208,9 @@ class GoogleDriveConnector(BaseConnector):
         try:
             resp = service.files().list(**kwargs).execute()
         except Exception as e:
-            return action_result.set_status(phantom.APP_ERROR, "Failed to list files", e)
+            error_message = str(e)
+            self.debug_print("Exception message: {}".format(error_message))
+            return action_result.set_status(phantom.APP_ERROR, "Failed to list files.")
 
         for file_obj in resp['files']:
             action_result.add_data(file_obj)
@@ -300,7 +304,9 @@ class GoogleDriveConnector(BaseConnector):
         try:
             file_metadata = service.files().get(fileId=file_id, fields=ALL_FILE_FIELDS).execute()
         except Exception as e:
-            return action_result.set_status(phantom.APP_ERROR, "Failed to get file metadata", e)
+            error_message = str(e)
+            self.debug_print("Exception message: {}".format(error_message))
+            return action_result.set_status(phantom.APP_ERROR, "Failed to get file metadata.")
 
         if param.get('download_file'):
             ret_val = self._save_file_to_vault(
@@ -377,7 +383,9 @@ class GoogleDriveConnector(BaseConnector):
                 media_body=media,
                 fields='id').execute()
         except Exception as e:
-            return action_result.set_status(phantom.APP_ERROR, "Error adding file to drive", e)
+            error_message = str(e)
+            self.debug_print("Exception message: {}".format(error_message))
+            return action_result.set_status(phantom.APP_ERROR, "Error adding file to drive.")
 
         action_result.update_summary({'new_file_id': resp['id']})
 
@@ -495,7 +503,7 @@ if __name__ == '__main__':
     if (username and password):
         login_url = BaseConnector._get_phantom_base_url() + "login"
         try:
-            print ("Accessing the Login page")
+            print("Accessing the Login page")
             r = requests.get(login_url, verify=False)
             csrftoken = r.cookies['csrftoken']
 
@@ -508,15 +516,15 @@ if __name__ == '__main__':
             headers['Cookie'] = 'csrftoken=' + csrftoken
             headers['Referer'] = login_url
 
-            print ("Logging into Platform to get the session id")
+            print("Logging into Platform to get the session id")
             r2 = requests.post(login_url, verify=False, data=data, headers=headers)
             session_id = r2.cookies['sessionid']
         except Exception as e:
-            print ("Unable to get session id from the platfrom. Error: " + str(e))
+            print("Unable to get session id from the platfrom. Error: " + str(e))
             exit(1)
 
     if (len(sys.argv) < 2):
-        print "No test json specified as input"
+        print("No test json specified as input")
         exit(0)
 
     with open(sys.argv[1]) as f:
@@ -531,6 +539,6 @@ if __name__ == '__main__':
             in_json['user_session_token'] = session_id
 
         ret_val = connector._handle_action(json.dumps(in_json), None)
-        print (json.dumps(json.loads(ret_val), indent=4))
+        print(json.dumps(json.loads(ret_val), indent=4))
 
     exit(0)
