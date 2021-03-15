@@ -226,6 +226,13 @@
                     ]
                 },
                 {
+                    "data_path": "action_result.data.*.emails.*.type",
+                    "data_type": "string",
+                    "example_values": [
+                        "work"
+                    ]
+                },
+                {
                     "data_path": "action_result.data.*.etag",
                     "data_type": "string",
                     "example_values": [
@@ -351,6 +358,17 @@
                     ]
                 },
                 {
+                    "data_path": "action_result.data.*.phones.*.type",
+                    "data_type": "string",
+                    "example_values": [
+                        "work"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.phones.*.value",
+                    "data_type": "string"
+                },
+                {
                     "data_path": "action_result.data.*.primaryEmail",
                     "data_type": "string",
                     "example_values": [
@@ -359,6 +377,13 @@
                     ],
                     "contains": [
                         "email"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.recoveryEmail",
+                    "data_type": "string",
+                    "example_values": [
+                        "test@phantom.us"
                     ]
                 },
                 {
@@ -922,6 +947,14 @@
                     ]
                 },
                 {
+                    "data_path": "action_result.data.*.capabilities.canAddMyDriveParent",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
                     "data_path": "action_result.data.*.capabilities.canChangeCopyRequiresWriterPermission",
                     "data_type": "boolean",
                     "example_values": [
@@ -986,7 +1019,39 @@
                     ]
                 },
                 {
+                    "data_path": "action_result.data.*.capabilities.canModifyContent",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.capabilities.canMoveChildrenWithinDrive",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
                     "data_path": "action_result.data.*.capabilities.canMoveItemIntoTeamDrive",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.capabilities.canMoveItemOutOfDrive",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.capabilities.canMoveItemWithinDrive",
                     "data_type": "boolean",
                     "example_values": [
                         true,
@@ -1003,6 +1068,14 @@
                 },
                 {
                     "data_path": "action_result.data.*.capabilities.canRemoveChildren",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.capabilities.canRemoveMyDriveParent",
                     "data_type": "boolean",
                     "example_values": [
                         true,
