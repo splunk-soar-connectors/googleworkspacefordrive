@@ -68,7 +68,7 @@
             },
             {
                 "module": "rsa",
-                "input_file": "wheels/oauth2client_wheel/rsa-3.4.2-py2.py3-none-any.whl"
+                "input_file": "wheels/oauth2client_wheel/rsa-4.7.2-py3-none-any.whl"
             },
             {
                 "module": "pyasn1_modules",
@@ -76,7 +76,7 @@
             },
             {
                 "module": "httplib2",
-                "input_file": "wheels/httplib2-0.17.3-py3-none-any.whl"
+                "input_file": "wheels/httplib2-0.19.0-py3-none-any.whl"
             },
             {
                 "module": "google-auth",
