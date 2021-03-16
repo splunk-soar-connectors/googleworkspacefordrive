@@ -111,7 +111,7 @@ class GoogleDriveConnector(BaseConnector):
         except Exception as e:
             return RetVal2(action_result.set_status(phantom.APP_ERROR,
                 "Failed to create service object for API: {0}-{1}. {2} {3}".format(api_name, api_version, str(e),
-                    "Please make sure the user '{0}' is valid and the service account has the proper scopes enabled.".format(delegated_user)),
+                    "Please make sure the user '{0}' is valid and the service account has the proper scopes enabled".format(delegated_user)),
                 None))
 
         return RetVal2(phantom.APP_SUCCESS, service)
@@ -133,7 +133,7 @@ class GoogleDriveConnector(BaseConnector):
             service.users().list(domain=self._domain, maxResults=1, orderBy='email', sortOrder="ASCENDING").execute()
         except Exception as e:
             self.save_progress("Test Connectivity Failed")
-            return action_result.set_status(phantom.APP_ERROR, "Failed to get users.", e)
+            return action_result.set_status(phantom.APP_ERROR, "Failed to get users", e)
 
         self.save_progress("Test Connectivity Passed")
         return action_result.set_status(phantom.APP_SUCCESS)
@@ -163,7 +163,7 @@ class GoogleDriveConnector(BaseConnector):
         except Exception as e:
             error_message = str(e)
             self.debug_print("Exception message: {}".format(error_message))
-            return action_result.set_status(phantom.APP_ERROR, "Failed to get users.")
+            return action_result.set_status(phantom.APP_ERROR, "Failed to get users")
 
         users = users_resp.get('users', [])
         num_users = len(users)
@@ -208,7 +208,7 @@ class GoogleDriveConnector(BaseConnector):
         except Exception as e:
             error_message = str(e)
             self.debug_print("Exception message: {}".format(error_message))
-            return action_result.set_status(phantom.APP_ERROR, "Failed to list files.")
+            return action_result.set_status(phantom.APP_ERROR, "Failed to list files")
 
         for file_obj in resp['files']:
             action_result.add_data(file_obj)
@@ -304,7 +304,7 @@ class GoogleDriveConnector(BaseConnector):
         except Exception as e:
             error_message = str(e)
             self.debug_print("Exception message: {}".format(error_message))
-            return action_result.set_status(phantom.APP_ERROR, "Failed to get file metadata.")
+            return action_result.set_status(phantom.APP_ERROR, "Failed to get file metadata")
 
         if param.get('download_file'):
             ret_val = self._save_file_to_vault(
@@ -384,7 +384,7 @@ class GoogleDriveConnector(BaseConnector):
         except Exception as e:
             error_message = str(e)
             self.debug_print("Exception message: {}".format(error_message))
-            return action_result.set_status(phantom.APP_ERROR, "Error adding file to drive.")
+            return action_result.set_status(phantom.APP_ERROR, "Error adding file to drive")
 
         action_result.update_summary({'new_file_id': resp['id']})
 
