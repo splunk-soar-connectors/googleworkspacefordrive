@@ -344,7 +344,11 @@ class GoogleDriveConnector(BaseConnector):
 
         mime = magic.Magic(mime=True)
 
-        _, _, vault_file_metadata = ph_rules.vault_info(vault_id=vault_id)
+        success, message, vault_file_metadata = ph_rules.vault_info(vault_id=vault_id)
+        if not success:
+            return action_result.set_status(
+                phantom.APP_ERROR, "Error fetching the file from vault. Error details: {}".format(message)
+            )
         vault_file_metadata = list(vault_file_metadata)[0]
 
         mime_type = mime.from_file(vault_file_metadata['path'])
