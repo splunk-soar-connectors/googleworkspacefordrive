@@ -9,16 +9,16 @@
     "product_name": "Google Drive",
     "product_version_regex": ".*",
     "publisher": "Splunk",
-    "license": "Copyright (c) 2018-2020 Splunk Inc.",
+    "license": "Copyright (c) 2018-2021 Splunk Inc.",
     "app_version": "2.0.17",
     "python_version": "3",
     "latest_tested_versions": [
-        "Cloud, May 8, 2020"
+        "Cloud, March 18, 2021"
     ],
     "utctime_updated": "2020-11-23T08:14:36.000000Z",
     "package_name": "phantom_googledrive",
     "main_module": "googledrive_connector.py",
-    "min_phantom_version": "4.6.19142",
+    "min_phantom_version": "4.9.39220",
     "app_wizard_version": "1.0.0",
     "pip_dependencies": {
         "wheel": [
@@ -28,7 +28,7 @@
             },
             {
                 "module": "rsa",
-                "input_file": "wheels/oauth2client_wheel/rsa-3.4.2-py2.py3-none-any.whl"
+                "input_file": "wheels/oauth2client_wheel/rsa-4.7.2-py3-none-any.whl"
             },
             {
                 "module": "pyasn1_modules",
@@ -36,47 +36,7 @@
             },
             {
                 "module": "httplib2",
-                "input_file": "wheels/httplib2_wheel/httplib2-0.9.2-py2-none-any.whl"
-            },
-            {
-                "module": "google-auth",
-                "input_file": "wheels/google-auth/google_auth-1.1.1-py2.py3-none-any.whl"
-            },
-            {
-                "module": "google-auth-httplib2",
-                "input_file": "wheels/google-auth/google_auth_httplib2-0.0.2-py2.py3-none-any.whl"
-            },
-            {
-                "module": "cachetools",
-                "input_file": "wheels/cachetools/cachetools-2.0.1-py2.py3-none-any.whl"
-            },
-            {
-                "module": "google-api-python-client",
-                "input_file": "wheels/googleapiclient_wheel/google_api_python_client-1.6.4-py2.py3-none-any.whl"
-            },
-            {
-                "module": "uritemplate",
-                "input_file": "wheels/uritemplate_wheel/uritemplate-3.0.0-py2.py3-none-any.whl"
-            }
-        ]
-    },
-    "pip3_dependencies": {
-        "wheel": [
-            {
-                "module": "oauth2client",
-                "input_file": "wheels/oauth2client_wheel/oauth2client-4.1.2-py2.py3-none-any.whl"
-            },
-            {
-                "module": "rsa",
-                "input_file": "wheels/oauth2client_wheel/rsa-3.4.2-py2.py3-none-any.whl"
-            },
-            {
-                "module": "pyasn1_modules",
-                "input_file": "wheels/oauth2client_wheel/pyasn1_modules-0.1.1-py2.py3-none-any.whl"
-            },
-            {
-                "module": "httplib2",
-                "input_file": "wheels/httplib2-0.17.3-py3-none-any.whl"
+                "input_file": "wheels/httplib2-0.19.0-py3-none-any.whl"
             },
             {
                 "module": "google-auth",
@@ -119,7 +79,6 @@
             "action": "test connectivity",
             "identifier": "test_connectivity",
             "description": "Validate the asset configuration for connectivity using supplied configuration",
-            "verbose": "",
             "type": "test",
             "read_only": true,
             "parameters": {},
@@ -137,37 +96,29 @@
                 "max_items": {
                     "description": "Maximum number of users to return",
                     "data_type": "numeric",
-                    "required": false,
                     "default": 500,
-                    "order": 0,
-                    "example_values": [
-                        "5"
-                    ]
+                    "order": 0
                 },
                 "next_page_token": {
                     "description": "Next Page Token",
                     "data_type": "string",
-                    "order": 2,
-                    "example_values": [
-                        "Invalid"
-                    ]
+                    "order": 2
                 }
             },
             "output": [
                 {
                     "data_path": "action_result.status",
                     "data_type": "string",
-                    "column_name": "status",
-                    "column_order": 0,
                     "example_values": [
-                        "success"
+                        "success",
+                        "failed"
                     ]
                 },
                 {
                     "data_path": "action_result.parameter.max_items",
                     "data_type": "numeric",
                     "example_values": [
-                        "2"
+                        2
                     ]
                 },
                 {
@@ -232,6 +183,13 @@
                     "example_values": [
                         true,
                         false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.emails.*.type",
+                    "data_type": "string",
+                    "example_values": [
+                        "work"
                     ]
                 },
                 {
@@ -332,9 +290,7 @@
                     "data_type": "string",
                     "example_values": [
                         "test Edwards"
-                    ],
-                    "column_name": "Full Name",
-                    "column_order": 0
+                    ]
                 },
                 {
                     "data_path": "action_result.data.*.name.givenName",
@@ -362,6 +318,17 @@
                     ]
                 },
                 {
+                    "data_path": "action_result.data.*.phones.*.type",
+                    "data_type": "string",
+                    "example_values": [
+                        "work"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.phones.*.value",
+                    "data_type": "string"
+                },
+                {
                     "data_path": "action_result.data.*.primaryEmail",
                     "data_type": "string",
                     "example_values": [
@@ -370,9 +337,14 @@
                     ],
                     "contains": [
                         "email"
-                    ],
-                    "column_name": "Email",
-                    "column_order": 1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.recoveryEmail",
+                    "data_type": "string",
+                    "example_values": [
+                        "test@phantom.us"
+                    ]
                 },
                 {
                     "data_path": "action_result.data.*.suspended",
@@ -419,7 +391,11 @@
                 }
             ],
             "render": {
-                "type": "table"
+                "type": "custom",
+                "view": "googledrive_views.list_users",
+                "width": 10,
+                "height": 5,
+                "title": "List Users"
             },
             "versions": "EQ(*)"
         },
@@ -437,8 +413,7 @@
                     "primary": true,
                     "contains": [
                         "email"
-                    ],
-                    "required": false
+                    ]
                 },
                 "id": {
                     "description": "File ID",
@@ -456,7 +431,8 @@
                     "data_path": "action_result.status",
                     "data_type": "string",
                     "example_values": [
-                        "success"
+                        "success",
+                        "failed"
                     ]
                 },
                 {
@@ -533,8 +509,7 @@
                     "primary": true,
                     "contains": [
                         "email"
-                    ],
-                    "required": false
+                    ]
                 },
                 "name": {
                     "description": "Name of the new folder",
@@ -549,9 +524,6 @@
                     "primary": true,
                     "contains": [
                         "drive file id"
-                    ],
-                    "example_values": [
-                        "1OPjWKnOCGlrePZ3cnLD0lnW5mlLE2x8D"
                     ]
                 }
             },
@@ -560,7 +532,8 @@
                     "data_path": "action_result.status",
                     "data_type": "string",
                     "example_values": [
-                        "success"
+                        "success",
+                        "failed"
                     ]
                 },
                 {
@@ -648,8 +621,7 @@
                     "primary": true,
                     "contains": [
                         "email"
-                    ],
-                    "required": false
+                    ]
                 },
                 "vault_id": {
                     "description": "Vault ID",
@@ -659,31 +631,26 @@
                         "vault id",
                         "sha1"
                     ],
-                    "required": true
+                    "required": true,
+                    "primary": true
                 },
                 "source_mime_type": {
                     "description": "MIME type of file in vault",
                     "data_type": "string",
                     "order": 2,
-                    "required": false,
                     "contains": [
                         "mime type"
                     ],
-                    "example_values": [
-                        "application/vnd.google-apps.spreadsheet"
-                    ]
+                    "primary": true
                 },
                 "dest_mime_type": {
                     "description": "MIME type of new Drive file (will disable convert)",
                     "data_type": "string",
                     "order": 3,
-                    "required": false,
                     "contains": [
                         "mime type"
                     ],
-                    "example_values": [
-                        "application/vnd.google-apps.spreadsheet"
-                    ]
+                    "primary": true
                 },
                 "folder_id": {
                     "description": "ID of the parent folder",
@@ -692,23 +659,18 @@
                     "primary": true,
                     "contains": [
                         "drive file id"
-                    ],
-                    "example_values": [
-                        "1OPjWKnOCGlrePZ3cnLD0lnW5mlLE2x8D"
                     ]
                 },
                 "file_name": {
                     "description": "Set the file name in Drive",
                     "data_type": "string",
-                    "order": 5,
-                    "required": false
+                    "order": 5
                 },
                 "convert": {
                     "description": "Attempt to convert file to native Drive type. Will only have an effect if dest_mime_type is not set",
                     "data_type": "boolean",
                     "order": 6,
-                    "default": true,
-                    "required": false
+                    "default": true
                 }
             },
             "output": [
@@ -716,7 +678,8 @@
                     "data_path": "action_result.status",
                     "data_type": "string",
                     "example_values": [
-                        "success"
+                        "success",
+                        "failed"
                     ]
                 },
                 {
@@ -842,10 +805,6 @@
                     "primary": true,
                     "contains": [
                         "email"
-                    ],
-                    "required": false,
-                    "example_values": [
-                        "abc@gmai.com"
                     ]
                 },
                 "id": {
@@ -861,7 +820,6 @@
                 "download_file": {
                     "description": "Download the file to the Vault",
                     "data_type": "boolean",
-                    "required": false,
                     "order": 2,
                     "default": false
                 },
@@ -872,16 +830,15 @@
                 "mime_type": {
                     "description": "MIME Type for exported file. This will only have an effect if the original document is file type that needs to be exported (i.e. Google Docs / Sheets / Slides files)",
                     "data_type": "string",
-                    "required": false,
                     "order": 4,
                     "contains": [
                         "mime type"
-                    ]
+                    ],
+                    "primary": true
                 },
                 "file_name": {
                     "description": "Set a new name for the file before adding it to the vault",
                     "data_type": "string",
-                    "required": false,
                     "order": 5
                 }
             },
@@ -890,8 +847,8 @@
                     "data_path": "action_result.status",
                     "data_type": "string",
                     "example_values": [
-                        "failed",
-                        "success"
+                        "success",
+                        "failed"
                     ]
                 },
                 {
@@ -943,6 +900,14 @@
                 },
                 {
                     "data_path": "action_result.data.*.capabilities.canAddChildren",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.capabilities.canAddMyDriveParent",
                     "data_type": "boolean",
                     "example_values": [
                         true,
@@ -1014,7 +979,39 @@
                     ]
                 },
                 {
+                    "data_path": "action_result.data.*.capabilities.canModifyContent",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.capabilities.canMoveChildrenWithinDrive",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
                     "data_path": "action_result.data.*.capabilities.canMoveItemIntoTeamDrive",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.capabilities.canMoveItemOutOfDrive",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.capabilities.canMoveItemWithinDrive",
                     "data_type": "boolean",
                     "example_values": [
                         true,
@@ -1031,6 +1028,14 @@
                 },
                 {
                     "data_path": "action_result.data.*.capabilities.canRemoveChildren",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.capabilities.canRemoveMyDriveParent",
                     "data_type": "boolean",
                     "example_values": [
                         true,
@@ -1088,17 +1093,11 @@
                 },
                 {
                     "data_path": "action_result.data.*.fileExtension",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.fullFileExtension",
-                    "data_type": "string",
-                    "example_values": [
-                        ""
-                    ]
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.data.*.hasThumbnail",
@@ -1573,32 +1572,22 @@
                     "primary": true,
                     "contains": [
                         "email"
-                    ],
-                    "required": false
+                    ]
                 },
                 "max_results": {
                     "description": "Max Results",
                     "data_type": "numeric",
-                    "order": 1,
-                    "example_values": [
-                        "2"
-                    ]
+                    "order": 1
                 },
                 "next_page_token": {
                     "description": "Next Page Token",
                     "data_type": "string",
-                    "order": 2,
-                    "example_values": [
-                        "~!!~AI9FV7RCbmvPCnWK0UIxnjniVz68Lt8ZOsGim7uc5YxlceqS4ovMelh229zAeFmpmw1aoBTI4ZmcjNxMdAPHEE5nW8BKEx7TI4LzYmLlvpBGoKnyf3lPFenef25jRS7FSMDBb1prqjMEFzRlvZtfX4X9kZuYVDk_dwUcjiKDkEXC2DUPCPcKctAg2HN-VH9FGcSAcSBftVBfbrLwZu9AgnfHvz-8wkDK1PpwE4l1H_mkfvRm_Ckvq9dnLCFSu5W-YzF6nXuZSgmJx5WWMO-IHSLILAf8OXPwbxJbTqM_YCdLeYD71IeqEu_idn54UhYNUCBi3mxeQJzzfp4vHJa3q1wN4uUuCNshqkXvLDwuVIk4cYHHVcJ2-A4GJhPGkQ2SfuMrIigi0nGKEk8pTmJaeD5C825ALevDLf574abZ385Hu7d0NTpJxfDdJti0JdcyL66qYis2l_zxMZZ-ZcSFpl_FKuhip3AP97VIk0QUiYlh9nH55tCvjkw="
-                    ]
+                    "order": 2
                 },
                 "query": {
                     "description": "Query",
                     "data_type": "string",
-                    "order": 3,
-                    "example_values": [
-                        "modifiedTime > '2012-06-04T12:00:00'"
-                    ]
+                    "order": 3
                 }
             },
             "output": [
@@ -1606,7 +1595,8 @@
                     "data_path": "action_result.status",
                     "data_type": "string",
                     "example_values": [
-                        "success"
+                        "success",
+                        "failed"
                     ]
                 },
                 {
