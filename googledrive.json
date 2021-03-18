@@ -13,7 +13,7 @@
     "app_version": "2.0.17",
     "python_version": "3",
     "latest_tested_versions": [
-        "Cloud, May 8, 2020"
+        "Cloud, March 18, 2021"
     ],
     "utctime_updated": "2020-11-23T08:14:36.000000Z",
     "package_name": "phantom_googledrive",
