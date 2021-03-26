@@ -10,10 +10,6 @@
 	path = wheels/googleapiclient_wheel
 	url = git@cd.splunkdev.com:phantom-external/googleapiclient_wheel.git
 	ignore = dirty
-[submodule "wheels/httplib2_wheel"]
-	path = wheels/httplib2_wheel
-	url = git@cd.splunkdev.com:phantom-external/httplib2_wheel.git
-	ignore = dirty
 [submodule "wheels/oauth2client_wheel"]
 	path = wheels/oauth2client_wheel
 	url = git@cd.splunkdev.com:phantom-external/oauth2client_wheel.git
