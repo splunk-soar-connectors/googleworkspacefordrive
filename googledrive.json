@@ -23,40 +23,76 @@
     "pip_dependencies": {
         "wheel": [
             {
-                "module": "oauth2client",
-                "input_file": "wheels/oauth2client_wheel/oauth2client-4.1.2-py2.py3-none-any.whl"
+                "module": "cachetools",
+                "input_file": "wheels/cachetools-2.0.1-py2.py3-none-any.whl"
             },
             {
-                "module": "rsa",
-                "input_file": "wheels/oauth2client_wheel/rsa-4.7.2-py3-none-any.whl"
+                "module": "certifi",
+                "input_file": "wheels/certifi-2021.10.8-py2.py3-none-any.whl"
             },
             {
-                "module": "pyasn1_modules",
-                "input_file": "wheels/oauth2client_wheel/pyasn1_modules-0.1.1-py2.py3-none-any.whl"
+                "module": "chardet",
+                "input_file": "wheels/chardet-3.0.4-py2.py3-none-any.whl"
+            },
+            {
+                "module": "google_api_python_client",
+                "input_file": "wheels/google_api_python_client-1.6.4-py2.py3-none-any.whl"
+            },
+            {
+                "module": "google_auth",
+                "input_file": "wheels/google_auth-1.1.1-py2.py3-none-any.whl"
+            },
+            {
+                "module": "google_auth_httplib2",
+                "input_file": "wheels/google_auth_httplib2-0.0.2-py2.py3-none-any.whl"
             },
             {
                 "module": "httplib2",
                 "input_file": "wheels/httplib2-0.19.0-py3-none-any.whl"
             },
             {
-                "module": "google-auth",
-                "input_file": "wheels/google-auth/google_auth-1.1.1-py2.py3-none-any.whl"
+                "module": "idna",
+                "input_file": "wheels/idna-2.10-py2.py3-none-any.whl"
             },
             {
-                "module": "google-auth-httplib2",
-                "input_file": "wheels/google-auth/google_auth_httplib2-0.0.2-py2.py3-none-any.whl"
+                "module": "oauth2client",
+                "input_file": "wheels/oauth2client-4.1.2-py2.py3-none-any.whl"
             },
             {
-                "module": "cachetools",
-                "input_file": "wheels/cachetools/cachetools-2.0.1-py2.py3-none-any.whl"
+                "module": "pyasn1",
+                "input_file": "wheels/pyasn1-0.3.3-py2.py3-none-any.whl"
             },
             {
-                "module": "google-api-python-client",
-                "input_file": "wheels/googleapiclient_wheel/google_api_python_client-1.6.4-py2.py3-none-any.whl"
+                "module": "pyasn1_modules",
+                "input_file": "wheels/pyasn1_modules-0.1.1-py2.py3-none-any.whl"
+            },
+            {
+                "module": "pyparsing",
+                "input_file": "wheels/pyparsing-2.4.7-py2.py3-none-any.whl"
+            },
+            {
+                "module": "python_magic",
+                "input_file": "wheels/python_magic-0.4.18-py2.py3-none-any.whl"
+            },
+            {
+                "module": "requests",
+                "input_file": "wheels/requests-2.25.0-py2.py3-none-any.whl"
+            },
+            {
+                "module": "rsa",
+                "input_file": "wheels/rsa-4.7.2-py3-none-any.whl"
+            },
+            {
+                "module": "six",
+                "input_file": "wheels/six-1.16.0-py2.py3-none-any.whl"
             },
             {
                 "module": "uritemplate",
-                "input_file": "wheels/uritemplate_wheel/uritemplate-3.0.0-py2.py3-none-any.whl"
+                "input_file": "wheels/uritemplate-3.0.0-py2.py3-none-any.whl"
+            },
+            {
+                "module": "urllib3",
+                "input_file": "wheels/urllib3-1.26.7-py2.py3-none-any.whl"
             }
         ]
     },
