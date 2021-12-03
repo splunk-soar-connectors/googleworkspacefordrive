@@ -19,6 +19,7 @@
     "package_name": "phantom_googledrive",
     "main_module": "googledrive_connector.py",
     "min_phantom_version": "4.9.39220",
+    "fips_compliant": true,
     "app_wizard_version": "1.0.0",
     "pip_dependencies": {
         "wheel": [
