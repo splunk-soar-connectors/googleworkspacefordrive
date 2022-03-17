@@ -15,24 +15,24 @@
 #
 #
 # Phantom App imports
-import phantom.app as phantom
-from phantom.base_connector import BaseConnector
-from phantom.action_result import ActionResult
-from phantom.vault import Vault  # noqa
-import phantom.utils as ph_utils
-import phantom.rules as ph_rules
-
-from googledrive_consts import *
-from google.oauth2 import service_account
-
-import magic
-import tempfile
-import requests
 import json
-import sys
-
 # Fix to add __init__.py to dependencies folder
 import os
+import sys
+import tempfile
+
+import magic
+import phantom.app as phantom
+import phantom.rules as ph_rules
+import phantom.utils as ph_utils
+import requests
+from google.oauth2 import service_account
+from phantom.action_result import ActionResult
+from phantom.base_connector import BaseConnector
+from phantom.vault import Vault  # noqa
+
+from googledrive_consts import *
+
 init_path = '{}/dependencies/google/__init__.py'.format(  # noqa
     os.path.dirname(os.path.abspath(__file__))  # noqa
 )  # noqa
@@ -51,7 +51,7 @@ except:
 sys.argv = ['']
 
 import apiclient  # noqa
-from googleapiclient.http import MediaIoBaseDownload, MediaFileUpload  # noqa
+from googleapiclient.http import MediaFileUpload, MediaIoBaseDownload  # noqa
 
 
 class RetVal2(tuple):
@@ -489,9 +489,10 @@ class GoogleDriveConnector(BaseConnector):
 
 if __name__ == '__main__':
 
-    import sys
-    import pudb
     import argparse
+    import sys
+
+    import pudb
 
     pudb.set_trace()
 
