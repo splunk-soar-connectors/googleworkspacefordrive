@@ -156,6 +156,7 @@ class GoogleDriveConnector(BaseConnector):
 
         login_email = config['login_email']
 
+        self.save_progress("Querying handle list users")
         ret_val, service = self._create_service(action_result, scopes, "admin", "directory_v1", login_email)
         if phantom.is_fail(ret_val):
             return ret_val
@@ -186,6 +187,7 @@ class GoogleDriveConnector(BaseConnector):
         if (next_page):
             summary['next_page_token'] = next_page
 
+        self.save_progress("Handle list users succeeded")
         return action_result.set_status(
             phantom.APP_SUCCESS, 'Successfully retrieved {} user{}'.format(
                 num_users, '' if num_users == 1 else 's'
@@ -199,6 +201,7 @@ class GoogleDriveConnector(BaseConnector):
         login_email = param.get('email', self._login_email)
         max_results = int(param.get('max_results', 500))
 
+        self.save_progress("Querying handle list files")
         ret_val, service = self._create_service(action_result, scopes, "drive", "v3", login_email)
         if phantom.is_fail(ret_val):
             return ret_val
@@ -230,6 +233,7 @@ class GoogleDriveConnector(BaseConnector):
         if (next_page):
             summary['next_page_token'] = next_page
 
+        self.save_progress("Handle list files succeeded")
         return action_result.set_status(
             phantom.APP_SUCCESS, 'Successfully retrieved {} file{}'.format(
                 num_files, '' if num_files == 1 else 's'
@@ -305,6 +309,7 @@ class GoogleDriveConnector(BaseConnector):
 
         file_id = param['id']
 
+        self.save_progress("Querying handle get file")
         ret_val, service = self._create_service(action_result, scopes, "drive", "v3", login_email)
         if phantom.is_fail(ret_val):
             return ret_val
@@ -328,6 +333,7 @@ class GoogleDriveConnector(BaseConnector):
 
         action_result.add_data(file_metadata)
 
+        self.save_progress("Handle get file succeeded")
         return action_result.set_status(
             phantom.APP_SUCCESS,
             "Successfully retrieved file information{}".format(
@@ -348,6 +354,7 @@ class GoogleDriveConnector(BaseConnector):
 
         vault_id = param['vault_id']
 
+        self.save_progress("Querying handle create file")
         ret_val, service = self._create_service(action_result, scopes, "drive", "v3", login_email)
         if phantom.is_fail(ret_val):
             return ret_val
@@ -402,6 +409,7 @@ class GoogleDriveConnector(BaseConnector):
 
         action_result.update_summary({'new_file_id': resp['id']})
 
+        self.save_progress("Handle create file succeeded")
         return action_result.set_status(phantom.APP_SUCCESS, "Successfully added new file to Drive")
 
     def _handle_create_folder(self, param):
@@ -409,6 +417,7 @@ class GoogleDriveConnector(BaseConnector):
         scopes = ['https://www.googleapis.com/auth/drive']
         login_email = param.get('email', self._login_email)
 
+        self.save_progress("Querying handle create folder")
         ret_val, service = self._create_service(action_result, scopes, "drive", "v3", login_email)
         if phantom.is_fail(ret_val):
             return ret_val
@@ -429,6 +438,7 @@ class GoogleDriveConnector(BaseConnector):
 
         action_result.update_summary({'new_folder_id': resp['id']})
 
+        self.save_progress("Handle create folder succeeded")
         return action_result.set_status(phantom.APP_SUCCESS, "Successfully added new folder to Drive")
 
     def _handle_delete_file(self, param):
@@ -438,6 +448,7 @@ class GoogleDriveConnector(BaseConnector):
 
         file_id = param['id']
 
+        self.save_progress("Querying handle delete file")
         ret_val, service = self._create_service(action_result, scopes, "drive", "v3", login_email)
         if phantom.is_fail(ret_val):
             return ret_val
@@ -452,6 +463,7 @@ class GoogleDriveConnector(BaseConnector):
         except Exception as e:
             return action_result.set_status(phantom.APP_ERROR, "Error deleting file", e)
 
+        self.save_progress("Handle delete file succeeded")
         return action_result.set_status(phantom.APP_SUCCESS, "Successfully deleted file from Drive")
 
     def handle_action(self, param):
