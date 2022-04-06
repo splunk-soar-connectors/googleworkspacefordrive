@@ -56,3 +56,4 @@ EXPORT_TYPE_MAPPINGS = {
     m_google_sheet: m_xlsx,
     m_google_slide: m_pptx,
 }
+DEFAULT_REQUEST_TIMEOUT = 30  # in seconds
