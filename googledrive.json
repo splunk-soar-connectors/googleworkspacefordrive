@@ -18,7 +18,7 @@
     "utctime_updated": "2022-01-07T22:13:59.000000Z",
     "package_name": "phantom_googledrive",
     "main_module": "googledrive_connector.py",
-    "min_phantom_version": "4.9.39220",
+    "min_phantom_version": "5.1.0",
     "fips_compliant": true,
     "app_wizard_version": "1.0.0",
     "pip_dependencies": {
@@ -1598,7 +1598,7 @@
             "action": "list files",
             "identifier": "list_files",
             "description": "Get the list of files",
-            "verbose": "You can use the <b>query</b> parameter to filter the results. The full documentation on this parameter can be read <a href=\"https://developers.google.com/drive/v3/web/search-parameters\">here</a>. Here are some examples:<ul><li><b>mimeType='application/vnd.google-apps.folder'</b>: show only folders</li><li><b>modifiedTime > '2018-01-05T12:00:00' and mimeType='application/vnd.google-apps.document'</b>: Show only documents which have been modified since the date</li></ul>",
+            "verbose": "You can use the <b>query</b> parameter to filter the results. The full documentation on this parameter can be read <a href=\"https://developers.google.com/drive/v3/web/search-parameters\">here</a>. Here are some examples:<ul><li><b>mimeType='application/vnd.google-apps.folder'</b>: show only folders</li><li><b>modifiedTime > '2018-01-05T12:00:00' and mimeType='application/vnd.google-apps.document'</b>: Show only documents which have been modified since the date</li></ul>.",
             "type": "investigate",
             "read_only": true,
             "parameters": {
