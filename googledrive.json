@@ -9,54 +9,91 @@
     "product_name": "Google Drive",
     "product_version_regex": ".*",
     "publisher": "Splunk",
-    "license": "Copyright (c) 2018-2021 Splunk Inc.",
-    "app_version": "2.0.19",
+    "license": "Copyright (c) 2018-2022 Splunk Inc.",
+    "app_version": "2.0.20",
     "python_version": "3",
     "latest_tested_versions": [
         "Cloud, March 18, 2021"
     ],
-    "utctime_updated": "2021-03-26T01:48:22.000000Z",
+    "utctime_updated": "2022-04-07T17:07:33.000000Z",
     "package_name": "phantom_googledrive",
     "main_module": "googledrive_connector.py",
-    "min_phantom_version": "4.9.39220",
+    "min_phantom_version": "5.2.0",
+    "fips_compliant": true,
     "app_wizard_version": "1.0.0",
     "pip_dependencies": {
         "wheel": [
             {
-                "module": "oauth2client",
-                "input_file": "wheels/oauth2client_wheel/oauth2client-4.1.2-py2.py3-none-any.whl"
+                "module": "cachetools",
+                "input_file": "wheels/cachetools-2.0.1-py2.py3-none-any.whl"
             },
             {
-                "module": "rsa",
-                "input_file": "wheels/oauth2client_wheel/rsa-4.7.2-py3-none-any.whl"
+                "module": "certifi",
+                "input_file": "wheels/certifi-2021.10.8-py2.py3-none-any.whl"
             },
             {
-                "module": "pyasn1_modules",
-                "input_file": "wheels/oauth2client_wheel/pyasn1_modules-0.1.1-py2.py3-none-any.whl"
+                "module": "chardet",
+                "input_file": "wheels/chardet-3.0.4-py2.py3-none-any.whl"
+            },
+            {
+                "module": "google_api_python_client",
+                "input_file": "wheels/google_api_python_client-1.6.4-py2.py3-none-any.whl"
+            },
+            {
+                "module": "google_auth",
+                "input_file": "wheels/google_auth-1.1.1-py2.py3-none-any.whl"
+            },
+            {
+                "module": "google_auth_httplib2",
+                "input_file": "wheels/google_auth_httplib2-0.0.2-py2.py3-none-any.whl"
             },
             {
                 "module": "httplib2",
                 "input_file": "wheels/httplib2-0.19.0-py3-none-any.whl"
             },
             {
-                "module": "google-auth",
-                "input_file": "wheels/google-auth/google_auth-1.1.1-py2.py3-none-any.whl"
+                "module": "idna",
+                "input_file": "wheels/idna-2.10-py2.py3-none-any.whl"
             },
             {
-                "module": "google-auth-httplib2",
-                "input_file": "wheels/google-auth/google_auth_httplib2-0.0.2-py2.py3-none-any.whl"
+                "module": "oauth2client",
+                "input_file": "wheels/oauth2client-4.1.2-py2.py3-none-any.whl"
             },
             {
-                "module": "cachetools",
-                "input_file": "wheels/cachetools/cachetools-2.0.1-py2.py3-none-any.whl"
+                "module": "pyasn1",
+                "input_file": "wheels/pyasn1-0.3.3-py2.py3-none-any.whl"
             },
             {
-                "module": "google-api-python-client",
-                "input_file": "wheels/googleapiclient_wheel/google_api_python_client-1.6.4-py2.py3-none-any.whl"
+                "module": "pyasn1_modules",
+                "input_file": "wheels/pyasn1_modules-0.1.1-py2.py3-none-any.whl"
+            },
+            {
+                "module": "pyparsing",
+                "input_file": "wheels/pyparsing-2.4.7-py2.py3-none-any.whl"
+            },
+            {
+                "module": "python_magic",
+                "input_file": "wheels/python_magic-0.4.18-py2.py3-none-any.whl"
+            },
+            {
+                "module": "requests",
+                "input_file": "wheels/requests-2.25.0-py2.py3-none-any.whl"
+            },
+            {
+                "module": "rsa",
+                "input_file": "wheels/rsa-4.7.2-py3-none-any.whl"
+            },
+            {
+                "module": "six",
+                "input_file": "wheels/six-1.16.0-py2.py3-none-any.whl"
             },
             {
                 "module": "uritemplate",
-                "input_file": "wheels/uritemplate_wheel/uritemplate-3.0.0-py2.py3-none-any.whl"
+                "input_file": "wheels/uritemplate-3.0.0-py2.py3-none-any.whl"
+            },
+            {
+                "module": "urllib3",
+                "input_file": "wheels/urllib3-1.26.7-py2.py3-none-any.whl"
             }
         ]
     },
@@ -102,7 +139,7 @@
                 "next_page_token": {
                     "description": "Next Page Token",
                     "data_type": "string",
-                    "order": 2
+                    "order": 1
                 }
             },
             "output": [
@@ -1561,7 +1598,7 @@
             "action": "list files",
             "identifier": "list_files",
             "description": "Get the list of files",
-            "verbose": "You can use the <b>query</b> parameter to filter the results. The full documentation on this parameter can be read <a href=\"https://developers.google.com/drive/v3/web/search-parameters\">here</a>. Here are some examples:<ul><li><b>mimeType='application/vnd.google-apps.folder'</b>: show only folders</li><li><b>modifiedTime > '2018-01-05T12:00:00' and mimeType='application/vnd.google-apps.document'</b>: Show only documents which have been modified since the date</li></ul>",
+            "verbose": "You can use the <b>query</b> parameter to filter the results. The full documentation on this parameter can be read <a href=\"https://developers.google.com/drive/v3/web/search-parameters\">here</a>. Here are some examples:<ul><li><b>mimeType='application/vnd.google-apps.folder'</b>: show only folders</li><li><b>modifiedTime > '2018-01-05T12:00:00' and mimeType='application/vnd.google-apps.document'</b>: Show only documents which have been modified since the date</li></ul>.",
             "type": "investigate",
             "read_only": true,
             "parameters": {
