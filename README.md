@@ -6,7 +6,7 @@ Connector Version: 2\.0\.20
 Product Vendor: Google  
 Product Name: Google Drive  
 Product Version Supported (regex): "\.\*"  
-Minimum Product Version: 5\.1\.0  
+Minimum Product Version: 5\.2\.0  
 
 This app allows various file manipulation actions to be performed on Google Drive
 
