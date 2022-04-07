@@ -2,16 +2,16 @@
 # G Suite for Drive
 
 Publisher: Splunk  
-Connector Version: 2\.0\.18  
+Connector Version: 2\.0\.20  
 Product Vendor: Google  
 Product Name: Google Drive  
 Product Version Supported (regex): "\.\*"  
-Minimum Product Version: 4\.9\.39220  
+Minimum Product Version: 5\.1\.0  
 
 This app allows various file manipulation actions to be performed on Google Drive
 
-[comment]: # " File: readme.md"
-[comment]: # "  Copyright (c) 2018-2021 Splunk Inc."
+[comment]: # " File: README.md"
+[comment]: # "  Copyright (c) 2018-2022 Splunk Inc."
 [comment]: # ""
 [comment]: # "Licensed under the Apache License, Version 2.0 (the 'License');"
 [comment]: # "you may not use this file except in compliance with the License."
@@ -361,7 +361,7 @@ Get the list of files
 Type: **investigate**  
 Read only: **True**
 
-You can use the <b>query</b> parameter to filter the results\. The full documentation on this parameter can be read <a href="https\://developers\.google\.com/drive/v3/web/search\-parameters">here</a>\. Here are some examples\:<ul><li><b>mimeType='application/vnd\.google\-apps\.folder'</b>\: show only folders</li><li><b>modifiedTime > '2018\-01\-05T12\:00\:00' and mimeType='application/vnd\.google\-apps\.document'</b>\: Show only documents which have been modified since the date</li></ul>
+You can use the <b>query</b> parameter to filter the results\. The full documentation on this parameter can be read <a href="https\://developers\.google\.com/drive/v3/web/search\-parameters">here</a>\. Here are some examples\:<ul><li><b>mimeType='application/vnd\.google\-apps\.folder'</b>\: show only folders</li><li><b>modifiedTime > '2018\-01\-05T12\:00\:00' and mimeType='application/vnd\.google\-apps\.document'</b>\: Show only documents which have been modified since the date</li></ul>\.
 
 #### Action Parameters
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
