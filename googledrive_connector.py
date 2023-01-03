@@ -101,9 +101,6 @@ class GoogleDriveConnector(BaseConnector):
 
     def _create_service(self, action_result, scopes, api_name, api_version, delegated_user=None):
 
-        # if delegated_user is None:
-        #     delegated_user = self._login_email
-
         # first the credentials
         try:
             credentials = service_account.Credentials.from_service_account_info(self._key_dict, scopes=scopes)
@@ -130,7 +127,7 @@ class GoogleDriveConnector(BaseConnector):
         config = self.get_config()
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        scopes = ['https://www.googleapis.com/auth/admin.directory.user']
+        scopes = ['https://www.googleapis.com/auth/admin.directory.user.readonly']
 
         self.save_progress("Creating AdminSDK service object")
         ret_val, service = self._create_service(action_result, scopes, "admin", "directory_v1", config['login_email'])
@@ -152,7 +149,7 @@ class GoogleDriveConnector(BaseConnector):
         config = self.get_config()
 
         action_result = self.add_action_result(ActionResult(dict(param)))
-        scopes = ['https://www.googleapis.com/auth/admin.directory.user']
+        scopes = ['https://www.googleapis.com/auth/admin.directory.user.readonly']
 
         login_email = config['login_email']
 
@@ -196,7 +193,7 @@ class GoogleDriveConnector(BaseConnector):
 
     def _handle_list_files(self, param):
         action_result = self.add_action_result(ActionResult(dict(param)))
-        scopes = ['https://www.googleapis.com/auth/drive']
+        scopes = ['https://www.googleapis.com/auth/drive.readonly']
 
         login_email = param.get('email', self._login_email)
         max_results = int(param.get('max_results', 500))
@@ -303,7 +300,7 @@ class GoogleDriveConnector(BaseConnector):
 
     def _handle_get_file(self, param):
         action_result = self.add_action_result(ActionResult(dict(param)))
-        scopes = ['https://www.googleapis.com/auth/drive']
+        scopes = ['https://www.googleapis.com/auth/drive.readonly']
 
         login_email = param.get('email', self._login_email)
 

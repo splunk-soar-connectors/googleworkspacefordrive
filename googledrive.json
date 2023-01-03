@@ -10,90 +10,90 @@
     "product_version_regex": ".*",
     "publisher": "Splunk",
     "license": "Copyright (c) 2018-2022 Splunk Inc.",
-    "app_version": "2.0.21",
+    "app_version": "2.1.0",
     "python_version": "3",
     "latest_tested_versions": [
-        "Cloud, March 18, 2021"
+        "Cloud, December 2022"
     ],
     "utctime_updated": "2022-04-13T17:10:40.000000Z",
     "package_name": "phantom_googledrive",
     "main_module": "googledrive_connector.py",
-    "min_phantom_version": "5.2.0",
+    "min_phantom_version": "5.3.5",
     "fips_compliant": true,
     "app_wizard_version": "1.0.0",
     "pip_dependencies": {
         "wheel": [
             {
                 "module": "cachetools",
-                "input_file": "wheels/cachetools-2.0.1-py2.py3-none-any.whl"
+                "input_file": "wheels/shared/cachetools-2.0.1-py2.py3-none-any.whl"
             },
             {
                 "module": "certifi",
-                "input_file": "wheels/certifi-2021.10.8-py2.py3-none-any.whl"
+                "input_file": "wheels/py3/certifi-2022.12.7-py3-none-any.whl"
             },
             {
                 "module": "chardet",
-                "input_file": "wheels/chardet-3.0.4-py2.py3-none-any.whl"
+                "input_file": "wheels/shared/chardet-3.0.4-py2.py3-none-any.whl"
             },
             {
                 "module": "google_api_python_client",
-                "input_file": "wheels/google_api_python_client-1.6.4-py2.py3-none-any.whl"
+                "input_file": "wheels/shared/google_api_python_client-1.6.4-py2.py3-none-any.whl"
             },
             {
                 "module": "google_auth",
-                "input_file": "wheels/google_auth-1.1.1-py2.py3-none-any.whl"
+                "input_file": "wheels/shared/google_auth-1.1.1-py2.py3-none-any.whl"
             },
             {
                 "module": "google_auth_httplib2",
-                "input_file": "wheels/google_auth_httplib2-0.0.2-py2.py3-none-any.whl"
+                "input_file": "wheels/shared/google_auth_httplib2-0.0.2-py2.py3-none-any.whl"
             },
             {
                 "module": "httplib2",
-                "input_file": "wheels/httplib2-0.19.0-py3-none-any.whl"
+                "input_file": "wheels/py3/httplib2-0.19.0-py3-none-any.whl"
             },
             {
                 "module": "idna",
-                "input_file": "wheels/idna-2.10-py2.py3-none-any.whl"
+                "input_file": "wheels/shared/idna-2.10-py2.py3-none-any.whl"
             },
             {
                 "module": "oauth2client",
-                "input_file": "wheels/oauth2client-4.1.2-py2.py3-none-any.whl"
+                "input_file": "wheels/shared/oauth2client-4.1.2-py2.py3-none-any.whl"
             },
             {
                 "module": "pyasn1",
-                "input_file": "wheels/pyasn1-0.3.3-py2.py3-none-any.whl"
+                "input_file": "wheels/shared/pyasn1-0.3.3-py2.py3-none-any.whl"
             },
             {
                 "module": "pyasn1_modules",
-                "input_file": "wheels/pyasn1_modules-0.1.1-py2.py3-none-any.whl"
+                "input_file": "wheels/shared/pyasn1_modules-0.1.1-py2.py3-none-any.whl"
             },
             {
                 "module": "pyparsing",
-                "input_file": "wheels/pyparsing-2.4.7-py2.py3-none-any.whl"
+                "input_file": "wheels/shared/pyparsing-2.4.7-py2.py3-none-any.whl"
             },
             {
                 "module": "python_magic",
-                "input_file": "wheels/python_magic-0.4.18-py2.py3-none-any.whl"
+                "input_file": "wheels/shared/python_magic-0.4.18-py2.py3-none-any.whl"
             },
             {
                 "module": "requests",
-                "input_file": "wheels/requests-2.25.0-py2.py3-none-any.whl"
+                "input_file": "wheels/shared/requests-2.25.0-py2.py3-none-any.whl"
             },
             {
                 "module": "rsa",
-                "input_file": "wheels/rsa-4.7.2-py3-none-any.whl"
+                "input_file": "wheels/py3/rsa-4.7.2-py3-none-any.whl"
             },
             {
                 "module": "six",
-                "input_file": "wheels/six-1.16.0-py2.py3-none-any.whl"
+                "input_file": "wheels/shared/six-1.16.0-py2.py3-none-any.whl"
             },
             {
                 "module": "uritemplate",
-                "input_file": "wheels/uritemplate-3.0.0-py2.py3-none-any.whl"
+                "input_file": "wheels/shared/uritemplate-3.0.0-py2.py3-none-any.whl"
             },
             {
                 "module": "urllib3",
-                "input_file": "wheels/urllib3-1.26.7-py2.py3-none-any.whl"
+                "input_file": "wheels/shared/urllib3-1.26.13-py2.py3-none-any.whl"
             }
         ]
     },
@@ -116,6 +116,7 @@
             "action": "test connectivity",
             "identifier": "test_connectivity",
             "description": "Validate the asset configuration for connectivity using supplied configuration",
+            "verbose": "Action requires authorization with the following scope:<ul><li>https://www.googleapis.com/auth/admin.directory.user.readonly</li></ul>.",
             "type": "test",
             "read_only": true,
             "parameters": {},
@@ -126,7 +127,7 @@
             "action": "list users",
             "identifier": "list_users",
             "description": "Get the list of users",
-            "verbose": "Action uses the Admin SDK API to get a list of users. Requires authorization with the following scope:<ul><li>https://www.googleapis.com/auth/admin.directory.user</li></ul><br>The action will limit the number of users returned to <b>max_items</b> or (if not specified) 500. If the system has any more users, a next page token will be returned in <b>action_result.summary.next_page_token</b>. Use this value as input to <b>next_page_token</b> in subsequent calls to <b>list users</b>.",
+            "verbose": "Action uses the Admin SDK API to get a list of users. Requires authorization with the following scope:<ul><li>https://www.googleapis.com/auth/admin.directory.user.readonly</li></ul><br>The action will limit the number of users returned to <b>max_items</b> or (if not specified) 500. If the system has any more users, a next page token will be returned in <b>action_result.summary.next_page_token</b>. Use this value as input to <b>next_page_token</b> in subsequent calls to <b>list users</b>.",
             "type": "investigate",
             "read_only": true,
             "parameters": {
@@ -207,8 +208,7 @@
                     "data_path": "action_result.data.*.emails.*.address",
                     "data_type": "string",
                     "example_values": [
-                        "test@phantom.us",
-                        "admin@testcorp.biz"
+                        "test@test.us"
                     ],
                     "contains": [
                         "email"
@@ -233,15 +233,14 @@
                     "data_path": "action_result.data.*.etag",
                     "data_type": "string",
                     "example_values": [
-                        "\"Slw4z1WwXVNuSGyQ8doYqfYCm3s/F2uDjNoukDRgPx6dvH-7j-A7NgQ\"",
-                        "\"TN30oD80QTVK45AAxvl_wbzs4vs/D4MZJnyRZA2U6cG1jvGCCGquz4M\""
+                        "\"Slw4z1WwXVNuSGyQ8doTq9uidvys/F2uDjNoukDRgPx6dvH-7j-A7NgQ\""
                     ]
                 },
                 {
                     "data_path": "action_result.data.*.id",
                     "data_type": "string",
                     "example_values": [
-                        "113211632970586460828"
+                        "113211632970586452310"
                     ]
                 },
                 {
@@ -311,8 +310,7 @@
                     "data_path": "action_result.data.*.lastLoginTime",
                     "data_type": "string",
                     "example_values": [
-                        "2018-01-06T01:11:49.000Z",
-                        "2018-12-20T20:37:16.000Z"
+                        "2018-01-06T01:11:49.000Z"
                     ]
                 },
                 {
@@ -340,8 +338,7 @@
                     "data_path": "action_result.data.*.nonEditableAliases",
                     "data_type": "string",
                     "example_values": [
-                        "test@phantom.us",
-                        "test.sample@testcorp.biz.test-google-a.com"
+                        "test@test.us"
                     ],
                     "contains": [
                         "email"
@@ -369,8 +366,7 @@
                     "data_path": "action_result.data.*.primaryEmail",
                     "data_type": "string",
                     "example_values": [
-                        "test@phantom.us",
-                        "admin@testcorp.biz"
+                        "test@test.us"
                     ],
                     "contains": [
                         "email"
@@ -380,7 +376,21 @@
                     "data_path": "action_result.data.*.recoveryEmail",
                     "data_type": "string",
                     "example_values": [
-                        "test@phantom.us"
+                        "test@test.us"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.languages.*.preference",
+                    "data_type": "string",
+                    "example_values": [
+                        "preferred"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.languages.*.languageCode",
+                    "data_type": "string",
+                    "example_values": [
+                        "en"
                     ]
                 },
                 {
@@ -395,7 +405,7 @@
                     "data_path": "action_result.summary.next_page_token",
                     "data_type": "string",
                     "example_values": [
-                        "~!!~AI9FV7RCbmvPCnWK0UIxnjniVz68Lt8ZOsGim7uc5YxlceqS4ovMelh229zAeFmpmw1aoBTI4ZmcjNxMdAPHEE5nW8BKEx7TI4LzYmLlvpBGoKnyf3lPFenef25jRS7FSMDBb1prqjMEFzRlvZtfX4X9kZuYVDk_dwUcjiKDkEXC2DUPCPcKctAg2HN-VH9FGcSAcSBftVBfbrLwZu9AgnfHvz-8wkDK1PpwE4l1H_mkfvRm_Ckvq9dnLCFSu5W-YzF6nXuZSgmJx5WWMO-IHSLILAf8OXPwbxJbTqM_YCdLeYD71IeqEu_idn54UhYNUCBi3mxeQJzzfp4vHJa3q1wN4uUuCNshqkXvLDwuVIk4cYHHVcJ2-A4GJhPGkQ2SfuMrIigi0nGKEk8pTmJaeD5C825ALevDLf574abZ385Hu7d0NTpJxfDdJti0JdcyL66qYis2l_zxMZZ-ZcSFpl_FKuhip3AP97VIk0QUiYlh9nH55tCvjkw="
+                        "~!!~AI9FV7RCbmvPCnWK0UIxnjniVz68Lt8ZOsGim7uc5YxlceqS4ovMelh229zAeFmpmw1aoBTI4ZmcjNxMdAPHEE5nW8BKEx7TI4LzYmLlvpBGoKnyf3lPFenef25jRS7FSMDBb1prqjMEFzRlvZtfX4X9kZuYVDk_dwUcjiKDkEXC2DUPCPcKctAg2HN-VH9FGcSAcSBftVBfbrLwZu9AgnfHvz-8wkDK1PpwE4l1H_mkfvRm_Ckvq9dnLCFSu5W-YzF6nXuZSgmJx5WWMO-IHSLILAf8OXPwbxJbTqM_YCdLeYD71IeqEu_idn54UhYNUCBi3mxeQJzzfp4vHJa3q1wN4uUuCNshqkXvLDwuVIk4cYHHVcJ2-A4GJhPGkQ2SfuMrIigi0nGKEk8pTmJaeD5C825ALevDLf574abZ385Hu7d0NTpJxfDdJti0JdcyL66qYis2l_zxMZZ-ZcSFpl_TSUxk87jhhjI55tCvjkw="
                     ]
                 },
                 {
@@ -440,6 +450,7 @@
             "action": "delete file",
             "identifier": "delete_file",
             "description": "Delete a file",
+            "verbose": "Action requires authorization with the following scope:<ul><li>https://www.googleapis.com/auth/drive</li></ul>.",
             "type": "contain",
             "read_only": false,
             "parameters": {
@@ -489,8 +500,7 @@
                         "drive file id"
                     ],
                     "example_values": [
-                        "12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt-vSJaLo1fA",
-                        "1GR9Ww4_AFxqmRRRSDi_EP5sPp8PLX7Te"
+                        "12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt-vgy46DA"
                     ]
                 },
                 {
@@ -505,9 +515,7 @@
                     "data_path": "action_result.message",
                     "data_type": "string",
                     "example_values": [
-                        "File doesn't exist or has already been deleted",
-                        "Successfully delete file from Drive",
-                        "Successfully deleted file from Drive"
+                        "File doesn't exist or has already been deleted"
                     ],
                     "column_name": "Message",
                     "column_order": 0
@@ -536,6 +544,7 @@
             "action": "create folder",
             "identifier": "create_folder",
             "description": "Create a new folder",
+            "verbose": "Action requires authorization with the following scope:<ul><li>https://www.googleapis.com/auth/drive</li></ul>.",
             "type": "generic",
             "read_only": false,
             "parameters": {
@@ -590,7 +599,7 @@
                         "drive file id"
                     ],
                     "example_values": [
-                        "1OPjWKnOCGlrePZ3cnLD0lnW5mlLE2x8D"
+                        "1OPjWKnOCGlretd23P0lnW5mlLE2x8D"
                     ]
                 },
                 {
@@ -608,7 +617,7 @@
                     "data_path": "action_result.summary.new_folder_id",
                     "data_type": "string",
                     "example_values": [
-                        "1OPjWKnOCGlrePZ3cnLD0lnW5mlLE2x8D"
+                        "1OPjWKnOCGlretd23P0lnW5mlLE2x8D"
                     ],
                     "contains": [
                         "drive file id"
@@ -647,7 +656,7 @@
             "action": "upload file",
             "identifier": "create_file",
             "description": "Upload a file from the Vault to Drive",
-            "verbose": "If the Drive API does not support the conversion from the files original MIME type to <b>dest_mime_type</b>, the uploaded file will become a native Google Drive type (e.g. a Google document).",
+            "verbose": "If the Drive API does not support the conversion from the files original MIME type to <b>dest_mime_type</b>, the uploaded file will become a native Google Drive type (e.g. a Google document).<br>Action requires authorization with the following scope:<ul><li>https://www.googleapis.com/auth/drive</li></ul>.",
             "type": "generic",
             "read_only": false,
             "parameters": {
@@ -731,7 +740,7 @@
                     "data_path": "action_result.parameter.dest_mime_type",
                     "data_type": "string",
                     "example_values": [
-                        "application/vnd.google-apps.spreadsheet"
+                        "application/vnd.test-apps.spreadsheet"
                     ],
                     "contains": [
                         "mime type"
@@ -771,7 +780,7 @@
                         "mime type"
                     ],
                     "example_values": [
-                        "application/vnd.google-apps.spreadsheet"
+                        "application/vnd.test-apps.spreadsheet"
                     ]
                 },
                 {
@@ -832,6 +841,7 @@
             "action": "get file",
             "identifier": "get_file",
             "description": "Get information about a file or download it to the Vault",
+            "verbose": "Action requires authorization with the following scope:<ul><li>https://www.googleapis.com/auth/drive.readonly</li></ul>.",
             "type": "generic",
             "read_only": false,
             "parameters": {
@@ -914,15 +924,20 @@
                     ]
                 },
                 {
+                    "data_path": "action_result.parameter.ph",
+                    "data_type": "string",
+                    "example_values": [
+                        "file.pdf"
+                    ]
+                },
+                {
                     "data_path": "action_result.parameter.id",
                     "data_type": "string",
                     "contains": [
                         "drive file id"
                     ],
                     "example_values": [
-                        "12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt-vSJaLo1fA",
-                        "1_x--TqEi4liLds9ZXjSHpVXoPuKEI2tUU9t4enGvOps",
-                        "1S09PXDLSIi4RiE7j5C86aB6Aj7ZeRR2z"
+                        "12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt-vSJaLo1fA"
                     ]
                 },
                 {
@@ -1112,12 +1127,71 @@
                     ]
                 },
                 {
+                    "data_path": "action_result.data.*.owners.*.photoLink",
+                    "data_type": "string",
+                    "example_values": [
+                        "https://lh3.testusercontent.com/a/default-user=s64"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.permissions.*.photoLink",
+                    "data_type": "string",
+                    "example_values": [
+                        "https://lh3.testusercontent.com/a/default-user=s64"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.permissions.*.pendingOwner",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.capabilities.canReadLabels",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.capabilities.canModifyLabels",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.capabilities.canAcceptOwnership",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.capabilities.canChangeSecurityUpdateEnabled",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.lastModifyingUser.photoLink",
+                    "data_type": "string",
+                    "example_values": [
+                        "https://lh3.testusercontent.com/a/default-user=s64"
+                    ]
+                },
+                {
                     "data_path": "action_result.data.*.createdTime",
                     "data_type": "string",
                     "example_values": [
-                        "2018-01-10T01:17:40.409Z",
-                        "2018-12-21T07:26:11.898Z",
-                        "2018-12-21T07:26:16.188Z"
+                        "2018-01-10T01:17:40.409Z"
                     ]
                 },
                 {
@@ -1148,16 +1222,14 @@
                     "data_path": "action_result.data.*.headRevisionId",
                     "data_type": "string",
                     "example_values": [
-                        "0B3SKAcU2T6x2ZlNyRm40eHNlS245VWZiTnp3QXh4OFFZRSt3PQ"
+                        "0B3SKAcU2R7vU7lNyRm40eHNlS245VWZiTnp3QXh4OFFZRSt3PQ"
                     ]
                 },
                 {
                     "data_path": "action_result.data.*.iconLink",
                     "data_type": "string",
                     "example_values": [
-                        "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.spreadsheet",
-                        "https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-apps.document",
-                        "https://drive-thirdparty.googleusercontent.com/16/type/text/plain"
+                        "https://drive-thirdparty.testusercontent.com/16/type/application/vnd.test-apps.spreadsheet"
                     ],
                     "contains": [
                         "url"
@@ -1167,9 +1239,7 @@
                     "data_path": "action_result.data.*.id",
                     "data_type": "string",
                     "example_values": [
-                        "12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt-vSJaLo1fA",
-                        "1_x--TqEi4liLds9ZXjSHpVXoPuKEI2tUU9t4enGvOps",
-                        "1S09PXDLSIi4RiE7j5C86aB6Aj7ZeRR2z"
+                        "12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt-vSJaLo1fA"
                     ],
                     "contains": [
                         "drive file id"
@@ -1203,8 +1273,7 @@
                     "data_path": "action_result.data.*.lastModifyingUser.emailAddress",
                     "data_type": "string",
                     "example_values": [
-                        "test@phantom.us",
-                        "admin@testcorp.biz"
+                        "test@test.us"
                     ],
                     "contains": [
                         "email"
@@ -1229,14 +1298,14 @@
                     "data_path": "action_result.data.*.lastModifyingUser.permissionId",
                     "data_type": "string",
                     "example_values": [
-                        "03385014771683713179"
+                        "03385014771683765349"
                     ]
                 },
                 {
                     "data_path": "action_result.data.*.md5Checksum",
                     "data_type": "string",
                     "example_values": [
-                        "ccdf997e20b103b9215082dcd07a86fc"
+                        "ts6c887e20b103b9215082dcd07a86fc"
                     ],
                     "contains": [
                         "md5"
@@ -1246,9 +1315,7 @@
                     "data_path": "action_result.data.*.mimeType",
                     "data_type": "string",
                     "example_values": [
-                        "application/vnd.google-apps.spreadsheet",
-                        "application/vnd.google-apps.document",
-                        "text/plain"
+                        "application/vnd.test-apps.spreadsheet"
                     ],
                     "contains": [
                         "mime type"
@@ -1266,18 +1333,14 @@
                     "data_path": "action_result.data.*.modifiedByMeTime",
                     "data_type": "string",
                     "example_values": [
-                        "2018-01-10T01:17:41.700Z",
-                        "2018-12-21T07:26:14.638Z",
-                        "2018-12-21T07:26:16.188Z"
+                        "2018-01-10T01:17:41.700Z"
                     ]
                 },
                 {
                     "data_path": "action_result.data.*.modifiedTime",
                     "data_type": "string",
                     "example_values": [
-                        "2018-01-10T01:17:41.700Z",
-                        "2018-12-21T07:26:14.638Z",
-                        "2018-12-21T07:26:16.188Z"
+                        "2018-01-10T01:17:41.700Z"
                     ],
                     "column_name": "Last Modified",
                     "column_order": 2
@@ -1286,9 +1349,7 @@
                     "data_path": "action_result.data.*.name",
                     "data_type": "string",
                     "example_values": [
-                        "Untitled.xlsx",
-                        "New Google Document",
-                        "New Plain Text"
+                        "Untitled.xlsx"
                     ],
                     "column_name": "Name",
                     "column_order": 1
@@ -1319,8 +1380,7 @@
                     "data_path": "action_result.data.*.owners.*.emailAddress",
                     "data_type": "string",
                     "example_values": [
-                        "test@phantom.us",
-                        "admin@testcorp.biz"
+                        "test@test.us"
                     ],
                     "contains": [
                         "email"
@@ -1352,8 +1412,7 @@
                     "data_path": "action_result.data.*.parents",
                     "data_type": "string",
                     "example_values": [
-                        "0AHSKAcU2T6x2Uk9PVA",
-                        "1GR9Ww4_AFxqmRRRSDi_EP5sPp8PLX7Te"
+                        "0AHSKAcU2T6x2Uk9PVA"
                     ]
                 },
                 {
@@ -1382,8 +1441,7 @@
                     "data_path": "action_result.data.*.permissions.*.emailAddress",
                     "data_type": "string",
                     "example_values": [
-                        "test@phantom.us",
-                        "admin@testcorp.biz"
+                        "test@test.us"
                     ],
                     "contains": [
                         "email"
@@ -1421,8 +1479,7 @@
                     "data_path": "action_result.data.*.quotaBytesUsed",
                     "data_type": "string",
                     "example_values": [
-                        "0",
-                        "48"
+                        "0"
                     ]
                 },
                 {
@@ -1459,9 +1516,7 @@
                     "data_path": "action_result.data.*.thumbnailLink",
                     "data_type": "string",
                     "example_values": [
-                        "https://drive.google.com/a/acme.com/&v=1&s=AMedNnoAAAAAWlWZqdpxKYbzlZb-ko4BLBo5QZYPyz8c&sz=s220?ddrp=1#",
-                        "https://docs.google.com/a/testcorp.biz/feeds/vt?gd=true&id=1_x--TqEi4liLds9ZXjSHpVXoPuKEI2tUU9t4enGvOps&v=1&s=AMedNnoAAAAAXByxw2buVBlu4JyZ3PAtCNKDXRCoXvkM&sz=s220",
-                        "https://lh3.googleusercontent.com/FhnFtKecgZ1fCEMgJASrrS9nh2eKWlONj_QGbuGkeFSbiLYmnJVspaw-sKkstgJpLnmo8SYDjd4=s220"
+                        "https://drive.test.com/a/acme.com/&v=1&s=AMedNnoAAAAAWlWZqdcfxjkYUHbKl-ko4BLBo5QZYPyz8c&sz=s220?ddrp=1#"
                     ],
                     "contains": [
                         "url"
@@ -1486,9 +1541,7 @@
                     "data_path": "action_result.data.*.version",
                     "data_type": "string",
                     "example_values": [
-                        "6",
-                        "5",
-                        "3"
+                        "6"
                     ]
                 },
                 {
@@ -1503,9 +1556,7 @@
                     "data_path": "action_result.data.*.viewedByMeTime",
                     "data_type": "string",
                     "example_values": [
-                        "2018-01-10T01:17:48.669Z",
-                        "2018-12-21T07:26:14.638Z",
-                        "2018-12-21T07:26:20.302Z"
+                        "2018-01-10T01:17:48.669Z"
                     ]
                 },
                 {
@@ -1520,8 +1571,7 @@
                     "data_path": "action_result.data.*.webContentLink",
                     "data_type": "string",
                     "example_values": [
-                        "https://drive.google.com/a/acme.com/uc?id=12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt-vSJaLo1fA&export=download",
-                        "https://drive.google.com/a/testcorp.biz/uc?id=1S09PXDLSIi4RiE7j5C86aB6Aj7ZeRR2z&export=download"
+                        "https://drive.test.com/a/acme.com/uc?id=12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt-vSJaLo1fA&export=download"
                     ],
                     "contains": [
                         "url"
@@ -1531,9 +1581,7 @@
                     "data_path": "action_result.data.*.webViewLink",
                     "data_type": "string",
                     "example_values": [
-                        "https://docs.google.com/a/acme.com/spreadsheets/d/12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt-vSJaLo1fA/edit?usp=drivesdk",
-                        "https://docs.google.com/document/d/1_x--TqEi4liLds9ZXjSHpVXoPuKEI2tUU9t4enGvOps/edit?usp=drivesdk",
-                        "https://drive.google.com/a/testcorp.biz/file/d/1S09PXDLSIi4RiE7j5C86aB6Aj7ZeRR2z/view?usp=drivesdk"
+                        "https://docs.test.com/a/acme.com/spreadsheets/d/12wNhYsdgesIzNyXfXZqI7l6dfGjoeZt-vSJaLo1fA/edit?usp=drivesdk"
                     ],
                     "contains": [
                         "url"
@@ -1551,8 +1599,7 @@
                     "data_path": "action_result.summary.vault_id",
                     "data_type": "string",
                     "example_values": [
-                        "2fd639e7bdeffe563d13770c2519f99a19bbeef3",
-                        "88cc2571feeaafc30d8c5c11c1d512d3be7b25fa"
+                        "7f56GVe7bdeffe563d13770c2519f99a19bbeef3"
                     ],
                     "contains": [
                         "sha1",
@@ -1565,27 +1612,21 @@
                     "data_path": "action_result.message",
                     "data_type": "string",
                     "example_values": [
-                        "Failed to get file. Error string: '<HttpError 400 when requesting https://www.googleapis.com/drive/v3/files/12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt-vSJaLo1fA?fields=all&alt=json returned \"Invalid field selection all\">'",
-                        "Successfully retrieved file and added to vault",
-                        "Successfully retrieved file information and added to vault",
-                        "Successfully retrieved file information"
+                        "Successfully retrieved file and added to vault"
                     ]
                 },
                 {
                     "data_path": "summary.total_objects",
                     "data_type": "numeric",
                     "example_values": [
-                        1,
-                        3
+                        1
                     ]
                 },
                 {
                     "data_path": "summary.total_objects_successful",
                     "data_type": "numeric",
                     "example_values": [
-                        0,
-                        1,
-                        3
+                        0
                     ]
                 }
             ],
@@ -1598,7 +1639,7 @@
             "action": "list files",
             "identifier": "list_files",
             "description": "Get the list of files",
-            "verbose": "You can use the <b>query</b> parameter to filter the results. The full documentation on this parameter can be read <a href=\"https://developers.google.com/drive/v3/web/search-parameters\">here</a>. Here are some examples:<ul><li><b>mimeType='application/vnd.google-apps.folder'</b>: show only folders</li><li><b>modifiedTime > '2018-01-05T12:00:00' and mimeType='application/vnd.google-apps.document'</b>: Show only documents which have been modified since the date</li></ul>.",
+            "verbose": "You can use the <b>query</b> parameter to filter the results. The full documentation on this parameter can be read <a href=\"https://developers.google.com/drive/v3/web/search-parameters\">here</a>. Here are some examples:<ul><li><b>mimeType='application/vnd.google-apps.folder'</b>: show only folders</li><li><b>modifiedTime > '2018-01-05T12:00:00' and mimeType='application/vnd.google-apps.document'</b>: Show only documents which have been modified since the date</li></ul>.<br>Action requires authorization with the following scope:<ul><li>https://www.googleapis.com/auth/drive.readonly</li></ul>.",
             "type": "investigate",
             "read_only": true,
             "parameters": {
@@ -1657,7 +1698,7 @@
                     "data_path": "action_result.parameter.next_page_token",
                     "data_type": "string",
                     "example_values": [
-                        "~!!~AI9FV7RCbmvPCnWK0UIxnjniVz68Lt8ZOsGim7uc5YxlceqS4ovMelh229zAeFmpmw1aoBTI4ZmcjNxMdAPHEE5nW8BKEx7TI4LzYmLlvpBGoKnyf3lPFenef25jRS7FSMDBb1prqjMEFzRlvZtfX4X9kZuYVDk_dwUcjiKDkEXC2DUPCPcKctAg2HN-VH9FGcSAcSBftVBfbrLwZu9AgnfHvz-8wkDK1PpwE4l1H_mkfvRm_Ckvq9dnLCFSu5W-YzF6nXuZSgmJx5WWMO-IHSLILAf8OXPwbxJbTqM_YCdLeYD71IeqEu_idn54UhYNUCBi3mxeQJzzfp4vHJa3q1wN4uUuCNshqkXvLDwuVIk4cYHHVcJ2-A4GJhPGkQ2SfuMrIigi0nGKEk8pTmJaeD5C825ALevDLf574abZ385Hu7d0NTpJxfDdJti0JdcyL66qYis2l_zxMZZ-ZcSFpl_FKuhip3AP97VIk0QUiYlh9nH55tCvjkw="
+                        "~!!~Tg45VCbmvPCnWK0UIxnjniVz68Lt8ZOsGim7uc5YxlceqS4ovMelh229zAeFmpmw1aoBTI4ZmcjNxMdAPHEE5nW8BKEx7TI4LzYmLlvpBGoKnyf3lPFenef25jRS7FSMDBb1prqjMEFzRlvZtfX4X9kZuYVDk_dwUcjiKDkEXC2DUPCPcKctAg2HN-VH9FGcSAcSBftVBfbrLwZu9AgnfHvz-8wkDK1PpwE4l1H_mkfvRm_Ckvq9dnLCFSu5W-YzF6nXuZSgmJx5WWMO-IHSLILAf8OXPwbxJbTqM_YCdLeYD71IeqEu_idn54UhYNUCBi3mxeQJzzfp4vHJa3q1wN4uUuCNshqkXvLDwuVIk4cYHHVcJ2-A4GJhPGkQ2SfuMrIigi0nGKEk8pTmJaeD5C825ALevDLf574abZ385Hu7d0NTpJxfDdJti0JdcyL66qYis2l_zxMZZ-ZcSFpl_FKuhip3AP97VIk0QUiYlh9nH55tCvjkw="
                     ]
                 },
                 {
@@ -1700,7 +1741,7 @@
                     "data_path": "action_result.data.*.mimeType",
                     "data_type": "string",
                     "example_values": [
-                        "application/vnd.google-apps.folder"
+                        "application/vnd.test-apps.folder"
                     ],
                     "contains": [
                         "mime type"
@@ -1726,7 +1767,7 @@
                     "data_path": "action_result.data.*.webContentLink",
                     "data_type": "string",
                     "example_values": [
-                        "https://drive.google.com/a/acme.com/uc?id=1pF6FMUwRkTl2Bs15-CzWQVHa5LyuFIpSFlPFOxzD-Nw&export=download"
+                        "https://drive.test.com/a/acme.com/uc?id=1pF6FMUwRkTl2Bs15-CzWQVHa5LyuFIpSFlPFOxzD-Nw&export=download"
                     ],
                     "contains": [
                         "url"
@@ -1736,7 +1777,7 @@
                     "data_path": "action_result.data.*.webViewLink",
                     "data_type": "string",
                     "example_values": [
-                        "https://drive.google.com/drive/folders/1tfCbCKJ3d122RFSHxuVyDCx0a29dzJ-B"
+                        "https://drive.test.com/drive/folders/1tfCbCKJ3d122RFSHxuVyDCx0a29dzJ-B"
                     ],
                     "contains": [
                         "url"
@@ -1746,7 +1787,7 @@
                     "data_path": "action_result.summary.next_page_token",
                     "data_type": "string",
                     "example_values": [
-                        "~!!~AI9FV7RCbmvPCnWK0UIxnjniVz68Lt8ZOsGim7uc5YxlceqS4ovMelh229zAeFmpmw1aoBTI4ZmcjNxMdAPHEE5nW8BKEx7TI4LzYmLlvpBGoKnyf3lPFenef25jRS7FSMDBb1prqjMEFzRlvZtfX4X9kZuYVDk_dwUcjiKDkEXC2DUPCPcKctAg2HN-VH9FGcSAcSBftVBfbrLwZu9AgnfHvz-8wkDK1PpwE4l1H_mkfvRm_Ckvq9dnLCFSu5W-YzF6nXuZSgmJx5WWMO-IHSLILAf8OXPwbxJbTqM_YCdLeYD71IeqEu_idn54UhYNUCBi3mxeQJzzfp4vHJa3q1wN4uUuCNshqkXvLDwuVIk4cYHHVcJ2-A4GJhPGkQ2SfuMrIigi0nGKEk8pTmJaeD5C825ALevDLf574abZ385Hu7d0NTpJxfDdJti0JdcyL66qYis2l_zxMZZ-ZcSFpl_FKuhip3AP97VIk0QUiYlh9nH55tCvjkw="
+                        "~!!~Td57GCbmvPCnWK0UIxnjniVz68Lt8ZOsGim7uc5YxlceqS4ovMelh229zAeFmpmw1aoBTI4ZmcjNxMdAPHEE5nW8BKEx7TI4LzYmLlvpBGoKnyf3lPFenef25jRS7FSMDBb1prqjMEFzRlvZtfX4X9kZuYVDk_dwUcjiKDkEXC2DUPCPcKctAg2HN-VH9FGcSAcSBftVBfbrLwZu9AgnfHvz-8wkDK1PpwE4l1H_mkfvRm_Ckvq9dnLCFSu5W-YzF6nXuZSgmJx5WWMO-IHSLILAf8OXPwbxJbTqM_YCdLeYD71IeqEu_idn54UhYNUCBi3mxeQJzzfp4vHJa3q1wN4uUuCNshqkXvLDwuVIk4cYHHVcJ2-A4GJhPGkQ2SfuMrIigi0nGKEk8pTmJaeD5C825ALevDLf574abZ385Hu7d0NTpJxfDdJti0JdcyL66qYis2l_zxMZZ-ZcSFpl_FKuhip3AP97VIk0QUiYlh9nH55tCvjkw="
                     ]
                 },
                 {
