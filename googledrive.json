@@ -13,12 +13,12 @@
     "app_version": "2.1.0",
     "python_version": "3",
     "latest_tested_versions": [
-        "Cloud, December 2022"
+        "Cloud, January 2023"
     ],
     "utctime_updated": "2022-04-13T17:10:40.000000Z",
     "package_name": "phantom_googledrive",
     "main_module": "googledrive_connector.py",
-    "min_phantom_version": "5.3.5",
+    "min_phantom_version": "5.4.0",
     "fips_compliant": true,
     "app_wizard_version": "1.0.0",
     "pip_dependencies": {
@@ -918,13 +918,6 @@
                 },
                 {
                     "data_path": "action_result.parameter.file_name",
-                    "data_type": "string",
-                    "example_values": [
-                        "file.pdf"
-                    ]
-                },
-                {
-                    "data_path": "action_result.parameter.ph",
                     "data_type": "string",
                     "example_values": [
                         "file.pdf"
