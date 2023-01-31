@@ -127,7 +127,7 @@ class GoogleDriveConnector(BaseConnector):
         config = self.get_config()
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        scopes = ['https://www.googleapis.com/auth/admin.directory.user.readonly']
+        scopes = [GOOGLE_SCOPE_USER_READONLY]
 
         self.save_progress("Creating AdminSDK service object")
         ret_val, service = self._create_service(action_result, scopes, "admin", "directory_v1", config['login_email'])
@@ -149,7 +149,7 @@ class GoogleDriveConnector(BaseConnector):
         config = self.get_config()
 
         action_result = self.add_action_result(ActionResult(dict(param)))
-        scopes = ['https://www.googleapis.com/auth/admin.directory.user.readonly']
+        scopes = [GOOGLE_SCOPE_USER_READONLY]
 
         login_email = config['login_email']
 
@@ -193,7 +193,7 @@ class GoogleDriveConnector(BaseConnector):
 
     def _handle_list_files(self, param):
         action_result = self.add_action_result(ActionResult(dict(param)))
-        scopes = ['https://www.googleapis.com/auth/drive.readonly']
+        scopes = [GOOGLE_SCOPE_DRIVE_READONLY]
 
         login_email = param.get('email', self._login_email)
         max_results = int(param.get('max_results', 500))
@@ -300,7 +300,7 @@ class GoogleDriveConnector(BaseConnector):
 
     def _handle_get_file(self, param):
         action_result = self.add_action_result(ActionResult(dict(param)))
-        scopes = ['https://www.googleapis.com/auth/drive.readonly']
+        scopes = [GOOGLE_SCOPE_DRIVE_READONLY]
 
         login_email = param.get('email', self._login_email)
 
@@ -345,7 +345,7 @@ class GoogleDriveConnector(BaseConnector):
 
     def _handle_create_file(self, param):
         action_result = self.add_action_result(ActionResult(dict(param)))
-        scopes = ['https://www.googleapis.com/auth/drive']
+        scopes = [GOOGLE_SCOPE_DRIVE]
 
         login_email = param.get('email', self._login_email)
 
@@ -411,7 +411,7 @@ class GoogleDriveConnector(BaseConnector):
 
     def _handle_create_folder(self, param):
         action_result = self.add_action_result(ActionResult(dict(param)))
-        scopes = ['https://www.googleapis.com/auth/drive']
+        scopes = [GOOGLE_SCOPE_DRIVE]
         login_email = param.get('email', self._login_email)
 
         self.save_progress("Querying handle create folder")
@@ -440,7 +440,7 @@ class GoogleDriveConnector(BaseConnector):
 
     def _handle_delete_file(self, param):
         action_result = self.add_action_result(ActionResult(dict(param)))
-        scopes = ['https://www.googleapis.com/auth/drive']
+        scopes = [GOOGLE_SCOPE_DRIVE]
         login_email = param.get('email', self._login_email)
 
         file_id = param['id']
