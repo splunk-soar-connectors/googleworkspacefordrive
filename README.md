@@ -2,16 +2,16 @@
 # G Suite for Drive
 
 Publisher: Splunk  
-Connector Version: 2\.0\.21  
+Connector Version: 2\.1\.0  
 Product Vendor: Google  
 Product Name: Google Drive  
 Product Version Supported (regex): "\.\*"  
-Minimum Product Version: 5\.2\.0  
+Minimum Product Version: 5\.4\.0  
 
 This app allows various file manipulation actions to be performed on Google Drive
 
 [comment]: # " File: README.md"
-[comment]: # "  Copyright (c) 2018-2022 Splunk Inc."
+[comment]: # "  Copyright (c) 2018-2023 Splunk Inc."
 [comment]: # ""
 [comment]: # "Licensed under the Apache License, Version 2.0 (the 'License');"
 [comment]: # "you may not use this file except in compliance with the License."
@@ -44,20 +44,21 @@ these APIs to allow the App to access them. Every action requires different scop
 are listed in the action documentation.  
 To enable scopes please complete the following steps:
 
--   Go to your G Suite domain’s [Admin console.](http://admin.google.com/)
+-   Go to your G Suite domain's [Admin console.](http://admin.google.com/)
 -   Select **Security** from the list of controls. If you don't see **Security** listed, select
-    **More controls** from the gray bar at the bottom of the page, then select **Security** from the
-    list of controls. If you can't see the controls, make sure you're signed in as an administrator
-    for the domain.
--   Select **Show more** and then **Advanced settings** from the list of options.
--   Select **Manage API client access** in the **Authentication** section.
+    **Show More** , then select **Security** from the list of controls. If you can't see the
+    controls, make sure you're signed in as an administrator for the domain.
+-   Select **API controls** in the **Access and data control** section.
+-   Select **MANAGE DOMAIN WIDE DELEGATIONS** in the **Domain wide delegation** section.
+-   Select **Add new** in the API clients section
 -   In the **Client Name** field enter the service account's **Client ID** . You can find your
-    service account's client ID in the [Service accounts
-    page](https://console.developers.google.com/permissions/serviceaccounts) or in the service
-    account JSON file (key named **client_id** ).
+    service account's client ID in the [Service accounts credentials
+    page](https://console.developers.google.com/apis/credentials) or the service account JSON file
+    (key named **client_id** ).
 -   In the **One or More API Scopes** field enter the list of scopes that you wish to grant access
     to the App. For example, to enable all the scopes required by this app enter:
-    https://www.googleapis.com/auth/admin.directory.user, https://www.googleapis.com/auth/drive
+    https://www.googleapis.com/auth/admin.directory.user.readonly,
+    https://www.googleapis.com/auth/drive.readonly, https://www.googleapis.com/auth/drive
 -   Click **Authorize** .
 
 ### MIME Types
@@ -105,6 +106,8 @@ Validate the asset configuration for connectivity using supplied configuration
 Type: **test**  
 Read only: **True**
 
+Action requires authorization with the following scope\:<ul><li>https\://www\.googleapis\.com/auth/admin\.directory\.user\.readonly</li></ul>\.
+
 #### Action Parameters
 No parameters are required for this action
 
@@ -117,7 +120,7 @@ Get the list of users
 Type: **investigate**  
 Read only: **True**
 
-Action uses the Admin SDK API to get a list of users\. Requires authorization with the following scope\:<ul><li>https\://www\.googleapis\.com/auth/admin\.directory\.user</li></ul><br>The action will limit the number of users returned to <b>max\_items</b> or \(if not specified\) 500\. If the system has any more users, a next page token will be returned in <b>action\_result\.summary\.next\_page\_token</b>\. Use this value as input to <b>next\_page\_token</b> in subsequent calls to <b>list users</b>\.
+Action uses the Admin SDK API to get a list of users\. Requires authorization with the following scope\:<ul><li>https\://www\.googleapis\.com/auth/admin\.directory\.user\.readonly</li></ul><br>The action will limit the number of users returned to <b>max\_items</b> or \(if not specified\) 500\. If the system has any more users, a next page token will be returned in <b>action\_result\.summary\.next\_page\_token</b>\. Use this value as input to <b>next\_page\_token</b> in subsequent calls to <b>list users</b>\.
 
 #### Action Parameters
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
@@ -126,51 +129,55 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 **next\_page\_token** |  optional  | Next Page Token | string | 
 
 #### Action Output
-DATA PATH | TYPE | CONTAINS
---------- | ---- | --------
-action\_result\.status | string | 
-action\_result\.parameter\.max\_items | numeric | 
-action\_result\.parameter\.next\_page\_token | string | 
-action\_result\.data\.\*\.agreedToTerms | boolean | 
-action\_result\.data\.\*\.archived | boolean | 
-action\_result\.data\.\*\.changePasswordAtNextLogin | boolean | 
-action\_result\.data\.\*\.creationTime | string | 
-action\_result\.data\.\*\.customerId | string | 
-action\_result\.data\.\*\.emails\.\*\.address | string |  `email` 
-action\_result\.data\.\*\.emails\.\*\.primary | boolean | 
-action\_result\.data\.\*\.emails\.\*\.type | string | 
-action\_result\.data\.\*\.etag | string | 
-action\_result\.data\.\*\.id | string | 
-action\_result\.data\.\*\.includeInGlobalAddressList | boolean | 
-action\_result\.data\.\*\.ipWhitelisted | boolean | 
-action\_result\.data\.\*\.isAdmin | boolean | 
-action\_result\.data\.\*\.isDelegatedAdmin | boolean | 
-action\_result\.data\.\*\.isEnforcedIn2Sv | boolean | 
-action\_result\.data\.\*\.isEnrolledIn2Sv | boolean | 
-action\_result\.data\.\*\.isMailboxSetup | boolean | 
-action\_result\.data\.\*\.kind | string | 
-action\_result\.data\.\*\.lastLoginTime | string | 
-action\_result\.data\.\*\.name\.familyName | string | 
-action\_result\.data\.\*\.name\.fullName | string | 
-action\_result\.data\.\*\.name\.givenName | string | 
-action\_result\.data\.\*\.nonEditableAliases | string |  `email` 
-action\_result\.data\.\*\.orgUnitPath | string | 
-action\_result\.data\.\*\.phones\.\*\.type | string | 
-action\_result\.data\.\*\.phones\.\*\.value | string | 
-action\_result\.data\.\*\.primaryEmail | string |  `email` 
-action\_result\.data\.\*\.recoveryEmail | string | 
-action\_result\.data\.\*\.suspended | boolean | 
-action\_result\.summary\.next\_page\_token | string | 
-action\_result\.summary\.total\_users\_returned | numeric | 
-action\_result\.message | string | 
-summary\.total\_objects | numeric | 
-summary\.total\_objects\_successful | numeric |   
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action\_result\.status | string |  |   success  failed 
+action\_result\.parameter\.max\_items | numeric |  |   2 
+action\_result\.parameter\.next\_page\_token | string |  |   Invalid 
+action\_result\.data\.\*\.agreedToTerms | boolean |  |   True  False 
+action\_result\.data\.\*\.archived | boolean |  |   True  False 
+action\_result\.data\.\*\.changePasswordAtNextLogin | boolean |  |   True  False 
+action\_result\.data\.\*\.creationTime | string |  |   2017\-05\-11T21\:35\:38\.000Z 
+action\_result\.data\.\*\.customerId | string |  |   C02eisxhx 
+action\_result\.data\.\*\.emails\.\*\.address | string |  `email`  |   test\@test\.us 
+action\_result\.data\.\*\.emails\.\*\.primary | boolean |  |   True  False 
+action\_result\.data\.\*\.emails\.\*\.type | string |  |   work 
+action\_result\.data\.\*\.etag | string |  |   "Slw4z1WwXVNuSGyQ8doTq9uidvys/F2uDjNoukDRgPx6dvH\-7j\-A7NgQ" 
+action\_result\.data\.\*\.id | string |  |   113211632970586452310 
+action\_result\.data\.\*\.includeInGlobalAddressList | boolean |  |   True  False 
+action\_result\.data\.\*\.ipWhitelisted | boolean |  |   True  False 
+action\_result\.data\.\*\.isAdmin | boolean |  |   True  False 
+action\_result\.data\.\*\.isDelegatedAdmin | boolean |  |   True  False 
+action\_result\.data\.\*\.isEnforcedIn2Sv | boolean |  |   True  False 
+action\_result\.data\.\*\.isEnrolledIn2Sv | boolean |  |   True  False 
+action\_result\.data\.\*\.isMailboxSetup | boolean |  |   True  False 
+action\_result\.data\.\*\.kind | string |  |   admin\#directory\#user 
+action\_result\.data\.\*\.lastLoginTime | string |  |   2018\-01\-06T01\:11\:49\.000Z 
+action\_result\.data\.\*\.name\.familyName | string |  |   Edwards 
+action\_result\.data\.\*\.name\.fullName | string |  |   test Edwards 
+action\_result\.data\.\*\.name\.givenName | string |  |   test 
+action\_result\.data\.\*\.nonEditableAliases | string |  `email`  |   test\@test\.us 
+action\_result\.data\.\*\.orgUnitPath | string |  |   / 
+action\_result\.data\.\*\.phones\.\*\.type | string |  |   work 
+action\_result\.data\.\*\.phones\.\*\.value | string |  |  
+action\_result\.data\.\*\.primaryEmail | string |  `email`  |   test\@test\.us 
+action\_result\.data\.\*\.recoveryEmail | string |  |   test\@test\.us 
+action\_result\.data\.\*\.languages\.\*\.preference | string |  |   preferred 
+action\_result\.data\.\*\.languages\.\*\.languageCode | string |  |   en 
+action\_result\.data\.\*\.suspended | boolean |  |   True  False 
+action\_result\.summary\.next\_page\_token | string |  |   ~\!\!~AI9FV7RCbmvPCnWK0UIxnjniVz68Lt8ZOsGim7uc5YxlceqS4ovMelh229zAeFmpmw1aoBTI4ZmcjNxMdAPHEE5nW8BKEx7TI4LzYmLlvpBGoKnyf3lPFenef25jRS7FSMDBb1prqjMEFzRlvZtfX4X9kZuYVDk\_dwUcjiKDkEXC2DUPCPcKctAg2HN\-VH9FGcSAcSBftVBfbrLwZu9AgnfHvz\-8wkDK1PpwE4l1H\_mkfvRm\_Ckvq9dnLCFSu5W\-YzF6nXuZSgmJx5WWMO\-IHSLILAf8OXPwbxJbTqM\_YCdLeYD71IeqEu\_idn54UhYNUCBi3mxeQJzzfp4vHJa3q1wN4uUuCNshqkXvLDwuVIk4cYHHVcJ2\-A4GJhPGkQ2SfuMrIigi0nGKEk8pTmJaeD5C825ALevDLf574abZ385Hu7d0NTpJxfDdJti0JdcyL66qYis2l\_zxMZZ\-ZcSFpl\_TSUxk87jhhjI55tCvjkw= 
+action\_result\.summary\.total\_users\_returned | numeric |  |   6 
+action\_result\.message | string |  |   Successfully retrieved 6 users 
+summary\.total\_objects | numeric |  |   1 
+summary\.total\_objects\_successful | numeric |  |   1   
 
 ## action: 'delete file'
 Delete a file
 
 Type: **contain**  
 Read only: **False**
+
+Action requires authorization with the following scope\:<ul><li>https\://www\.googleapis\.com/auth/drive</li></ul>\.
 
 #### Action Parameters
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
@@ -179,22 +186,24 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 **id** |  required  | File ID | string |  `drive file id` 
 
 #### Action Output
-DATA PATH | TYPE | CONTAINS
---------- | ---- | --------
-action\_result\.status | string | 
-action\_result\.parameter\.email | string |  `email` 
-action\_result\.parameter\.id | string |  `drive file id` 
-action\_result\.data | string | 
-action\_result\.summary | string | 
-action\_result\.message | string | 
-summary\.total\_objects | numeric | 
-summary\.total\_objects\_successful | numeric |   
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action\_result\.status | string |  |   success  failed 
+action\_result\.parameter\.email | string |  `email`  |   abc\@gmail\.com 
+action\_result\.parameter\.id | string |  `drive file id`  |   12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt\-vgy46DA 
+action\_result\.data | string |  |  
+action\_result\.summary | string |  |  
+action\_result\.message | string |  |   File doesn't exist or has already been deleted 
+summary\.total\_objects | numeric |  |   1 
+summary\.total\_objects\_successful | numeric |  |   1   
 
 ## action: 'create folder'
 Create a new folder
 
 Type: **generic**  
 Read only: **False**
+
+Action requires authorization with the following scope\:<ul><li>https\://www\.googleapis\.com/auth/drive</li></ul>\.
 
 #### Action Parameters
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
@@ -204,17 +213,17 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 **folder\_id** |  optional  | ID of the parent folder | string |  `drive file id` 
 
 #### Action Output
-DATA PATH | TYPE | CONTAINS
---------- | ---- | --------
-action\_result\.status | string | 
-action\_result\.parameter\.email | string |  `email` 
-action\_result\.parameter\.folder\_id | string |  `drive file id` 
-action\_result\.parameter\.name | string | 
-action\_result\.data | string | 
-action\_result\.summary\.new\_folder\_id | string |  `drive file id` 
-action\_result\.message | string | 
-summary\.total\_objects | numeric | 
-summary\.total\_objects\_successful | numeric |   
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action\_result\.status | string |  |   success  failed 
+action\_result\.parameter\.email | string |  `email`  |   abc\@gmail\.com 
+action\_result\.parameter\.folder\_id | string |  `drive file id`  |   1OPjWKnOCGlretd23P0lnW5mlLE2x8D 
+action\_result\.parameter\.name | string |  |   NewFolder1 
+action\_result\.data | string |  |  
+action\_result\.summary\.new\_folder\_id | string |  `drive file id`  |   1OPjWKnOCGlretd23P0lnW5mlLE2x8D 
+action\_result\.message | string |  |   Successfully added new folder to Drive 
+summary\.total\_objects | numeric |  |   1 
+summary\.total\_objects\_successful | numeric |  |   1   
 
 ## action: 'upload file'
 Upload a file from the Vault to Drive
@@ -222,7 +231,7 @@ Upload a file from the Vault to Drive
 Type: **generic**  
 Read only: **False**
 
-If the Drive API does not support the conversion from the files original MIME type to <b>dest\_mime\_type</b>, the uploaded file will become a native Google Drive type \(e\.g\. a Google document\)\.
+If the Drive API does not support the conversion from the files original MIME type to <b>dest\_mime\_type</b>, the uploaded file will become a native Google Drive type \(e\.g\. a Google document\)\.<br>Action requires authorization with the following scope\:<ul><li>https\://www\.googleapis\.com/auth/drive</li></ul>\.
 
 #### Action Parameters
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
@@ -236,27 +245,29 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 **convert** |  optional  | Attempt to convert file to native Drive type\. Will only have an effect if dest\_mime\_type is not set | boolean | 
 
 #### Action Output
-DATA PATH | TYPE | CONTAINS
---------- | ---- | --------
-action\_result\.status | string | 
-action\_result\.parameter\.convert | boolean | 
-action\_result\.parameter\.dest\_mime\_type | string |  `mime type` 
-action\_result\.parameter\.email | string |  `email` 
-action\_result\.parameter\.file\_name | string | 
-action\_result\.parameter\.folder\_id | string |  `drive file id` 
-action\_result\.parameter\.source\_mime\_type | string |  `mime type` 
-action\_result\.parameter\.vault\_id | string |  `vault id`  `sha1` 
-action\_result\.data | string | 
-action\_result\.summary\.new\_file\_id | string |  `drive file id` 
-action\_result\.message | string | 
-summary\.total\_objects | numeric | 
-summary\.total\_objects\_successful | numeric |   
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action\_result\.status | string |  |   success  failed 
+action\_result\.parameter\.convert | boolean |  |   True  False 
+action\_result\.parameter\.dest\_mime\_type | string |  `mime type`  |   application/vnd\.test\-apps\.spreadsheet 
+action\_result\.parameter\.email | string |  `email`  |   abc\@gmail\.com 
+action\_result\.parameter\.file\_name | string |  |   file1 
+action\_result\.parameter\.folder\_id | string |  `drive file id`  |   1OPjWKnOCGlrePZ3cnLD0lnW5mlLE2x8D 
+action\_result\.parameter\.source\_mime\_type | string |  `mime type`  |   application/vnd\.test\-apps\.spreadsheet 
+action\_result\.parameter\.vault\_id | string |  `vault id`  `sha1`  |   82cbbb588ce83b5527e2f9f1d3bcba24f60c92cc 
+action\_result\.data | string |  |  
+action\_result\.summary\.new\_file\_id | string |  `drive file id`  |   12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt\-vSJaLo1fA 
+action\_result\.message | string |  |   Successfully added new file to Drive 
+summary\.total\_objects | numeric |  |   1 
+summary\.total\_objects\_successful | numeric |  |   1   
 
 ## action: 'get file'
 Get information about a file or download it to the Vault
 
 Type: **generic**  
 Read only: **False**
+
+Action requires authorization with the following scope\:<ul><li>https\://www\.googleapis\.com/auth/drive\.readonly</li></ul>\.
 
 #### Action Parameters
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
@@ -268,92 +279,100 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 **file\_name** |  optional  | Set a new name for the file before adding it to the vault | string | 
 
 #### Action Output
-DATA PATH | TYPE | CONTAINS
---------- | ---- | --------
-action\_result\.status | string | 
-action\_result\.parameter\.download\_file | boolean | 
-action\_result\.parameter\.email | string |  `email` 
-action\_result\.parameter\.file\_name | string | 
-action\_result\.parameter\.id | string |  `drive file id` 
-action\_result\.parameter\.mime\_type | string |  `mime type` 
-action\_result\.data\.\*\.capabilities\.canAddChildren | boolean | 
-action\_result\.data\.\*\.capabilities\.canAddMyDriveParent | boolean | 
-action\_result\.data\.\*\.capabilities\.canChangeCopyRequiresWriterPermission | boolean | 
-action\_result\.data\.\*\.capabilities\.canChangeViewersCanCopyContent | boolean | 
-action\_result\.data\.\*\.capabilities\.canComment | boolean | 
-action\_result\.data\.\*\.capabilities\.canCopy | boolean | 
-action\_result\.data\.\*\.capabilities\.canDelete | boolean | 
-action\_result\.data\.\*\.capabilities\.canDownload | boolean | 
-action\_result\.data\.\*\.capabilities\.canEdit | boolean | 
-action\_result\.data\.\*\.capabilities\.canListChildren | boolean | 
-action\_result\.data\.\*\.capabilities\.canModifyContent | boolean | 
-action\_result\.data\.\*\.capabilities\.canMoveChildrenWithinDrive | boolean | 
-action\_result\.data\.\*\.capabilities\.canMoveItemIntoTeamDrive | boolean | 
-action\_result\.data\.\*\.capabilities\.canMoveItemOutOfDrive | boolean | 
-action\_result\.data\.\*\.capabilities\.canMoveItemWithinDrive | boolean | 
-action\_result\.data\.\*\.capabilities\.canReadRevisions | boolean | 
-action\_result\.data\.\*\.capabilities\.canRemoveChildren | boolean | 
-action\_result\.data\.\*\.capabilities\.canRemoveMyDriveParent | boolean | 
-action\_result\.data\.\*\.capabilities\.canRename | boolean | 
-action\_result\.data\.\*\.capabilities\.canShare | boolean | 
-action\_result\.data\.\*\.capabilities\.canTrash | boolean | 
-action\_result\.data\.\*\.capabilities\.canUntrash | boolean | 
-action\_result\.data\.\*\.createdTime | string | 
-action\_result\.data\.\*\.explicitlyTrashed | boolean | 
-action\_result\.data\.\*\.fileExtension | string | 
-action\_result\.data\.\*\.fullFileExtension | string | 
-action\_result\.data\.\*\.hasThumbnail | boolean | 
-action\_result\.data\.\*\.headRevisionId | string | 
-action\_result\.data\.\*\.iconLink | string |  `url` 
-action\_result\.data\.\*\.id | string |  `drive file id` 
-action\_result\.data\.\*\.isAppAuthorized | boolean | 
-action\_result\.data\.\*\.kind | string | 
-action\_result\.data\.\*\.lastModifyingUser\.displayName | string | 
-action\_result\.data\.\*\.lastModifyingUser\.emailAddress | string |  `email` 
-action\_result\.data\.\*\.lastModifyingUser\.kind | string | 
-action\_result\.data\.\*\.lastModifyingUser\.me | boolean | 
-action\_result\.data\.\*\.lastModifyingUser\.permissionId | string | 
-action\_result\.data\.\*\.md5Checksum | string |  `md5` 
-action\_result\.data\.\*\.mimeType | string |  `mime type` 
-action\_result\.data\.\*\.modifiedByMe | boolean | 
-action\_result\.data\.\*\.modifiedByMeTime | string | 
-action\_result\.data\.\*\.modifiedTime | string | 
-action\_result\.data\.\*\.name | string | 
-action\_result\.data\.\*\.originalFilename | string | 
-action\_result\.data\.\*\.ownedByMe | boolean | 
-action\_result\.data\.\*\.owners\.\*\.displayName | string | 
-action\_result\.data\.\*\.owners\.\*\.emailAddress | string |  `email` 
-action\_result\.data\.\*\.owners\.\*\.kind | string | 
-action\_result\.data\.\*\.owners\.\*\.me | boolean | 
-action\_result\.data\.\*\.owners\.\*\.permissionId | string | 
-action\_result\.data\.\*\.parents | string | 
-action\_result\.data\.\*\.permissionIds | string | 
-action\_result\.data\.\*\.permissions\.\*\.deleted | boolean | 
-action\_result\.data\.\*\.permissions\.\*\.displayName | string | 
-action\_result\.data\.\*\.permissions\.\*\.emailAddress | string |  `email` 
-action\_result\.data\.\*\.permissions\.\*\.id | string | 
-action\_result\.data\.\*\.permissions\.\*\.kind | string | 
-action\_result\.data\.\*\.permissions\.\*\.role | string | 
-action\_result\.data\.\*\.permissions\.\*\.type | string | 
-action\_result\.data\.\*\.quotaBytesUsed | string | 
-action\_result\.data\.\*\.shared | boolean | 
-action\_result\.data\.\*\.size | string | 
-action\_result\.data\.\*\.spaces | string | 
-action\_result\.data\.\*\.starred | boolean | 
-action\_result\.data\.\*\.thumbnailLink | string |  `url` 
-action\_result\.data\.\*\.thumbnailVersion | string | 
-action\_result\.data\.\*\.trashed | boolean | 
-action\_result\.data\.\*\.version | string | 
-action\_result\.data\.\*\.viewedByMe | boolean | 
-action\_result\.data\.\*\.viewedByMeTime | string | 
-action\_result\.data\.\*\.viewersCanCopyContent | boolean | 
-action\_result\.data\.\*\.webContentLink | string |  `url` 
-action\_result\.data\.\*\.webViewLink | string |  `url` 
-action\_result\.data\.\*\.writersCanShare | boolean | 
-action\_result\.summary\.vault\_id | string |  `sha1`  `vault id` 
-action\_result\.message | string | 
-summary\.total\_objects | numeric | 
-summary\.total\_objects\_successful | numeric |   
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action\_result\.status | string |  |   success  failed 
+action\_result\.parameter\.download\_file | boolean |  |   True  False 
+action\_result\.parameter\.email | string |  `email`  |   abc\@gmail\.com 
+action\_result\.parameter\.file\_name | string |  |   file\.pdf 
+action\_result\.parameter\.id | string |  `drive file id`  |   12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt\-vSJaLo1fA 
+action\_result\.parameter\.mime\_type | string |  `mime type`  |   application/pdf 
+action\_result\.data\.\*\.capabilities\.canAddChildren | boolean |  |   True  False 
+action\_result\.data\.\*\.capabilities\.canAddMyDriveParent | boolean |  |   True  False 
+action\_result\.data\.\*\.capabilities\.canChangeCopyRequiresWriterPermission | boolean |  |   True  False 
+action\_result\.data\.\*\.capabilities\.canChangeViewersCanCopyContent | boolean |  |   True  False 
+action\_result\.data\.\*\.capabilities\.canComment | boolean |  |   True  False 
+action\_result\.data\.\*\.capabilities\.canCopy | boolean |  |   True  False 
+action\_result\.data\.\*\.capabilities\.canDelete | boolean |  |   True  False 
+action\_result\.data\.\*\.capabilities\.canDownload | boolean |  |   True  False 
+action\_result\.data\.\*\.capabilities\.canEdit | boolean |  |   True  False 
+action\_result\.data\.\*\.capabilities\.canListChildren | boolean |  |   True  False 
+action\_result\.data\.\*\.capabilities\.canModifyContent | boolean |  |   True  False 
+action\_result\.data\.\*\.capabilities\.canMoveChildrenWithinDrive | boolean |  |   True  False 
+action\_result\.data\.\*\.capabilities\.canMoveItemIntoTeamDrive | boolean |  |   True  False 
+action\_result\.data\.\*\.capabilities\.canMoveItemOutOfDrive | boolean |  |   True  False 
+action\_result\.data\.\*\.capabilities\.canMoveItemWithinDrive | boolean |  |   True  False 
+action\_result\.data\.\*\.capabilities\.canReadRevisions | boolean |  |   True  False 
+action\_result\.data\.\*\.capabilities\.canRemoveChildren | boolean |  |   True  False 
+action\_result\.data\.\*\.capabilities\.canRemoveMyDriveParent | boolean |  |   True  False 
+action\_result\.data\.\*\.capabilities\.canRename | boolean |  |   True  False 
+action\_result\.data\.\*\.capabilities\.canShare | boolean |  |   True  False 
+action\_result\.data\.\*\.capabilities\.canTrash | boolean |  |   True  False 
+action\_result\.data\.\*\.capabilities\.canUntrash | boolean |  |   True  False 
+action\_result\.data\.\*\.owners\.\*\.photoLink | string |  |   https\://lh3\.testusercontent\.com/a/default\-user=s64 
+action\_result\.data\.\*\.permissions\.\*\.photoLink | string |  |   https\://lh3\.testusercontent\.com/a/default\-user=s64 
+action\_result\.data\.\*\.permissions\.\*\.pendingOwner | boolean |  |   True  False 
+action\_result\.data\.\*\.capabilities\.canReadLabels | boolean |  |   True  False 
+action\_result\.data\.\*\.capabilities\.canModifyLabels | boolean |  |   True  False 
+action\_result\.data\.\*\.capabilities\.canAcceptOwnership | boolean |  |   True  False 
+action\_result\.data\.\*\.capabilities\.canChangeSecurityUpdateEnabled | boolean |  |   True  False 
+action\_result\.data\.\*\.lastModifyingUser\.photoLink | string |  |   https\://lh3\.testusercontent\.com/a/default\-user=s64 
+action\_result\.data\.\*\.createdTime | string |  |   2018\-01\-10T01\:17\:40\.409Z 
+action\_result\.data\.\*\.explicitlyTrashed | boolean |  |   True  False 
+action\_result\.data\.\*\.fileExtension | string |  |  
+action\_result\.data\.\*\.fullFileExtension | string |  |  
+action\_result\.data\.\*\.hasThumbnail | boolean |  |   True  False 
+action\_result\.data\.\*\.headRevisionId | string |  |   0B3SKAcU2R7vU7lNyRm40eHNlS245VWZiTnp3QXh4OFFZRSt3PQ 
+action\_result\.data\.\*\.iconLink | string |  `url`  |   https\://drive\-thirdparty\.testusercontent\.com/16/type/application/vnd\.test\-apps\.spreadsheet 
+action\_result\.data\.\*\.id | string |  `drive file id`  |   12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt\-vSJaLo1fA 
+action\_result\.data\.\*\.isAppAuthorized | boolean |  |   True  False 
+action\_result\.data\.\*\.kind | string |  |   drive\#file 
+action\_result\.data\.\*\.lastModifyingUser\.displayName | string |  |   test Edwards 
+action\_result\.data\.\*\.lastModifyingUser\.emailAddress | string |  `email`  |   test\@test\.us 
+action\_result\.data\.\*\.lastModifyingUser\.kind | string |  |   drive\#user 
+action\_result\.data\.\*\.lastModifyingUser\.me | boolean |  |   True  False 
+action\_result\.data\.\*\.lastModifyingUser\.permissionId | string |  |   03385014771683765349 
+action\_result\.data\.\*\.md5Checksum | string |  `md5`  |   ts6c887e20b103b9215082dcd07a86fc 
+action\_result\.data\.\*\.mimeType | string |  `mime type`  |   application/vnd\.test\-apps\.spreadsheet 
+action\_result\.data\.\*\.modifiedByMe | boolean |  |   True  False 
+action\_result\.data\.\*\.modifiedByMeTime | string |  |   2018\-01\-10T01\:17\:41\.700Z 
+action\_result\.data\.\*\.modifiedTime | string |  |   2018\-01\-10T01\:17\:41\.700Z 
+action\_result\.data\.\*\.name | string |  |   Untitled\.xlsx 
+action\_result\.data\.\*\.originalFilename | string |  |   New Plain Text 
+action\_result\.data\.\*\.ownedByMe | boolean |  |   True  False 
+action\_result\.data\.\*\.owners\.\*\.displayName | string |  |   test Edwards 
+action\_result\.data\.\*\.owners\.\*\.emailAddress | string |  `email`  |   test\@test\.us 
+action\_result\.data\.\*\.owners\.\*\.kind | string |  |   drive\#user 
+action\_result\.data\.\*\.owners\.\*\.me | boolean |  |   True  False 
+action\_result\.data\.\*\.owners\.\*\.permissionId | string |  |   03385014771683713179 
+action\_result\.data\.\*\.parents | string |  |   0AHSKAcU2T6x2Uk9PVA 
+action\_result\.data\.\*\.permissionIds | string |  |   03385014771683713179 
+action\_result\.data\.\*\.permissions\.\*\.deleted | boolean |  |   True  False 
+action\_result\.data\.\*\.permissions\.\*\.displayName | string |  |   test Edwards 
+action\_result\.data\.\*\.permissions\.\*\.emailAddress | string |  `email`  |   test\@test\.us 
+action\_result\.data\.\*\.permissions\.\*\.id | string |  |   03385014771683713179 
+action\_result\.data\.\*\.permissions\.\*\.kind | string |  |   drive\#permission 
+action\_result\.data\.\*\.permissions\.\*\.role | string |  |   owner 
+action\_result\.data\.\*\.permissions\.\*\.type | string |  |   user 
+action\_result\.data\.\*\.quotaBytesUsed | string |  |   0 
+action\_result\.data\.\*\.shared | boolean |  |   True  False 
+action\_result\.data\.\*\.size | string |  |   48 
+action\_result\.data\.\*\.spaces | string |  |   drive 
+action\_result\.data\.\*\.starred | boolean |  |   True  False 
+action\_result\.data\.\*\.thumbnailLink | string |  `url`  |   https\://drive\.test\.com/a/acme\.com/&v=1&s=AMedNnoAAAAAWlWZqdcfxjkYUHbKl\-ko4BLBo5QZYPyz8c&sz=s220?ddrp=1\# 
+action\_result\.data\.\*\.thumbnailVersion | string |  |   1 
+action\_result\.data\.\*\.trashed | boolean |  |   True  False 
+action\_result\.data\.\*\.version | string |  |   6 
+action\_result\.data\.\*\.viewedByMe | boolean |  |   True  False 
+action\_result\.data\.\*\.viewedByMeTime | string |  |   2018\-01\-10T01\:17\:48\.669Z 
+action\_result\.data\.\*\.viewersCanCopyContent | boolean |  |   True  False 
+action\_result\.data\.\*\.webContentLink | string |  `url`  |   https\://drive\.test\.com/a/acme\.com/uc?id=12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt\-vSJaLo1fA&export=download 
+action\_result\.data\.\*\.webViewLink | string |  `url`  |   https\://docs\.test\.com/a/acme\.com/spreadsheets/d/12wNhYsdgesIzNyXfXZqI7l6dfGjoeZt\-vSJaLo1fA/edit?usp=drivesdk 
+action\_result\.data\.\*\.writersCanShare | boolean |  |   True  False 
+action\_result\.summary\.vault\_id | string |  `sha1`  `vault id`  |   7f56GVe7bdeffe563d13770c2519f99a19bbeef3 
+action\_result\.message | string |  |   Successfully retrieved file and added to vault 
+summary\.total\_objects | numeric |  |   1 
+summary\.total\_objects\_successful | numeric |  |   0   
 
 ## action: 'list files'
 Get the list of files
@@ -361,7 +380,7 @@ Get the list of files
 Type: **investigate**  
 Read only: **True**
 
-You can use the <b>query</b> parameter to filter the results\. The full documentation on this parameter can be read <a href="https\://developers\.google\.com/drive/v3/web/search\-parameters">here</a>\. Here are some examples\:<ul><li><b>mimeType='application/vnd\.google\-apps\.folder'</b>\: show only folders</li><li><b>modifiedTime > '2018\-01\-05T12\:00\:00' and mimeType='application/vnd\.google\-apps\.document'</b>\: Show only documents which have been modified since the date</li></ul>\.
+You can use the <b>query</b> parameter to filter the results\. The full documentation on this parameter can be read <a href="https\://developers\.google\.com/drive/v3/web/search\-parameters">here</a>\. Here are some examples\:<ul><li><b>mimeType='application/vnd\.google\-apps\.folder'</b>\: show only folders</li><li><b>modifiedTime > '2018\-01\-05T12\:00\:00' and mimeType='application/vnd\.google\-apps\.document'</b>\: Show only documents which have been modified since the date</li></ul>\.<br>Action requires authorization with the following scope\:<ul><li>https\://www\.googleapis\.com/auth/drive\.readonly</li></ul>\.
 
 #### Action Parameters
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
@@ -372,23 +391,23 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 **query** |  optional  | Query | string | 
 
 #### Action Output
-DATA PATH | TYPE | CONTAINS
---------- | ---- | --------
-action\_result\.status | string | 
-action\_result\.parameter\.email | string |  `email` 
-action\_result\.parameter\.max\_results | numeric | 
-action\_result\.parameter\.next\_page\_token | string | 
-action\_result\.parameter\.query | string | 
-action\_result\.data\.\*\.id | string |  `drive file id` 
-action\_result\.data\.\*\.kind | string | 
-action\_result\.data\.\*\.md5Checksum | string |  `md5` 
-action\_result\.data\.\*\.mimeType | string |  `mime type` 
-action\_result\.data\.\*\.name | string | 
-action\_result\.data\.\*\.parents | string | 
-action\_result\.data\.\*\.webContentLink | string |  `url` 
-action\_result\.data\.\*\.webViewLink | string |  `url` 
-action\_result\.summary\.next\_page\_token | string | 
-action\_result\.summary\.total\_files\_returned | numeric | 
-action\_result\.message | string | 
-summary\.total\_objects | numeric | 
-summary\.total\_objects\_successful | numeric | 
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action\_result\.status | string |  |   success  failed 
+action\_result\.parameter\.email | string |  `email`  |   abc\@gmail\.com 
+action\_result\.parameter\.max\_results | numeric |  |   2 
+action\_result\.parameter\.next\_page\_token | string |  |   ~\!\!~Tg45VCbmvPCnWK0UIxnjniVz68Lt8ZOsGim7uc5YxlceqS4ovMelh229zAeFmpmw1aoBTI4ZmcjNxMdAPHEE5nW8BKEx7TI4LzYmLlvpBGoKnyf3lPFenef25jRS7FSMDBb1prqjMEFzRlvZtfX4X9kZuYVDk\_dwUcjiKDkEXC2DUPCPcKctAg2HN\-VH9FGcSAcSBftVBfbrLwZu9AgnfHvz\-8wkDK1PpwE4l1H\_mkfvRm\_Ckvq9dnLCFSu5W\-YzF6nXuZSgmJx5WWMO\-IHSLILAf8OXPwbxJbTqM\_YCdLeYD71IeqEu\_idn54UhYNUCBi3mxeQJzzfp4vHJa3q1wN4uUuCNshqkXvLDwuVIk4cYHHVcJ2\-A4GJhPGkQ2SfuMrIigi0nGKEk8pTmJaeD5C825ALevDLf574abZ385Hu7d0NTpJxfDdJti0JdcyL66qYis2l\_zxMZZ\-ZcSFpl\_FKuhip3AP97VIk0QUiYlh9nH55tCvjkw= 
+action\_result\.parameter\.query | string |  |   modifiedTime > '2012\-06\-04T12\:00\:00' 
+action\_result\.data\.\*\.id | string |  `drive file id`  |   1PJZ\_cZKMbIZWOJdQQe3r41vdGj8 
+action\_result\.data\.\*\.kind | string |  |   drive\#file 
+action\_result\.data\.\*\.md5Checksum | string |  `md5`  |   b99abc7a0e9da88f8636f0c48f924f63 
+action\_result\.data\.\*\.mimeType | string |  `mime type`  |   application/vnd\.test\-apps\.folder 
+action\_result\.data\.\*\.name | string |  |   / 
+action\_result\.data\.\*\.parents | string |  |   0AHSKAcU2T6x2Uk9PVA 
+action\_result\.data\.\*\.webContentLink | string |  `url`  |   https\://drive\.test\.com/a/acme\.com/uc?id=1pF6FMUwRkTl2Bs15\-CzWQVHa5LyuFIpSFlPFOxzD\-Nw&export=download 
+action\_result\.data\.\*\.webViewLink | string |  `url`  |   https\://drive\.test\.com/drive/folders/1tfCbCKJ3d122RFSHxuVyDCx0a29dzJ\-B 
+action\_result\.summary\.next\_page\_token | string |  |   ~\!\!~Td57GCbmvPCnWK0UIxnjniVz68Lt8ZOsGim7uc5YxlceqS4ovMelh229zAeFmpmw1aoBTI4ZmcjNxMdAPHEE5nW8BKEx7TI4LzYmLlvpBGoKnyf3lPFenef25jRS7FSMDBb1prqjMEFzRlvZtfX4X9kZuYVDk\_dwUcjiKDkEXC2DUPCPcKctAg2HN\-VH9FGcSAcSBftVBfbrLwZu9AgnfHvz\-8wkDK1PpwE4l1H\_mkfvRm\_Ckvq9dnLCFSu5W\-YzF6nXuZSgmJx5WWMO\-IHSLILAf8OXPwbxJbTqM\_YCdLeYD71IeqEu\_idn54UhYNUCBi3mxeQJzzfp4vHJa3q1wN4uUuCNshqkXvLDwuVIk4cYHHVcJ2\-A4GJhPGkQ2SfuMrIigi0nGKEk8pTmJaeD5C825ALevDLf574abZ385Hu7d0NTpJxfDdJti0JdcyL66qYis2l\_zxMZZ\-ZcSFpl\_FKuhip3AP97VIk0QUiYlh9nH55tCvjkw= 
+action\_result\.summary\.total\_files\_returned | numeric |  |   47 
+action\_result\.message | string |  |   Successfully retrieved 47 files 
+summary\.total\_objects | numeric |  |   1 
+summary\.total\_objects\_successful | numeric |  |   1 

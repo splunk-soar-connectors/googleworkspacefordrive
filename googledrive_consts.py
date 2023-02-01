@@ -1,6 +1,6 @@
 # File: googledrive_consts.py
 #
-# Copyright (c) 2018-2022 Splunk Inc.
+# Copyright (c) 2018-2023 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,6 +12,12 @@
 # the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
 # either express or implied. See the License for the specific language governing permissions
 # and limitations under the License.
+
+# Scopes
+GOOGLE_SCOPE_USER_READONLY = "https://www.googleapis.com/auth/admin.directory.user.readonly"
+GOOGLE_SCOPE_DRIVE_READONLY = "https://www.googleapis.com/auth/drive.readonly"
+GOOGLE_SCOPE_DRIVE = "https://www.googleapis.com/auth/drive"
+
 LIST_RESP_FIELDS = "nextPageToken, files(id, name, kind, mimeType, webContentLink, webViewLink, parents, md5Checksum)"
 
 # The API is supposed to return all the metadeta, but my experience has been it only returning id, name, kind and mimeType
