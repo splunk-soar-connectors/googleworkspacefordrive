@@ -284,6 +284,8 @@ class GoogleDriveConnector(BaseConnector):
         except Exception as e:
             return action_result.set_status(phantom.APP_ERROR, "Error downloading file", e)
 
+        tmp.flush()  # flush data stored in temporary buffer
+
         file_name = param.get('file_name') or file_metadata['name']
 
         success, message, vault_id = ph_rules.vault_add(file_location=tmp.name, container=self.get_container_id(), file_name=file_name)
