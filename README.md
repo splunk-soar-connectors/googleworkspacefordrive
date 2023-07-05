@@ -6,7 +6,7 @@ Connector Version: 2.1.0
 Product Vendor: Google  
 Product Name: Google Drive  
 Product Version Supported (regex): ".\*"  
-Minimum Product Version: 5.4.0  
+Minimum Product Version: 6.0.0  
 
 This app allows various file manipulation actions to be performed on Google Drive
 
@@ -152,6 +152,8 @@ action_result.data.\*.isEnforcedIn2Sv | boolean |  |   True  False
 action_result.data.\*.isEnrolledIn2Sv | boolean |  |   True  False 
 action_result.data.\*.isMailboxSetup | boolean |  |   True  False 
 action_result.data.\*.kind | string |  |   admin#directory#user 
+action_result.data.\*.languages.\*.languageCode | string |  |   en 
+action_result.data.\*.languages.\*.preference | string |  |   preferred 
 action_result.data.\*.lastLoginTime | string |  |   2018-01-06T01:11:49.000Z 
 action_result.data.\*.name.familyName | string |  |   Edwards 
 action_result.data.\*.name.fullName | string |  |   test Edwards 
@@ -162,9 +164,8 @@ action_result.data.\*.phones.\*.type | string |  |   work
 action_result.data.\*.phones.\*.value | string |  |  
 action_result.data.\*.primaryEmail | string |  `email`  |   test@test.us 
 action_result.data.\*.recoveryEmail | string |  |   test@test.us 
-action_result.data.\*.languages.\*.preference | string |  |   preferred 
-action_result.data.\*.languages.\*.languageCode | string |  |   en 
 action_result.data.\*.suspended | boolean |  |   True  False 
+action_result.data.\*.suspensionReason | string |  |   ADMIN 
 action_result.summary.next_page_token | string |  |   ~!!~AI9FV7RCbmvPCnWK0UIxnjniVz68Lt8ZOsGim7uc5YxlceqS4ovMelh229zAeFmpmw1aoBTI4ZmcjNxMdAPHEE5nW8BKEx7TI4LzYmLlvpBGoKnyf3lPFenef25jRS7FSMDBb1prqjMEFzRlvZtfX4X9kZuYVDk_dwUcjiKDkEXC2DUPCPcKctAg2HN-VH9FGcSAcSBftVBfbrLwZu9AgnfHvz-8wkDK1PpwE4l1H_mkfvRm_Ckvq9dnLCFSu5W-YzF6nXuZSgmJx5WWMO-IHSLILAf8OXPwbxJbTqM_YCdLeYD71IeqEu_idn54UhYNUCBi3mxeQJzzfp4vHJa3q1wN4uUuCNshqkXvLDwuVIk4cYHHVcJ2-A4GJhPGkQ2SfuMrIigi0nGKEk8pTmJaeD5C825ALevDLf574abZ385Hu7d0NTpJxfDdJti0JdcyL66qYis2l_zxMZZ-ZcSFpl_TSUxk87jhhjI55tCvjkw= 
 action_result.summary.total_users_returned | numeric |  |   6 
 action_result.message | string |  |   Successfully retrieved 6 users 
@@ -287,9 +288,11 @@ action_result.parameter.email | string |  `email`  |   abc@gmail.com
 action_result.parameter.file_name | string |  |   file.pdf 
 action_result.parameter.id | string |  `drive file id`  |   12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt-vSJaLo1fA 
 action_result.parameter.mime_type | string |  `mime type`  |   application/pdf 
+action_result.data.\*.capabilities.canAcceptOwnership | boolean |  |   True  False 
 action_result.data.\*.capabilities.canAddChildren | boolean |  |   True  False 
 action_result.data.\*.capabilities.canAddMyDriveParent | boolean |  |   True  False 
 action_result.data.\*.capabilities.canChangeCopyRequiresWriterPermission | boolean |  |   True  False 
+action_result.data.\*.capabilities.canChangeSecurityUpdateEnabled | boolean |  |   True  False 
 action_result.data.\*.capabilities.canChangeViewersCanCopyContent | boolean |  |   True  False 
 action_result.data.\*.capabilities.canComment | boolean |  |   True  False 
 action_result.data.\*.capabilities.canCopy | boolean |  |   True  False 
@@ -298,10 +301,13 @@ action_result.data.\*.capabilities.canDownload | boolean |  |   True  False
 action_result.data.\*.capabilities.canEdit | boolean |  |   True  False 
 action_result.data.\*.capabilities.canListChildren | boolean |  |   True  False 
 action_result.data.\*.capabilities.canModifyContent | boolean |  |   True  False 
+action_result.data.\*.capabilities.canModifyContentRestriction | boolean |  |  
+action_result.data.\*.capabilities.canModifyLabels | boolean |  |   True  False 
 action_result.data.\*.capabilities.canMoveChildrenWithinDrive | boolean |  |   True  False 
 action_result.data.\*.capabilities.canMoveItemIntoTeamDrive | boolean |  |   True  False 
 action_result.data.\*.capabilities.canMoveItemOutOfDrive | boolean |  |   True  False 
 action_result.data.\*.capabilities.canMoveItemWithinDrive | boolean |  |   True  False 
+action_result.data.\*.capabilities.canReadLabels | boolean |  |   True  False 
 action_result.data.\*.capabilities.canReadRevisions | boolean |  |   True  False 
 action_result.data.\*.capabilities.canRemoveChildren | boolean |  |   True  False 
 action_result.data.\*.capabilities.canRemoveMyDriveParent | boolean |  |   True  False 
@@ -309,14 +315,6 @@ action_result.data.\*.capabilities.canRename | boolean |  |   True  False
 action_result.data.\*.capabilities.canShare | boolean |  |   True  False 
 action_result.data.\*.capabilities.canTrash | boolean |  |   True  False 
 action_result.data.\*.capabilities.canUntrash | boolean |  |   True  False 
-action_result.data.\*.owners.\*.photoLink | string |  |   https://lh3.testusercontent.com/a/default-user=s64 
-action_result.data.\*.permissions.\*.photoLink | string |  |   https://lh3.testusercontent.com/a/default-user=s64 
-action_result.data.\*.permissions.\*.pendingOwner | boolean |  |   True  False 
-action_result.data.\*.capabilities.canReadLabels | boolean |  |   True  False 
-action_result.data.\*.capabilities.canModifyLabels | boolean |  |   True  False 
-action_result.data.\*.capabilities.canAcceptOwnership | boolean |  |   True  False 
-action_result.data.\*.capabilities.canChangeSecurityUpdateEnabled | boolean |  |   True  False 
-action_result.data.\*.lastModifyingUser.photoLink | string |  |   https://lh3.testusercontent.com/a/default-user=s64 
 action_result.data.\*.createdTime | string |  |   2018-01-10T01:17:40.409Z 
 action_result.data.\*.explicitlyTrashed | boolean |  |   True  False 
 action_result.data.\*.fileExtension | string |  |  
@@ -332,6 +330,7 @@ action_result.data.\*.lastModifyingUser.emailAddress | string |  `email`  |   te
 action_result.data.\*.lastModifyingUser.kind | string |  |   drive#user 
 action_result.data.\*.lastModifyingUser.me | boolean |  |   True  False 
 action_result.data.\*.lastModifyingUser.permissionId | string |  |   03385014771683765349 
+action_result.data.\*.lastModifyingUser.photoLink | string |  |   https://lh3.testusercontent.com/a/default-user=s64 
 action_result.data.\*.md5Checksum | string |  `md5`  |   ts6c887e20b103b9215082dcd07a86fc 
 action_result.data.\*.mimeType | string |  `mime type`  |   application/vnd.test-apps.spreadsheet 
 action_result.data.\*.modifiedByMe | boolean |  |   True  False 
@@ -345,6 +344,7 @@ action_result.data.\*.owners.\*.emailAddress | string |  `email`  |   test@test.
 action_result.data.\*.owners.\*.kind | string |  |   drive#user 
 action_result.data.\*.owners.\*.me | boolean |  |   True  False 
 action_result.data.\*.owners.\*.permissionId | string |  |   03385014771683713179 
+action_result.data.\*.owners.\*.photoLink | string |  |   https://lh3.testusercontent.com/a/default-user=s64 
 action_result.data.\*.parents | string |  |   0AHSKAcU2T6x2Uk9PVA 
 action_result.data.\*.permissionIds | string |  |   03385014771683713179 
 action_result.data.\*.permissions.\*.deleted | boolean |  |   True  False 
@@ -352,6 +352,8 @@ action_result.data.\*.permissions.\*.displayName | string |  |   test Edwards
 action_result.data.\*.permissions.\*.emailAddress | string |  `email`  |   test@test.us 
 action_result.data.\*.permissions.\*.id | string |  |   03385014771683713179 
 action_result.data.\*.permissions.\*.kind | string |  |   drive#permission 
+action_result.data.\*.permissions.\*.pendingOwner | boolean |  |   True  False 
+action_result.data.\*.permissions.\*.photoLink | string |  |   https://lh3.testusercontent.com/a/default-user=s64 
 action_result.data.\*.permissions.\*.role | string |  |   owner 
 action_result.data.\*.permissions.\*.type | string |  |   user 
 action_result.data.\*.quotaBytesUsed | string |  |   0 
