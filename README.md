@@ -2,7 +2,7 @@
 # G Suite for Drive
 
 Publisher: Splunk  
-Connector Version: 2.1.0  
+Connector Version: 2.2.0  
 Product Vendor: Google  
 Product Name: Google Drive  
 Product Version Supported (regex): ".\*"  
