@@ -1,2 +1,2 @@
 **Unreleased**
-* Bug fix in the 'Get File' action [PAPP-30962]
+* Bug fix in the 'get file' action [PAPP-30962]
