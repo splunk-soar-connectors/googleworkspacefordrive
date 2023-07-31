@@ -142,7 +142,7 @@ action_result.data.\*.customerId | string |  |   C02eisxhx
 action_result.data.\*.emails.\*.address | string |  `email`  |   test@test.us 
 action_result.data.\*.emails.\*.primary | boolean |  |   True  False 
 action_result.data.\*.emails.\*.type | string |  |   work 
-action_result.data.\*.etag | string |  |   "Slw4z1WwXVNuSGyQ8doTq9uidvys/F2uDjNoukDRgPx6dvH-7j-A7NgQ" 
+action_result.data.\*.etag | string |  |   "Slw4z1WwXVNuSGyQ8doTq9uidvys/F2uDjNoukDRgPx6dvH-7j-A7NgQ" <!--  pragma: allowlist secret -->
 action_result.data.\*.id | string |  |   113211632970586452310 
 action_result.data.\*.includeInGlobalAddressList | boolean |  |   True  False 
 action_result.data.\*.ipWhitelisted | boolean |  |   True  False 
