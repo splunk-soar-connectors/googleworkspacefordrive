@@ -82,6 +82,9 @@ Excel.
 A full list of Google Drive's own MIME types can be found at this link:
 <https://developers.google.com/drive/v3/web/mime-types>
 
+The list files action would return only 460 files at a time. The next token can can be used to fetch
+more files.
+
 
 ### Configuration Variables
 The below configuration variables are required for this Connector to operate.  These variables are specified when configuring a Google Drive asset in SOAR.
@@ -142,7 +145,7 @@ action_result.data.\*.customerId | string |  |   C02eisxhx
 action_result.data.\*.emails.\*.address | string |  `email`  |   test@test.us 
 action_result.data.\*.emails.\*.primary | boolean |  |   True  False 
 action_result.data.\*.emails.\*.type | string |  |   work 
-action_result.data.\*.etag | string |  |   "Slw4z1WwXVNuSGyQ8doTq9uidvys/F2uDjNoukDRgPx6dvH-7j-A7NgQ" <!--  pragma: allowlist secret -->
+action_result.data.\*.etag | string |  |   "Slw4z1WwXVNuSGyQ8doTq9uidvys/F2uDjNoukDRgPx6dvH-7j-A7NgQ" 
 action_result.data.\*.id | string |  |   113211632970586452310 
 action_result.data.\*.includeInGlobalAddressList | boolean |  |   True  False 
 action_result.data.\*.ipWhitelisted | boolean |  |   True  False 
