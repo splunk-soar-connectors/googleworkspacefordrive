@@ -249,7 +249,7 @@ class GoogleDriveConnector(BaseConnector):
         try:
             resp = service.about().get(fields='exportFormats').execute()
             if mime_type not in resp['exportFormats']:
-                return RetVal2(action_result.set_status(phantom.APP_ERROR, f"A file with mime type {mime_type} cannot be downloaded.",None))
+                return RetVal2(action_result.set_status(phantom.APP_ERROR, f"A file with mime type {mime_type} cannot be downloaded.", None))
         except Exception as e:
             return RetVal2(action_result.set_status(phantom.APP_ERROR, "Error getting export MIME types", e))
 
