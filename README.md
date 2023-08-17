@@ -82,9 +82,7 @@ Excel.
 A full list of Google Drive's own MIME types can be found at this link:
 <https://developers.google.com/drive/v3/web/mime-types>
 
-The list files action would return only 460 files at a time. The next token can be used to fetch
-more files.
-
+The list files action would return only 460 files at a time. The next token can be used to fetch more files.
 
 ### Configuration Variables
 The below configuration variables are required for this Connector to operate.  These variables are specified when configuring a Google Drive asset in SOAR.
