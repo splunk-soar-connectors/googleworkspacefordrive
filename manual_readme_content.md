@@ -69,3 +69,5 @@ Excel.
 
 A full list of Google Drive's own MIME types can be found at this link:
 <https://developers.google.com/drive/v3/web/mime-types>
+
+The list files action would return only 460 files at a time. The next token can be used to fetch more files.

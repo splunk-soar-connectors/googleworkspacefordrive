@@ -248,6 +248,8 @@ class GoogleDriveConnector(BaseConnector):
 
         try:
             resp = service.about().get(fields='exportFormats').execute()
+            if mime_type not in resp['exportFormats']:
+                return RetVal2(action_result.set_status(phantom.APP_ERROR, f"A file with mime type {mime_type} cannot be downloaded.", None))
         except Exception as e:
             return RetVal2(action_result.set_status(phantom.APP_ERROR, "Error getting export MIME types", e))
 
@@ -283,6 +285,9 @@ class GoogleDriveConnector(BaseConnector):
                 status, done = downloader.next_chunk()
         except Exception as e:
             return action_result.set_status(phantom.APP_ERROR, "Error downloading file", e)
+
+        finally:
+            tmp.flush()  # flush data stored in temporary buffer
 
         file_name = param.get('file_name') or file_metadata['name']
 
