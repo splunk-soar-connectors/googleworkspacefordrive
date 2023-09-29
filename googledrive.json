@@ -10,15 +10,15 @@
     "product_version_regex": ".*",
     "publisher": "Splunk",
     "license": "Copyright (c) 2018-2023 Splunk Inc.",
-    "app_version": "2.1.0",
+    "app_version": "2.2.0",
     "python_version": "3",
     "latest_tested_versions": [
-        "Cloud, January 2023"
+        "Cloud, July 2023"
     ],
     "utctime_updated": "2022-04-13T17:10:40.000000Z",
     "package_name": "phantom_googledrive",
     "main_module": "googledrive_connector.py",
-    "min_phantom_version": "5.4.0",
+    "min_phantom_version": "6.1.0",
     "fips_compliant": true,
     "app_wizard_version": "1.0.0",
     "pip_dependencies": {
@@ -26,14 +26,6 @@
             {
                 "module": "cachetools",
                 "input_file": "wheels/shared/cachetools-2.0.1-py2.py3-none-any.whl"
-            },
-            {
-                "module": "certifi",
-                "input_file": "wheels/py3/certifi-2022.12.7-py3-none-any.whl"
-            },
-            {
-                "module": "chardet",
-                "input_file": "wheels/shared/chardet-3.0.4-py2.py3-none-any.whl"
             },
             {
                 "module": "google_api_python_client",
@@ -50,10 +42,6 @@
             {
                 "module": "httplib2",
                 "input_file": "wheels/py3/httplib2-0.19.0-py3-none-any.whl"
-            },
-            {
-                "module": "idna",
-                "input_file": "wheels/shared/idna-2.10-py2.py3-none-any.whl"
             },
             {
                 "module": "oauth2client",
@@ -76,10 +64,6 @@
                 "input_file": "wheels/shared/python_magic-0.4.18-py2.py3-none-any.whl"
             },
             {
-                "module": "requests",
-                "input_file": "wheels/shared/requests-2.25.0-py2.py3-none-any.whl"
-            },
-            {
                 "module": "rsa",
                 "input_file": "wheels/py3/rsa-4.7.2-py3-none-any.whl"
             },
@@ -90,10 +74,6 @@
             {
                 "module": "uritemplate",
                 "input_file": "wheels/shared/uritemplate-3.0.0-py2.py3-none-any.whl"
-            },
-            {
-                "module": "urllib3",
-                "input_file": "wheels/shared/urllib3-1.26.14-py2.py3-none-any.whl"
             }
         ]
     },
@@ -307,6 +287,20 @@
                     ]
                 },
                 {
+                    "data_path": "action_result.data.*.languages.*.languageCode",
+                    "data_type": "string",
+                    "example_values": [
+                        "en"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.languages.*.preference",
+                    "data_type": "string",
+                    "example_values": [
+                        "preferred"
+                    ]
+                },
+                {
                     "data_path": "action_result.data.*.lastLoginTime",
                     "data_type": "string",
                     "example_values": [
@@ -380,25 +374,18 @@
                     ]
                 },
                 {
-                    "data_path": "action_result.data.*.languages.*.preference",
-                    "data_type": "string",
-                    "example_values": [
-                        "preferred"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.languages.*.languageCode",
-                    "data_type": "string",
-                    "example_values": [
-                        "en"
-                    ]
-                },
-                {
                     "data_path": "action_result.data.*.suspended",
                     "data_type": "boolean",
                     "example_values": [
                         true,
                         false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.suspensionReason",
+                    "data_type": "string",
+                    "example_values": [
+                        "ADMIN"
                     ]
                 },
                 {
@@ -944,6 +931,14 @@
                     ]
                 },
                 {
+                    "data_path": "action_result.data.*.capabilities.canAcceptOwnership",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
                     "data_path": "action_result.data.*.capabilities.canAddChildren",
                     "data_type": "boolean",
                     "example_values": [
@@ -961,6 +956,14 @@
                 },
                 {
                     "data_path": "action_result.data.*.capabilities.canChangeCopyRequiresWriterPermission",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.capabilities.canChangeSecurityUpdateEnabled",
                     "data_type": "boolean",
                     "example_values": [
                         true,
@@ -1032,6 +1035,18 @@
                     ]
                 },
                 {
+                    "data_path": "action_result.data.*.capabilities.canModifyContentRestriction",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.data.*.capabilities.canModifyLabels",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
                     "data_path": "action_result.data.*.capabilities.canMoveChildrenWithinDrive",
                     "data_type": "boolean",
                     "example_values": [
@@ -1057,6 +1072,14 @@
                 },
                 {
                     "data_path": "action_result.data.*.capabilities.canMoveItemWithinDrive",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.capabilities.canReadLabels",
                     "data_type": "boolean",
                     "example_values": [
                         true,
@@ -1117,67 +1140,6 @@
                     "example_values": [
                         true,
                         false
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.owners.*.photoLink",
-                    "data_type": "string",
-                    "example_values": [
-                        "https://lh3.testusercontent.com/a/default-user=s64"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.permissions.*.photoLink",
-                    "data_type": "string",
-                    "example_values": [
-                        "https://lh3.testusercontent.com/a/default-user=s64"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.permissions.*.pendingOwner",
-                    "data_type": "boolean",
-                    "example_values": [
-                        true,
-                        false
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.capabilities.canReadLabels",
-                    "data_type": "boolean",
-                    "example_values": [
-                        true,
-                        false
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.capabilities.canModifyLabels",
-                    "data_type": "boolean",
-                    "example_values": [
-                        true,
-                        false
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.capabilities.canAcceptOwnership",
-                    "data_type": "boolean",
-                    "example_values": [
-                        true,
-                        false
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.capabilities.canChangeSecurityUpdateEnabled",
-                    "data_type": "boolean",
-                    "example_values": [
-                        true,
-                        false
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.lastModifyingUser.photoLink",
-                    "data_type": "string",
-                    "example_values": [
-                        "https://lh3.testusercontent.com/a/default-user=s64"
                     ]
                 },
                 {
@@ -1295,6 +1257,13 @@
                     ]
                 },
                 {
+                    "data_path": "action_result.data.*.lastModifyingUser.photoLink",
+                    "data_type": "string",
+                    "example_values": [
+                        "https://lh3.testusercontent.com/a/default-user=s64"
+                    ]
+                },
+                {
                     "data_path": "action_result.data.*.md5Checksum",
                     "data_type": "string",
                     "example_values": [
@@ -1402,6 +1371,13 @@
                     ]
                 },
                 {
+                    "data_path": "action_result.data.*.owners.*.photoLink",
+                    "data_type": "string",
+                    "example_values": [
+                        "https://lh3.testusercontent.com/a/default-user=s64"
+                    ]
+                },
+                {
                     "data_path": "action_result.data.*.parents",
                     "data_type": "string",
                     "example_values": [
@@ -1452,6 +1428,21 @@
                     "data_type": "string",
                     "example_values": [
                         "drive#permission"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.permissions.*.pendingOwner",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.permissions.*.photoLink",
+                    "data_type": "string",
+                    "example_values": [
+                        "https://lh3.testusercontent.com/a/default-user=s64"
                     ]
                 },
                 {
