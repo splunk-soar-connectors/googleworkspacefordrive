@@ -30,6 +30,7 @@ from google.oauth2 import service_account
 from phantom.action_result import ActionResult
 from phantom.base_connector import BaseConnector
 from phantom.vault import Vault  # noqa
+from phantom_common import paths
 
 from googledrive_consts import *
 
@@ -277,7 +278,8 @@ class GoogleDriveConnector(BaseConnector):
         if hasattr(Vault, 'get_vault_tmp_dir'):
             tmp = tempfile.NamedTemporaryFile(dir=Vault.get_vault_tmp_dir(), delete=False)
         else:
-            tmp = tempfile.NamedTemporaryFile(dir="/opt/phantom/vault/tmp/", delete=False)
+            local_dir = os.path.join(paths.PHANTOM_VAULT, "tmp")
+            tmp = tempfile.NamedTemporaryFile(dir=local_dir, delete=False)
         downloader = MediaIoBaseDownload(tmp, file_req)
         done = False
         try:
