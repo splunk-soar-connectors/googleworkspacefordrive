@@ -321,7 +321,7 @@ class GoogleDriveConnector(BaseConnector):
         ret_val, service = self._create_service(action_result, scopes, "drive", "v3", login_email)
         if phantom.is_fail(ret_val):
             return ret_val
-        
+
         supportsAllDrives = param.get("supports_all_drives")
 
         try:
@@ -401,7 +401,7 @@ class GoogleDriveConnector(BaseConnector):
             resp = service.files().create(
                 body=file_metadata,
                 media_body=media,
-                supportsAllDrives=supportsAllDrives
+                supportsAllDrives=supportsAllDrives,
                 fields='id').execute()
         except Exception as e:
             error_message = str(e)
