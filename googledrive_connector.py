@@ -654,7 +654,6 @@ class GoogleDriveConnector(BaseConnector):
                 .execute()
             )
         except Exception as e:
-            error_message = str(e)
             return action_result.set_status(
                 phantom.APP_ERROR, "Failed to get file metadata \n" + str(e)
             )
@@ -697,7 +696,6 @@ class GoogleDriveConnector(BaseConnector):
                 .execute()
             )
         except Exception as e:
-            error_message = str(e)
             return action_result.set_status(
                 phantom.APP_ERROR, "Failed to update spreadsheet values\n" + str(e)
             )
