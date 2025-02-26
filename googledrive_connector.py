@@ -214,6 +214,16 @@ class GoogleDriveConnector(BaseConnector):
         if (page_token):
             kwargs.update({'pageToken': page_token})
 
+        supportsAllDrives = param.get("supports_all_drives")
+        if supportsAllDrives:
+            kwargs.update({"supportsAllDrives": supportsAllDrives})
+
+        includeItemsFromAllDrives = param.get("include_items_from_all_drives")
+        if includeItemsFromAllDrives:
+            kwargs.update({"includeItemsFromAllDrives": includeItemsFromAllDrives})
+
+        kwargs.update({"corpora": "allDrives"})
+
         try:
             resp = service.files().list(**kwargs).execute()
         except Exception as e:
@@ -317,9 +327,11 @@ class GoogleDriveConnector(BaseConnector):
         ret_val, service = self._create_service(action_result, scopes, "drive", "v3", login_email)
         if phantom.is_fail(ret_val):
             return ret_val
+        
+        supportsAllDrives = param.get("supports_all_drives")
 
         try:
-            file_metadata = service.files().get(fileId=file_id, fields=ALL_FILE_FIELDS).execute()
+            file_metadata = service.files().get(fileId=file_id, fields=ALL_FILE_FIELDS, supportsAllDrives=supportsAllDrives).execute()
         except Exception as e:
             error_message = str(e)
             self.debug_print("Exception message: {}".format(error_message))
@@ -396,6 +408,8 @@ class GoogleDriveConnector(BaseConnector):
         if folder_id:
             file_metadata['parents'] = [folder_id]
 
+        supportsAllDrives = param.get("supports_all_drives")
+
         media = MediaFileUpload(
             vault_file_metadata['path'],
             mimetype=mime_type
@@ -405,6 +419,7 @@ class GoogleDriveConnector(BaseConnector):
             resp = service.files().create(
                 body=file_metadata,
                 media_body=media,
+                supportsAllDrives=supportsAllDrives
                 fields='id').execute()
         except Exception as e:
             error_message = str(e)
@@ -435,8 +450,14 @@ class GoogleDriveConnector(BaseConnector):
         if folder_id:
             file_metadata['parents'] = [folder_id]
 
+        driveid = param.get("driveid")
+        if driveid:
+            file_metadata["driveId"] = driveid
+
+        supportsAllDrives = param.get("supports_all_drives")
+
         try:
-            resp = service.files().create(body=file_metadata, fields='id').execute()
+            resp = service.files().create(body=file_metadata, fields='id', supportsAllDrives=supportsAllDrives).execute()
         except Exception as e:
             return action_result.set_status(phantom.APP_ERROR, "Error adding folder to drive", e)
 
@@ -457,8 +478,10 @@ class GoogleDriveConnector(BaseConnector):
         if phantom.is_fail(ret_val):
             return ret_val
 
+        supportsAllDrives = param.get("supports_all_drives")
+
         try:
-            service.files().get(fileId=file_id, fields="id").execute()  # noqa
+            service.files().get(fileId=file_id, fields="id", supportsAllDrives=supportsAllDrives).execute()  # noqa
         except Exception:
             return action_result.set_status(phantom.APP_SUCCESS, "File doesn't exist or has already been deleted")
 
@@ -469,6 +492,240 @@ class GoogleDriveConnector(BaseConnector):
 
         self.save_progress("Handle delete file succeeded")
         return action_result.set_status(phantom.APP_SUCCESS, "Successfully deleted file from Drive")
+
+    def _handle_copy_file(self, param):
+        action_result = self.add_action_result(ActionResult(dict(param)))
+        scopes = [GOOGLE_SCOPE_DRIVE]
+        login_email = param.get("email", self._login_email)
+
+        ret_val, service = self._create_service(
+            action_result, scopes, "drive", "v3", login_email
+        )
+        if phantom.is_fail(ret_val):
+            return ret_val
+
+        file_metadata = {}
+
+        parent_id = param.get("parent_id")
+        if parent_id:
+            file_metadata["parents"] = [parent_id]
+
+        driveid = param.get("driveid")
+        if driveid:
+            file_metadata["driveId"] = driveid
+
+        file_id = param.get("file_id")
+
+        supportsAllDrives = param.get("supports_all_drives")
+
+        try:
+            resp = (
+                service.files()
+                .copy(
+                    fileId=file_id,
+                    body=file_metadata,
+                    supportsAllDrives=supportsAllDrives,
+                    fields="id",
+                )
+                .execute()
+            )
+        except Exception as e:
+            return action_result.set_status(
+                phantom.APP_ERROR, "Error copying file to folder", e
+            )
+
+        action_result.update_summary({"new_file_id": resp["id"]})
+
+        return action_result.set_status(
+            phantom.APP_SUCCESS, "Successfully copied file to folder"
+        )
+
+    def _handle_rename_file(self, param):
+        action_result = self.add_action_result(ActionResult(dict(param)))
+        scopes = [GOOGLE_SCOPE_DRIVE]
+        login_email = param.get("email", self._login_email)
+
+        ret_val, service = self._create_service(
+            action_result, scopes, "drive", "v3", login_email
+        )
+        if phantom.is_fail(ret_val):
+            return ret_val
+
+        file_metadata = {}
+
+        new_name = param.get("new_name")
+        if new_name:
+            file_metadata["name"] = [new_name]
+
+        file_id = param.get("file_id")
+
+        supportsAllDrives = param.get("supports_all_drives")
+
+        try:
+            resp = (
+                service.files()
+                .update(
+                    fileId=file_id,
+                    body=file_metadata,
+                    supportsAllDrives=supportsAllDrives,
+                    fields="name",
+                )
+                .execute()
+            )
+        except Exception as e:
+            return action_result.set_status(phantom.APP_ERROR, "Error renaming file", e)
+
+        action_result.update_summary({"updated_name": resp["name"]})
+
+        return action_result.set_status(
+            phantom.APP_SUCCESS, "Successfully renamed file"
+        )
+
+    def _handle_move_file(self, param):
+        action_result = self.add_action_result(ActionResult(dict(param)))
+        scopes = [GOOGLE_SCOPE_DRIVE]
+        login_email = param.get("email", self._login_email)
+
+        ret_val, service = self._create_service(
+            action_result, scopes, "drive", "v3", login_email
+        )
+        if phantom.is_fail(ret_val):
+            return ret_val
+
+        new_parent_id = param.get("new_parent_id")
+
+        remove_parent_id = param.get("remove_parent_id")
+
+        file_id = param.get("file_id")
+
+        supportsAllDrives = param.get("supports_all_drives")
+
+        try:
+            resp = (
+                service.files()
+                .update(
+                    fileId=file_id,
+                    addParents=new_parent_id,
+                    removeParents=remove_parent_id,
+                    supportsAllDrives=supportsAllDrives,
+                    enforceSingleParent=True,
+                )
+                .execute()
+            )
+        except Exception as e:
+            return action_result.set_status(
+                phantom.APP_ERROR, "Error copying file to folder", e
+            )
+
+        action_result.update_summary({"new_folder_name": resp["name"]})
+
+        return action_result.set_status(
+            phantom.APP_SUCCESS, "Successfully moved to new folder"
+        )
+
+    def _handle_read_file(self, param):
+        action_result = self.add_action_result(ActionResult(dict(param)))
+        scopes = [GOOGLE_SCOPE_DOCUMENTS_READONLY]
+
+        login_email = param.get("email", self._login_email)
+
+        file_id = param["file_id"]
+
+        ret_val, service = self._create_service(
+            action_result, scopes, "docs", "v1", login_email
+        )
+        if phantom.is_fail(ret_val):
+            return ret_val
+
+        try:
+            file_data = service.documents().get(documentId=file_id).execute()
+        except Exception as e:
+            error_message = str(e)
+            self.debug_print("Exception message: {}".format(error_message))
+            return action_result.set_status(
+                phantom.APP_ERROR, "Failed to get file data", e
+            )
+
+        action_result.add_data(file_data)
+        return action_result.set_status(
+            phantom.APP_SUCCESS, "Successfully retrieved file information"
+        )
+
+    def _handle_get_spreadsheet(self, param):
+        action_result = self.add_action_result(ActionResult(dict(param)))
+        scopes = [GOOGLE_SCOPE_DRIVE]
+
+        login_email = param.get("email", self._login_email)
+
+        file_id = param["id"]
+
+        range_values = param.get("range", "A1:Z1001")
+
+        ret_val, service = self._create_service(
+            action_result, scopes, "sheets", "v4", login_email
+        )
+        if phantom.is_fail(ret_val):
+            return ret_val
+
+        try:
+            sheet_values = (
+                service.spreadsheets()
+                .values()
+                .get(spreadsheetId=file_id, range=range_values)
+                .execute()
+            )
+        except Exception as e:
+            error_message = str(e)
+            return action_result.set_status(
+                phantom.APP_ERROR, "Failed to get file metadata \n" + str(e)
+            )
+
+        action_result.add_data(sheet_values)
+
+        return action_result.set_status(
+            phantom.APP_SUCCESS, "Successfully retrieved Spreadsheet values information"
+        )
+
+    def _handle_update_spreadsheet(self, param):
+        action_result = self.add_action_result(ActionResult(dict(param)))
+        scopes = [GOOGLE_SCOPE_DRIVE]
+
+        login_email = param.get("email", self._login_email)
+
+        file_id = param["id"]
+
+        range_values = param.get("range", "A1:Z1001")
+
+        values = json.loads(param.get("values"))
+
+        ret_val, service = self._create_service(
+            action_result, scopes, "sheets", "v4", login_email
+        )
+        if phantom.is_fail(ret_val):
+            return ret_val
+
+        body = {"values": values, "majorDimension": "ROWS"}
+        try:
+            response = (
+                service.spreadsheets()
+                .values()
+                .update(
+                    spreadsheetId=file_id,
+                    range=range_values,
+                    valueInputOption="RAW",
+                    body=body,
+                )
+                .execute()
+            )
+        except Exception as e:
+            error_message = str(e)
+            return action_result.set_status(
+                phantom.APP_ERROR, "Failed to update spreadsheet values\n" + str(e)
+            )
+        action_result.add_data(response)
+        return action_result.set_status(
+            phantom.APP_SUCCESS, "Successfully updates Spreadsheet values information"
+        )
 
     def handle_action(self, param):
 
@@ -499,6 +756,24 @@ class GoogleDriveConnector(BaseConnector):
 
         elif action_id == 'delete_file':
             ret_val = self._handle_delete_file(param)
+
+        elif action_id == "copy_file":
+            ret_val = self._handle_copy_file(param)
+
+        elif action_id == "rename_file":
+            ret_val = self._handle_rename_file(param)
+
+        elif action_id == "move_file":
+            ret_val = self._handle_move_file(param)
+
+        elif action_id == "read_file":
+            ret_val = self._handle_read_file(param)
+
+        elif action_id == "get_spreadsheet":
+            ret_val = self._handle_get_spreadsheet(param)
+
+        elif action_id == "update_spreadsheet":
+            ret_val = self._handle_update_spreadsheet(param)
 
         return ret_val
 
