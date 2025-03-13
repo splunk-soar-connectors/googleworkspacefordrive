@@ -17,6 +17,7 @@
 GOOGLE_SCOPE_USER_READONLY = "https://www.googleapis.com/auth/admin.directory.user.readonly"
 GOOGLE_SCOPE_DRIVE_READONLY = "https://www.googleapis.com/auth/drive.readonly"
 GOOGLE_SCOPE_DRIVE = "https://www.googleapis.com/auth/drive"
+GOOGLE_SCOPE_DOCUMENTS_READONLY = "https://www.googleapis.com/auth/documents.readonly"
 
 LIST_RESP_FIELDS = "nextPageToken, files(id, name, kind, mimeType, webContentLink, webViewLink, parents, md5Checksum)"
 
