@@ -9,7 +9,7 @@
     "product_name": "Google Drive",
     "product_version_regex": ".*",
     "publisher": "Splunk",
-    "license": "Copyright (c) 2018-2023 Splunk Inc.",
+    "license": "Copyright (c) 2018-2025 Splunk Inc.",
     "app_version": "2.2.1",
     "python_version": "3",
     "latest_tested_versions": [
@@ -1612,6 +1612,10 @@
                     "example_values": [
                         0
                     ]
+                },
+                {
+                    "data_path": "action_result.parameter.ph",
+                    "data_type": "ph"
                 }
             ],
             "versions": "EQ(*)",
