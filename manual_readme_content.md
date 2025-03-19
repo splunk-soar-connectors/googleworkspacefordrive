@@ -1,25 +1,11 @@
-[comment]: # " File: README.md"
-[comment]: # "  Copyright (c) 2018-2023 Splunk Inc."
-[comment]: # ""
-[comment]: # "Licensed under the Apache License, Version 2.0 (the 'License');"
-[comment]: # "you may not use this file except in compliance with the License."
-[comment]: # "You may obtain a copy of the License at"
-[comment]: # ""
-[comment]: # "    http://www.apache.org/licenses/LICENSE-2.0"
-[comment]: # ""
-[comment]: # "Unless required by applicable law or agreed to in writing, software distributed under"
-[comment]: # "the License is distributed on an 'AS IS' BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,"
-[comment]: # "either express or implied. See the License for the specific language governing permissions"
-[comment]: # "and limitations under the License."
-[comment]: # ""
 ### Service Account
 
 This app requires a pre-configured service account to operate. Please follow the procedure outlined
-at [this link](https://support.google.com/a/answer/7378726?hl=en) to create a service account.  
+at [this link](https://support.google.com/a/answer/7378726?hl=en) to create a service account.\
 The following APIs will need to be enabled:
 
--   AdminSDK
--   Drive API
+- AdminSDK
+- Drive API
 
 At the end of the creation process, the admin console should ask you to save the config as a JSON
 file. Copy the contents of the JSON file in the clipboard and paste it as the value of the "Contents
@@ -29,25 +15,25 @@ of Service Account JSON file" asset configuration parameter.
 
 Once the service account has been created and APIs enabled, the next step is to configure scopes on
 these APIs to allow the App to access them. Every action requires different scopes to operate, these
-are listed in the action documentation.  
+are listed in the action documentation.\
 To enable scopes please complete the following steps:
 
--   Go to your G Suite domain's [Admin console.](http://admin.google.com/)
--   Select **Security** from the list of controls. If you don't see **Security** listed, select
-    **Show More** , then select **Security** from the list of controls. If you can't see the
-    controls, make sure you're signed in as an administrator for the domain.
--   Select **API controls** in the **Access and data control** section.
--   Select **MANAGE DOMAIN WIDE DELEGATIONS** in the **Domain wide delegation** section.
--   Select **Add new** in the API clients section
--   In the **Client Name** field enter the service account's **Client ID** . You can find your
-    service account's client ID in the [Service accounts credentials
-    page](https://console.developers.google.com/apis/credentials) or the service account JSON file
-    (key named **client_id** ).
--   In the **One or More API Scopes** field enter the list of scopes that you wish to grant access
-    to the App. For example, to enable all the scopes required by this app enter:
-    https://www.googleapis.com/auth/admin.directory.user.readonly,
-    https://www.googleapis.com/auth/drive.readonly, https://www.googleapis.com/auth/drive
--   Click **Authorize** .
+- Go to your G Suite domain's [Admin console.](http://admin.google.com/)
+- Select **Security** from the list of controls. If you don't see **Security** listed, select
+  **Show More** , then select **Security** from the list of controls. If you can't see the
+  controls, make sure you're signed in as an administrator for the domain.
+- Select **API controls** in the **Access and data control** section.
+- Select **MANAGE DOMAIN WIDE DELEGATIONS** in the **Domain wide delegation** section.
+- Select **Add new** in the API clients section
+- In the **Client Name** field enter the service account's **Client ID** . You can find your
+  service account's client ID in the [Service accounts credentials
+  page](https://console.developers.google.com/apis/credentials) or the service account JSON file
+  (key named **client_id** ).
+- In the **One or More API Scopes** field enter the list of scopes that you wish to grant access
+  to the App. For example, to enable all the scopes required by this app enter:
+  https://www.googleapis.com/auth/admin.directory.user.readonly,
+  https://www.googleapis.com/auth/drive.readonly, https://www.googleapis.com/auth/drive
+- Click **Authorize** .
 
 ### MIME Types
 

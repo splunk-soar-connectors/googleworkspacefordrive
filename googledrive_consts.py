@@ -1,6 +1,6 @@
 # File: googledrive_consts.py
 #
-# Copyright (c) 2018-2023 Splunk Inc.
+# Copyright (c) 2018-2025 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,27 +21,29 @@ GOOGLE_SCOPE_DRIVE = "https://www.googleapis.com/auth/drive"
 LIST_RESP_FIELDS = "nextPageToken, files(id, name, kind, mimeType, webContentLink, webViewLink, parents, md5Checksum)"
 
 # The API is supposed to return all the metadeta, but my experience has been it only returning id, name, kind and mimeType
-ALL_FILE_FIELDS = "kind, id, name, mimeType, description, starred, trashed, explicitlyTrashed, "\
-                  "parents, properties, appProperties, spaces, version, webContentLink, webViewLink, "\
-                  "iconLink, thumbnailLink, viewedByMe, viewedByMeTime, createdTime, modifiedTime, "\
-                  "modifiedByMeTime, sharedWithMeTime, sharingUser, owners, lastModifyingUser, "\
-                  "shared, ownedByMe, viewersCanCopyContent, writersCanShare, permissions, "\
-                  "folderColorRgb, originalFilename, fullFileExtension, fileExtension, size, "\
-                  "md5Checksum, quotaBytesUsed, headRevisionId, contentHints, imageMediaMetadata, "\
-                  "videoMediaMetadata, capabilities, isAppAuthorized, hasThumbnail, thumbnailVersion, "\
-                  "modifiedByMe, trashingUser, trashedTime, teamDriveId, permissionIds"
+ALL_FILE_FIELDS = (
+    "kind, id, name, mimeType, description, starred, trashed, explicitlyTrashed, "
+    "parents, properties, appProperties, spaces, version, webContentLink, webViewLink, "
+    "iconLink, thumbnailLink, viewedByMe, viewedByMeTime, createdTime, modifiedTime, "
+    "modifiedByMeTime, sharedWithMeTime, sharingUser, owners, lastModifyingUser, "
+    "shared, ownedByMe, viewersCanCopyContent, writersCanShare, permissions, "
+    "folderColorRgb, originalFilename, fullFileExtension, fileExtension, size, "
+    "md5Checksum, quotaBytesUsed, headRevisionId, contentHints, imageMediaMetadata, "
+    "videoMediaMetadata, capabilities, isAppAuthorized, hasThumbnail, thumbnailVersion, "
+    "modifiedByMe, trashingUser, trashedTime, teamDriveId, permissionIds"
+)
 
-m_doc = 'application/msword'
-m_docx = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-m_xls = 'application/vnd.ms-excel',
-m_xlsx = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-m_csv = 'text/csv'
-m_ppt = 'application/vnd.ms-powerpoint',
-m_pptx = 'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+m_doc = "application/msword"
+m_docx = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+m_xls = ("application/vnd.ms-excel",)
+m_xlsx = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+m_csv = "text/csv"
+m_ppt = ("application/vnd.ms-powerpoint",)
+m_pptx = "application/vnd.openxmlformats-officedocument.presentationml.presentation"
 
-m_google_doc = 'application/vnd.google-apps.document'
-m_google_sheet = 'application/vnd.google-apps.spreadsheet'
-m_google_slide = 'application/vnd.google-apps.presentation'
+m_google_doc = "application/vnd.google-apps.document"
+m_google_sheet = "application/vnd.google-apps.spreadsheet"
+m_google_slide = "application/vnd.google-apps.presentation"
 
 # There is dynamic list of these which you can query through the API,
 #  but it contains a lot of conversions which I'd imagine you don't want
