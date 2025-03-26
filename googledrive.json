@@ -68,10 +68,6 @@
                 "input_file": "wheels/py3/rsa-4.7.2-py3-none-any.whl"
             },
             {
-                "module": "six",
-                "input_file": "wheels/shared/six-1.16.0-py2.py3-none-any.whl"
-            },
-            {
                 "module": "uritemplate",
                 "input_file": "wheels/shared/uritemplate-3.0.0-py2.py3-none-any.whl"
             }

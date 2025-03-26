@@ -1,59 +1,69 @@
 Splunk SOAR G Suite for Drive
-Copyright (c) 2018-2023 Splunk Inc.
+Copyright (c) 2018-2025 Splunk Inc.
 
-Third-party Software Attributions:
+Third Party Software Attributions:
 
-Library: cachetools
+Name: cachetools
 Version: 2.0.1
+Author: Thomas Kemmer
 License: MIT
-Copyright 2014-2017 Thomas Kemmer
 
-Library: google-api-python-client
+Name: google-api-python-client
 Version: 1.6.4
-License: Apache Software License (Apache 2.0)
-Copyright 2017 Google Inc
+Author: Google Inc.
+License: Apache 2.0
 
-Library: google-auth
+Name: google-auth
 Version: 1.1.1
-License: Apache Software License (Apache 2.0)
-Copyright 2017 Google Inc
+Author: Google Cloud Platform
+License: Apache 2.0
 
-Library: google-auth-httplib2
+Name: google-auth-httplib2
 Version: 0.0.2
-License: Apache Software License (Apache 2.0)
-Copyright 2014 Google Inc
+Author: Google Cloud Platform
+License: Apache 2.0
 
-Library: httplib2
+Name: httplib2
 Version: 0.19.0
+Author: Joe Gregorio
 License: MIT
-Copyright 2006 by Joe Gregorio
 
-Library: oauth2client
+Name: oauth2client
 Version: 4.1.2
-License: Apache Software License (Apache 2.0)
-Copyright 2014 Google Inc
+Author: Google Inc.
+License: Apache 2.0
 
-Library: pyasn1-modules
+Name: pyasn1
+Version: 0.3.3
+Author: Ilya Etingof <etingof@gmail.com>
+License: BSD
+
+Name: pyasn1-modules
 Version: 0.1.1
-License: BSD License (BSD)
-Copyright (c) 2005-2017, Ilya Etingof <etingof@gmail.com>
+Author: Ilya Etingof <etingof@gmail.com>
+License: BSD
 
-Library: python-magic
+Name: pyparsing
+Version: 2.4.7
+Author: Paul McGuire
+License: MIT License
+
+Name: python-magic
 Version: 0.4.18
+Author: Adam Hupp
 License: MIT
-Copyright 2001-2014 Adam Hupp
 
-Library: requests
-Version: 2.25.0
-License: Apache 2.0
-Kenneth Reitz
-
-Library: rsa
+Name: rsa
 Version: 4.7.2
-License: Apache 2.0
-Copyright 2011 Sybren A
+Author: Sybren A. Stuvel
+License: ASL 2
 
-Library: uritemplate
+Name: six
+Version: 1.17.0
+Author: Benjamin Peterson
+License: MIT
+
+Name: uritemplate
 Version: 3.0.0
-License: OSI Approved, Apache Software License, BSD License (BSD 3-Clause License or Apache License, Version 2.0)
-Unknown copyright
+Author: Ian Cordasco
+License: BSD 3-Clause License or Apache License, Version 2.0
