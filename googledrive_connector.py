@@ -1,6 +1,6 @@
 # File: googledrive_connector.py
 #
-# Copyright (c) 2018-2023 Splunk Inc.
+# Copyright (c) 2018-2025 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 #
 # Phantom App imports
 import json
+
 # Fix to add __init__.py to dependencies folder
 import os
 import sys
@@ -29,18 +30,19 @@ import requests
 from google.oauth2 import service_account
 from phantom.action_result import ActionResult
 from phantom.base_connector import BaseConnector
-from phantom.vault import Vault  # noqa
+from phantom.vault import Vault
 from phantom_common import paths
 
 from googledrive_consts import *
 
-init_path = '{}/dependencies/google/__init__.py'.format(  # noqa
-    os.path.dirname(os.path.abspath(__file__))  # noqa
-)  # noqa
+
+init_path = "{}/dependencies/google/__init__.py".format(  # noqa
+    os.path.dirname(os.path.abspath(__file__))
+)
 try:
-    open(init_path, 'a+').close()  # noqa
-except:  # noqa
-    pass  # noqa
+    open(init_path, "a+").close()
+except:
+    pass
 
 
 # the following argv 'work around' is to keep apiclient happy
@@ -49,10 +51,10 @@ try:
     argv_temp = list(sys.argv)
 except:
     pass
-sys.argv = ['']
+sys.argv = [""]
 
-import apiclient  # noqa
-from googleapiclient.http import MediaFileUpload, MediaIoBaseDownload  # noqa
+import apiclient
+from googleapiclient.http import MediaFileUpload, MediaIoBaseDownload
 
 
 class RetVal2(tuple):
@@ -61,11 +63,9 @@ class RetVal2(tuple):
 
 
 class GoogleDriveConnector(BaseConnector):
-
     def __init__(self):
-
         # Call the BaseConnectors init first
-        super(GoogleDriveConnector, self).__init__()
+        super().__init__()
         self._login_email = None
         self._key_dict = None
         self._domain = None
@@ -74,7 +74,7 @@ class GoogleDriveConnector(BaseConnector):
     def initialize(self):
         config = self.get_config()
         self._state = self.load_state()
-        key_json = config['key_json']
+        key_json = config["key_json"]
         try:
             key_dict = json.loads(key_json)
         except Exception as e:
@@ -82,15 +82,15 @@ class GoogleDriveConnector(BaseConnector):
 
         self._key_dict = key_dict
 
-        login_email = config['login_email']
+        login_email = config["login_email"]
 
-        if (not ph_utils.is_email(login_email)):
+        if not ph_utils.is_email(login_email):
             return self.set_status(phantom.APP_ERROR, "Asset config 'login_email' failed validation")
 
         self._login_email = login_email
 
         try:
-            username, _, self._domain = login_email.partition('@')
+            username, _, self._domain = login_email.partition("@")
         except Exception as e:
             return self.set_status(phantom.APP_ERROR, "Unable to extract domain from login_email", e)
 
@@ -101,14 +101,13 @@ class GoogleDriveConnector(BaseConnector):
         return phantom.APP_SUCCESS
 
     def _create_service(self, action_result, scopes, api_name, api_version, delegated_user=None):
-
         # first the credentials
         try:
             credentials = service_account.Credentials.from_service_account_info(self._key_dict, scopes=scopes)
         except Exception as e:
             return RetVal2(action_result.set_status(phantom.APP_ERROR, "Unable to create load the key json", e))
 
-        if (delegated_user):
+        if delegated_user:
             try:
                 credentials = credentials.with_subject(delegated_user)
             except Exception as e:
@@ -117,10 +116,18 @@ class GoogleDriveConnector(BaseConnector):
         try:
             service = apiclient.discovery.build(api_name, api_version, credentials=credentials)
         except Exception as e:
-            return RetVal2(action_result.set_status(phantom.APP_ERROR,
-                "Failed to create service object for API: {0}-{1}. {2} {3}".format(api_name, api_version, str(e),
-                    "Please make sure the user '{0}' is valid and the service account has the proper scopes enabled".format(delegated_user)),
-                None))
+            return RetVal2(
+                action_result.set_status(
+                    phantom.APP_ERROR,
+                    "Failed to create service object for API: {}-{}. {} {}".format(
+                        api_name,
+                        api_version,
+                        str(e),
+                        f"Please make sure the user '{delegated_user}' is valid and the service account has the proper scopes enabled",
+                    ),
+                    None,
+                )
+            )
 
         return RetVal2(phantom.APP_SUCCESS, service)
 
@@ -131,14 +138,14 @@ class GoogleDriveConnector(BaseConnector):
         scopes = [GOOGLE_SCOPE_USER_READONLY]
 
         self.save_progress("Creating AdminSDK service object")
-        ret_val, service = self._create_service(action_result, scopes, "admin", "directory_v1", config['login_email'])
+        ret_val, service = self._create_service(action_result, scopes, "admin", "directory_v1", config["login_email"])
         if phantom.is_fail(ret_val):
             self.save_progress("Test Connectivity Failed")
             return ret_val
 
-        self.save_progress("Getting list of users for domain: {0}".format(self._domain))
+        self.save_progress(f"Getting list of users for domain: {self._domain}")
         try:
-            service.users().list(domain=self._domain, maxResults=1, orderBy='email', sortOrder="ASCENDING").execute()
+            service.users().list(domain=self._domain, maxResults=1, orderBy="email", sortOrder="ASCENDING").execute()
         except Exception as e:
             self.save_progress("Test Connectivity Failed")
             return action_result.set_status(phantom.APP_ERROR, "Failed to get users", e)
@@ -152,67 +159,63 @@ class GoogleDriveConnector(BaseConnector):
         action_result = self.add_action_result(ActionResult(dict(param)))
         scopes = [GOOGLE_SCOPE_USER_READONLY]
 
-        login_email = config['login_email']
+        login_email = config["login_email"]
 
         self.save_progress("Querying handle list users")
         ret_val, service = self._create_service(action_result, scopes, "admin", "directory_v1", login_email)
         if phantom.is_fail(ret_val):
             return ret_val
 
-        max_users = param.get('max_items', 500)
+        max_users = param.get("max_items", 500)
 
-        kwargs = {'domain': self._domain, 'maxResults': max_users, 'orderBy': 'email', 'sortOrder': 'ASCENDING'}
+        kwargs = {"domain": self._domain, "maxResults": max_users, "orderBy": "email", "sortOrder": "ASCENDING"}
 
-        page_token = param.get('next_page_token')
-        if (page_token):
-            kwargs.update({'pageToken': page_token})
+        page_token = param.get("next_page_token")
+        if page_token:
+            kwargs.update({"pageToken": page_token})
 
         try:
             users_resp = service.users().list(**kwargs).execute()
         except Exception as e:
             error_message = str(e)
-            self.debug_print("Exception message: {}".format(error_message))
+            self.debug_print(f"Exception message: {error_message}")
             return action_result.set_status(phantom.APP_ERROR, "Failed to get users")
 
-        users = users_resp.get('users', [])
+        users = users_resp.get("users", [])
         num_users = len(users)
-        next_page = users_resp.get('nextPageToken')
-        summary = action_result.update_summary({'total_users_returned': num_users})
+        next_page = users_resp.get("nextPageToken")
+        summary = action_result.update_summary({"total_users_returned": num_users})
 
         for curr_user in users:
             action_result.add_data(curr_user)
 
-        if (next_page):
-            summary['next_page_token'] = next_page
+        if next_page:
+            summary["next_page_token"] = next_page
 
         self.save_progress("Handle list users succeeded")
-        return action_result.set_status(
-            phantom.APP_SUCCESS, 'Successfully retrieved {} user{}'.format(
-                num_users, '' if num_users == 1 else 's'
-            )
-        )
+        return action_result.set_status(phantom.APP_SUCCESS, "Successfully retrieved {} user{}".format(num_users, "" if num_users == 1 else "s"))
 
     def _handle_list_files(self, param):
         action_result = self.add_action_result(ActionResult(dict(param)))
         scopes = [GOOGLE_SCOPE_DRIVE_READONLY]
 
-        login_email = param.get('email', self._login_email)
-        max_results = int(param.get('max_results', 500))
+        login_email = param.get("email", self._login_email)
+        max_results = int(param.get("max_results", 500))
 
         self.save_progress("Querying handle list files")
         ret_val, service = self._create_service(action_result, scopes, "drive", "v3", login_email)
         if phantom.is_fail(ret_val):
             return ret_val
 
-        kwargs = {'orderBy': 'name', 'pageSize': max_results, 'fields': LIST_RESP_FIELDS}
+        kwargs = {"orderBy": "name", "pageSize": max_results, "fields": LIST_RESP_FIELDS}
 
-        query = param.get('query')
-        if (query):
-            kwargs.update({'q': query})
+        query = param.get("query")
+        if query:
+            kwargs.update({"q": query})
 
-        page_token = param.get('next_page_token')
-        if (page_token):
-            kwargs.update({'pageToken': page_token})
+        page_token = param.get("next_page_token")
+        if page_token:
+            kwargs.update({"pageToken": page_token})
 
         supportsAllDrives = param.get("supports_all_drives")
         if supportsAllDrives:
@@ -228,28 +231,24 @@ class GoogleDriveConnector(BaseConnector):
             resp = service.files().list(**kwargs).execute()
         except Exception as e:
             error_message = str(e)
-            self.debug_print("Exception message: {}".format(error_message))
+            self.debug_print(f"Exception message: {error_message}")
             return action_result.set_status(phantom.APP_ERROR, "Failed to list files")
 
-        for file_obj in resp['files']:
+        for file_obj in resp["files"]:
             action_result.add_data(file_obj)
 
-        num_files = len(resp['files'])
-        summary = action_result.update_summary({'total_files_returned': num_files})
+        num_files = len(resp["files"])
+        summary = action_result.update_summary({"total_files_returned": num_files})
 
-        next_page = resp.get('nextPageToken')
-        if (next_page):
-            summary['next_page_token'] = next_page
+        next_page = resp.get("nextPageToken")
+        if next_page:
+            summary["next_page_token"] = next_page
 
         self.save_progress("Handle list files succeeded")
-        return action_result.set_status(
-            phantom.APP_SUCCESS, 'Successfully retrieved {} file{}'.format(
-                num_files, '' if num_files == 1 else 's'
-            )
-        )
+        return action_result.set_status(phantom.APP_SUCCESS, "Successfully retrieved {} file{}".format(num_files, "" if num_files == 1 else "s"))
 
     def _get_export_mime_type(self, action_result, service, mime_type, param):
-        export_mime_type = param.get('mime_type')
+        export_mime_type = param.get("mime_type")
         if export_mime_type:
             return RetVal2(phantom.APP_SUCCESS, export_mime_type)
 
@@ -258,20 +257,20 @@ class GoogleDriveConnector(BaseConnector):
             return RetVal2(phantom.APP_SUCCESS, export_mime_type)
 
         try:
-            resp = service.about().get(fields='exportFormats').execute()
-            if mime_type not in resp['exportFormats']:
+            resp = service.about().get(fields="exportFormats").execute()
+            if mime_type not in resp["exportFormats"]:
                 return RetVal2(action_result.set_status(phantom.APP_ERROR, f"A file with mime type {mime_type} cannot be downloaded.", None))
         except Exception as e:
             return RetVal2(action_result.set_status(phantom.APP_ERROR, "Error getting export MIME types", e))
 
-        return RetVal2(phantom.APP_SUCCESS, resp['exportFormats'][mime_type][0])
+        return RetVal2(phantom.APP_SUCCESS, resp["exportFormats"][mime_type][0])
 
     def _save_file_to_vault(self, action_result, service, param, file_metadata):
-        file_id = param['id']
+        file_id = param["id"]
 
-        if file_metadata['mimeType'].startswith('application/vnd.google-'):
+        if file_metadata["mimeType"].startswith("application/vnd.google-"):
             # We will need to export this type of file
-            ret_val, mime_type = self._get_export_mime_type(action_result, service, file_metadata['mimeType'], param)
+            ret_val, mime_type = self._get_export_mime_type(action_result, service, file_metadata["mimeType"], param)
             if phantom.is_fail(ret_val):
                 return ret_val
             try:
@@ -285,7 +284,7 @@ class GoogleDriveConnector(BaseConnector):
             except Exception as e:
                 return action_result.set_status(phantom.APP_ERROR, "Failed to get file", e)
 
-        if hasattr(Vault, 'get_vault_tmp_dir'):
+        if hasattr(Vault, "get_vault_tmp_dir"):
             tmp = tempfile.NamedTemporaryFile(dir=Vault.get_vault_tmp_dir(), delete=False)
         else:
             local_dir = os.path.join(paths.PHANTOM_VAULT, "tmp")
@@ -301,17 +300,13 @@ class GoogleDriveConnector(BaseConnector):
         finally:
             tmp.flush()  # flush data stored in temporary buffer
 
-        file_name = param.get('file_name') or file_metadata['name']
+        file_name = param.get("file_name") or file_metadata["name"]
 
         success, message, vault_id = ph_rules.vault_add(file_location=tmp.name, container=self.get_container_id(), file_name=file_name)
         if not success:
-            return action_result.set_status(
-                phantom.APP_ERROR, "Error adding file to vault: {}".format(message)
-            )
+            return action_result.set_status(phantom.APP_ERROR, f"Error adding file to vault: {message}")
 
-        action_result.update_summary({
-            'vault_id': vault_id
-        })
+        action_result.update_summary({"vault_id": vault_id})
 
         return phantom.APP_SUCCESS
 
@@ -319,9 +314,9 @@ class GoogleDriveConnector(BaseConnector):
         action_result = self.add_action_result(ActionResult(dict(param)))
         scopes = [GOOGLE_SCOPE_DRIVE_READONLY]
 
-        login_email = param.get('email', self._login_email)
+        login_email = param.get("email", self._login_email)
 
-        file_id = param['id']
+        file_id = param["id"]
 
         self.save_progress("Querying handle get file")
         ret_val, service = self._create_service(action_result, scopes, "drive", "v3", login_email)
@@ -334,16 +329,11 @@ class GoogleDriveConnector(BaseConnector):
             file_metadata = service.files().get(fileId=file_id, fields=ALL_FILE_FIELDS, supportsAllDrives=supportsAllDrives).execute()
         except Exception as e:
             error_message = str(e)
-            self.debug_print("Exception message: {}".format(error_message))
+            self.debug_print(f"Exception message: {error_message}")
             return action_result.set_status(phantom.APP_ERROR, "Failed to get file metadata")
 
-        if param.get('download_file'):
-            ret_val = self._save_file_to_vault(
-                action_result,
-                service,
-                param,
-                file_metadata
-            )
+        if param.get("download_file"):
+            ret_val = self._save_file_to_vault(action_result, service, param, file_metadata)
             if phantom.is_fail(ret_val):
                 return ret_val
 
@@ -351,24 +341,21 @@ class GoogleDriveConnector(BaseConnector):
 
         self.save_progress("Handle get file succeeded")
         return action_result.set_status(
-            phantom.APP_SUCCESS,
-            "Successfully retrieved file information{}".format(
-                " and added to vault" if param.get('download_file') else ""
-            )
+            phantom.APP_SUCCESS, "Successfully retrieved file information{}".format(" and added to vault" if param.get("download_file") else "")
         )
 
     def _convert_mime_types(self, file_metadata, mime_type):
         updated_mime_type = MIME_TYPE_MAPPINGS.get(mime_type)
         if updated_mime_type:
-            file_metadata['mimeType'] = updated_mime_type
+            file_metadata["mimeType"] = updated_mime_type
 
     def _handle_create_file(self, param):
         action_result = self.add_action_result(ActionResult(dict(param)))
         scopes = [GOOGLE_SCOPE_DRIVE]
 
-        login_email = param.get('email', self._login_email)
+        login_email = param.get("email", self._login_email)
 
-        vault_id = param['vault_id']
+        vault_id = param["vault_id"]
 
         self.save_progress("Querying handle create file")
         ret_val, service = self._create_service(action_result, scopes, "drive", "v3", login_email)
@@ -379,35 +366,32 @@ class GoogleDriveConnector(BaseConnector):
 
         success, message, vault_file_metadata = ph_rules.vault_info(vault_id=vault_id)
         if not success:
-            return action_result.set_status(
-                phantom.APP_ERROR, "Error fetching the file from vault. Error details: {}".format(message)
-            )
-        vault_file_metadata = list(vault_file_metadata)[0]
+            return action_result.set_status(phantom.APP_ERROR, f"Error fetching the file from vault. Error details: {message}")
+        vault_file_metadata = next(iter(vault_file_metadata))
 
-        mime_type = mime.from_file(vault_file_metadata['path'])
+        mime_type = mime.from_file(vault_file_metadata["path"])
 
-        name = param.get('file_name') or vault_file_metadata['name']
+        name = param.get("file_name") or vault_file_metadata["name"]
 
-        file_metadata = {
-            'name': name
-        }
+        file_metadata = {"name": name}
 
-        source_mime_type = param.get('source_mime_type')
+        source_mime_type = param.get("source_mime_type")
         if source_mime_type:
             mime_type = source_mime_type
 
-        dest_mime_type = param.get('dest_mime_type')
+        dest_mime_type = param.get("dest_mime_type")
         if dest_mime_type:
-            file_metadata['mimeType'] = dest_mime_type
-        elif param.get('convert', True):
+            file_metadata["mimeType"] = dest_mime_type
+        elif param.get("convert", True):
             updated_mime_type = MIME_TYPE_MAPPINGS.get(mime_type)
             if updated_mime_type:
-                file_metadata['mimeType'] = updated_mime_type
+                file_metadata["mimeType"] = updated_mime_type
 
-        folder_id = param.get('folder_id')
+        folder_id = param.get("folder_id")
         if folder_id:
-            file_metadata['parents'] = [folder_id]
+            file_metadata["parents"] = [folder_id]
 
+<<<<<<< HEAD
         supportsAllDrives = param.get("supports_all_drives")
 
         media = MediaFileUpload(
@@ -421,12 +405,18 @@ class GoogleDriveConnector(BaseConnector):
                 media_body=media,
                 supportsAllDrives=supportsAllDrives,
                 fields='id').execute()
+=======
+        media = MediaFileUpload(vault_file_metadata["path"], mimetype=mime_type)
+
+        try:
+            resp = service.files().create(body=file_metadata, media_body=media, fields="id").execute()
+>>>>>>> 26adb258a68ee7852a4785e3bf0fa6be2d6c97d6
         except Exception as e:
             error_message = str(e)
-            self.debug_print("Exception message: {}".format(error_message))
+            self.debug_print(f"Exception message: {error_message}")
             return action_result.set_status(phantom.APP_ERROR, "Error adding file to drive")
 
-        action_result.update_summary({'new_file_id': resp['id']})
+        action_result.update_summary({"new_file_id": resp["id"]})
 
         self.save_progress("Handle create file succeeded")
         return action_result.set_status(phantom.APP_SUCCESS, "Successfully added new file to Drive")
@@ -434,21 +424,18 @@ class GoogleDriveConnector(BaseConnector):
     def _handle_create_folder(self, param):
         action_result = self.add_action_result(ActionResult(dict(param)))
         scopes = [GOOGLE_SCOPE_DRIVE]
-        login_email = param.get('email', self._login_email)
+        login_email = param.get("email", self._login_email)
 
         self.save_progress("Querying handle create folder")
         ret_val, service = self._create_service(action_result, scopes, "drive", "v3", login_email)
         if phantom.is_fail(ret_val):
             return ret_val
 
-        file_metadata = {
-            'name': param['name'],
-            'mimeType': 'application/vnd.google-apps.folder'
-        }
+        file_metadata = {"name": param["name"], "mimeType": "application/vnd.google-apps.folder"}
 
-        folder_id = param.get('folder_id')
+        folder_id = param.get("folder_id")
         if folder_id:
-            file_metadata['parents'] = [folder_id]
+            file_metadata["parents"] = [folder_id]
 
         driveid = param.get("driveid")
         if driveid:
@@ -457,11 +444,15 @@ class GoogleDriveConnector(BaseConnector):
         supportsAllDrives = param.get("supports_all_drives")
 
         try:
+<<<<<<< HEAD
             resp = service.files().create(body=file_metadata, fields='id', supportsAllDrives=supportsAllDrives).execute()
+=======
+            resp = service.files().create(body=file_metadata, fields="id").execute()
+>>>>>>> 26adb258a68ee7852a4785e3bf0fa6be2d6c97d6
         except Exception as e:
             return action_result.set_status(phantom.APP_ERROR, "Error adding folder to drive", e)
 
-        action_result.update_summary({'new_folder_id': resp['id']})
+        action_result.update_summary({"new_folder_id": resp["id"]})
 
         self.save_progress("Handle create folder succeeded")
         return action_result.set_status(phantom.APP_SUCCESS, "Successfully added new folder to Drive")
@@ -469,9 +460,9 @@ class GoogleDriveConnector(BaseConnector):
     def _handle_delete_file(self, param):
         action_result = self.add_action_result(ActionResult(dict(param)))
         scopes = [GOOGLE_SCOPE_DRIVE]
-        login_email = param.get('email', self._login_email)
+        login_email = param.get("email", self._login_email)
 
-        file_id = param['id']
+        file_id = param["id"]
 
         self.save_progress("Querying handle delete file")
         ret_val, service = self._create_service(action_result, scopes, "drive", "v3", login_email)
@@ -481,12 +472,16 @@ class GoogleDriveConnector(BaseConnector):
         supportsAllDrives = param.get("supports_all_drives")
 
         try:
+<<<<<<< HEAD
             service.files().get(fileId=file_id, fields="id", supportsAllDrives=supportsAllDrives).execute()  # noqa
+=======
+            service.files().get(fileId=file_id, fields="id").execute()
+>>>>>>> 26adb258a68ee7852a4785e3bf0fa6be2d6c97d6
         except Exception:
             return action_result.set_status(phantom.APP_SUCCESS, "File doesn't exist or has already been deleted")
 
         try:
-            resp = service.files().delete(fileId=file_id).execute()  # noqa
+            resp = service.files().delete(fileId=file_id).execute()
         except Exception as e:
             return action_result.set_status(phantom.APP_ERROR, "Error deleting file", e)
 
@@ -726,7 +721,6 @@ class GoogleDriveConnector(BaseConnector):
         )
 
     def handle_action(self, param):
-
         ret_val = phantom.APP_SUCCESS
 
         # Get the action that we are supposed to execute for this App Run
@@ -734,25 +728,25 @@ class GoogleDriveConnector(BaseConnector):
 
         self.debug_print("action_id", self.get_action_identifier())
 
-        if action_id == 'test_connectivity':
+        if action_id == "test_connectivity":
             ret_val = self._handle_test_connectivity(param)
 
-        elif action_id == 'list_users':
+        elif action_id == "list_users":
             ret_val = self._handle_list_users(param)
 
-        elif action_id == 'list_files':
+        elif action_id == "list_files":
             ret_val = self._handle_list_files(param)
 
-        elif action_id == 'get_file':
+        elif action_id == "get_file":
             ret_val = self._handle_get_file(param)
 
-        elif action_id == 'create_file':
+        elif action_id == "create_file":
             ret_val = self._handle_create_file(param)
 
-        elif action_id == 'create_folder':
+        elif action_id == "create_folder":
             ret_val = self._handle_create_folder(param)
 
-        elif action_id == 'delete_file':
+        elif action_id == "delete_file":
             ret_val = self._handle_delete_file(param)
 
         elif action_id == "copy_file":
@@ -776,8 +770,7 @@ class GoogleDriveConnector(BaseConnector):
         return ret_val
 
 
-if __name__ == '__main__':
-
+if __name__ == "__main__":
     import argparse
     import sys
 
@@ -787,10 +780,10 @@ if __name__ == '__main__':
 
     argparser = argparse.ArgumentParser()
 
-    argparser.add_argument('input_test_json', help='Input Test JSON file')
-    argparser.add_argument('-u', '--username', help='username', required=False)
-    argparser.add_argument('-p', '--password', help='password', required=False)
-    argparser.add_argument('-v', '--verify', action='store_true', help='verify', required=False, default=False)
+    argparser.add_argument("input_test_json", help="Input Test JSON file")
+    argparser.add_argument("-u", "--username", help="username", required=False)
+    argparser.add_argument("-p", "--password", help="password", required=False)
+    argparser.add_argument("-v", "--verify", action="store_true", help="verify", required=False, default=False)
 
     args = argparser.parse_args()
     session_id = None
@@ -799,36 +792,36 @@ if __name__ == '__main__':
     password = args.password
     verify = args.verify
 
-    if (username is not None and password is None):
-
+    if username is not None and password is None:
         # User specified a username but not a password, so ask
         import getpass
+
         password = getpass.getpass("Password: ")
 
-    if (username and password):
+    if username and password:
         login_url = BaseConnector._get_phantom_base_url() + "login"
         try:
             print("Accessing the Login page")
             r = requests.get(login_url, verify=verify, timeout=DEFAULT_REQUEST_TIMEOUT)
-            csrftoken = r.cookies['csrftoken']
+            csrftoken = r.cookies["csrftoken"]
 
             data = dict()
-            data['username'] = username
-            data['password'] = password
-            data['csrfmiddlewaretoken'] = csrftoken
+            data["username"] = username
+            data["password"] = password
+            data["csrfmiddlewaretoken"] = csrftoken
 
             headers = dict()
-            headers['Cookie'] = 'csrftoken=' + csrftoken
-            headers['Referer'] = login_url
+            headers["Cookie"] = "csrftoken=" + csrftoken
+            headers["Referer"] = login_url
 
             print("Logging into Platform to get the session id")
             r2 = requests.post(login_url, verify=verify, data=data, headers=headers, timeout=DEFAULT_REQUEST_TIMEOUT)
-            session_id = r2.cookies['sessionid']
+            session_id = r2.cookies["sessionid"]
         except Exception as e:
-            print("Unable to get session id from the platfrom. Error: {}".format(str(e)))
+            print(f"Unable to get session id from the platfrom. Error: {e!s}")
             sys.exit(1)
 
-    if (len(sys.argv) < 2):
+    if len(sys.argv) < 2:
         print("No test json specified as input")
         sys.exit(0)
 
@@ -840,8 +833,8 @@ if __name__ == '__main__':
         connector = GoogleDriveConnector()
         connector.print_progress_message = True
 
-        if (session_id is not None):
-            in_json['user_session_token'] = session_id
+        if session_id is not None:
+            in_json["user_session_token"] = session_id
 
         ret_val = connector._handle_action(json.dumps(in_json), None)
         print(json.dumps(json.loads(ret_val), indent=4))
