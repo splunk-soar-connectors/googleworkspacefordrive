@@ -430,7 +430,7 @@ class GoogleDriveConnector(BaseConnector):
         supportsAllDrives = param.get("supports_all_drives")
 
         try:
-            resp = service.files().create(body=file_metadata, fields='id', supportsAllDrives=supportsAllDrives).execute()
+            resp = service.files().create(body=file_metadata, fields="id", supportsAllDrives=supportsAllDrives).execute()
         except Exception as e:
             return action_result.set_status(phantom.APP_ERROR, "Error adding folder to drive", e)
 
@@ -454,7 +454,7 @@ class GoogleDriveConnector(BaseConnector):
         supportsAllDrives = param.get("supports_all_drives")
 
         try:
-            service.files().get(fileId=file_id, fields="id", supportsAllDrives=supportsAllDrives).execute()  # noqa
+            service.files().get(fileId=file_id, fields="id", supportsAllDrives=supportsAllDrives).execute()
         except Exception:
             return action_result.set_status(phantom.APP_SUCCESS, "File doesn't exist or has already been deleted")
 
@@ -471,9 +471,7 @@ class GoogleDriveConnector(BaseConnector):
         scopes = [GOOGLE_SCOPE_DRIVE]
         login_email = param.get("email", self._login_email)
 
-        ret_val, service = self._create_service(
-            action_result, scopes, "drive", "v3", login_email
-        )
+        ret_val, service = self._create_service(action_result, scopes, "drive", "v3", login_email)
         if phantom.is_fail(ret_val):
             return ret_val
 
@@ -503,24 +501,18 @@ class GoogleDriveConnector(BaseConnector):
                 .execute()
             )
         except Exception as e:
-            return action_result.set_status(
-                phantom.APP_ERROR, "Error copying file to folder", e
-            )
+            return action_result.set_status(phantom.APP_ERROR, "Error copying file to folder", e)
 
         action_result.update_summary({"new_file_id": resp["id"]})
 
-        return action_result.set_status(
-            phantom.APP_SUCCESS, "Successfully copied file to folder"
-        )
+        return action_result.set_status(phantom.APP_SUCCESS, "Successfully copied file to folder")
 
     def _handle_rename_file(self, param):
         action_result = self.add_action_result(ActionResult(dict(param)))
         scopes = [GOOGLE_SCOPE_DRIVE]
         login_email = param.get("email", self._login_email)
 
-        ret_val, service = self._create_service(
-            action_result, scopes, "drive", "v3", login_email
-        )
+        ret_val, service = self._create_service(action_result, scopes, "drive", "v3", login_email)
         if phantom.is_fail(ret_val):
             return ret_val
 
@@ -550,18 +542,14 @@ class GoogleDriveConnector(BaseConnector):
 
         action_result.update_summary({"updated_name": resp["name"]})
 
-        return action_result.set_status(
-            phantom.APP_SUCCESS, "Successfully renamed file"
-        )
+        return action_result.set_status(phantom.APP_SUCCESS, "Successfully renamed file")
 
     def _handle_move_file(self, param):
         action_result = self.add_action_result(ActionResult(dict(param)))
         scopes = [GOOGLE_SCOPE_DRIVE]
         login_email = param.get("email", self._login_email)
 
-        ret_val, service = self._create_service(
-            action_result, scopes, "drive", "v3", login_email
-        )
+        ret_val, service = self._create_service(action_result, scopes, "drive", "v3", login_email)
         if phantom.is_fail(ret_val):
             return ret_val
 
@@ -586,15 +574,11 @@ class GoogleDriveConnector(BaseConnector):
                 .execute()
             )
         except Exception as e:
-            return action_result.set_status(
-                phantom.APP_ERROR, "Error copying file to folder", e
-            )
+            return action_result.set_status(phantom.APP_ERROR, "Error copying file to folder", e)
 
         action_result.update_summary({"new_folder_name": resp["name"]})
 
-        return action_result.set_status(
-            phantom.APP_SUCCESS, "Successfully moved to new folder"
-        )
+        return action_result.set_status(phantom.APP_SUCCESS, "Successfully moved to new folder")
 
     def _handle_read_file(self, param):
         action_result = self.add_action_result(ActionResult(dict(param)))
@@ -604,9 +588,7 @@ class GoogleDriveConnector(BaseConnector):
 
         file_id = param["file_id"]
 
-        ret_val, service = self._create_service(
-            action_result, scopes, "docs", "v1", login_email
-        )
+        ret_val, service = self._create_service(action_result, scopes, "docs", "v1", login_email)
         if phantom.is_fail(ret_val):
             return ret_val
 
@@ -614,15 +596,11 @@ class GoogleDriveConnector(BaseConnector):
             file_data = service.documents().get(documentId=file_id).execute()
         except Exception as e:
             error_message = str(e)
-            self.debug_print("Exception message: {}".format(error_message))
-            return action_result.set_status(
-                phantom.APP_ERROR, "Failed to get file data", e
-            )
+            self.debug_print(f"Exception message: {error_message}")
+            return action_result.set_status(phantom.APP_ERROR, "Failed to get file data", e)
 
         action_result.add_data(file_data)
-        return action_result.set_status(
-            phantom.APP_SUCCESS, "Successfully retrieved file information"
-        )
+        return action_result.set_status(phantom.APP_SUCCESS, "Successfully retrieved file information")
 
     def _handle_get_spreadsheet(self, param):
         action_result = self.add_action_result(ActionResult(dict(param)))
@@ -634,29 +612,18 @@ class GoogleDriveConnector(BaseConnector):
 
         range_values = param.get("range", "A1:Z1001")
 
-        ret_val, service = self._create_service(
-            action_result, scopes, "sheets", "v4", login_email
-        )
+        ret_val, service = self._create_service(action_result, scopes, "sheets", "v4", login_email)
         if phantom.is_fail(ret_val):
             return ret_val
 
         try:
-            sheet_values = (
-                service.spreadsheets()
-                .values()
-                .get(spreadsheetId=file_id, range=range_values)
-                .execute()
-            )
+            sheet_values = service.spreadsheets().values().get(spreadsheetId=file_id, range=range_values).execute()
         except Exception as e:
-            return action_result.set_status(
-                phantom.APP_ERROR, "Failed to get file metadata \n" + str(e)
-            )
+            return action_result.set_status(phantom.APP_ERROR, "Failed to get file metadata \n" + str(e))
 
         action_result.add_data(sheet_values)
 
-        return action_result.set_status(
-            phantom.APP_SUCCESS, "Successfully retrieved Spreadsheet values information"
-        )
+        return action_result.set_status(phantom.APP_SUCCESS, "Successfully retrieved Spreadsheet values information")
 
     def _handle_update_spreadsheet(self, param):
         action_result = self.add_action_result(ActionResult(dict(param)))
@@ -670,9 +637,7 @@ class GoogleDriveConnector(BaseConnector):
 
         values = json.loads(param.get("values"))
 
-        ret_val, service = self._create_service(
-            action_result, scopes, "sheets", "v4", login_email
-        )
+        ret_val, service = self._create_service(action_result, scopes, "sheets", "v4", login_email)
         if phantom.is_fail(ret_val):
             return ret_val
 
@@ -690,13 +655,9 @@ class GoogleDriveConnector(BaseConnector):
                 .execute()
             )
         except Exception as e:
-            return action_result.set_status(
-                phantom.APP_ERROR, "Failed to update spreadsheet values\n" + str(e)
-            )
+            return action_result.set_status(phantom.APP_ERROR, "Failed to update spreadsheet values\n" + str(e))
         action_result.add_data(response)
-        return action_result.set_status(
-            phantom.APP_SUCCESS, "Successfully updates Spreadsheet values information"
-        )
+        return action_result.set_status(phantom.APP_SUCCESS, "Successfully updates Spreadsheet values information")
 
     def handle_action(self, param):
         ret_val = phantom.APP_SUCCESS

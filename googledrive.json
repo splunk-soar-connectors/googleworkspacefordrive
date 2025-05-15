@@ -18,7 +18,7 @@
     "utctime_updated": "2025-05-06T16:37:26.155783Z",
     "package_name": "phantom_googledrive",
     "main_module": "googledrive_connector.py",
-    "min_phantom_version": "6.1.0",
+    "min_phantom_version": "6.3.0",
     "fips_compliant": true,
     "app_wizard_version": "1.0.0",
     "configuration": {
@@ -1682,17 +1682,17 @@
                         true,
                         false
                     ]
-                  },
-                  "include_items_from_all_drives": {
-                        "description": "Whether both My Drive and shared drive items should be included in results.",
-                        "data_type": "boolean",
-                        "order": 5,
-                        "default": false,
-                        "example_values": [
-                            true,
-                            false
-                        ]
-                  }
+                },
+                "include_items_from_all_drives": {
+                    "description": "Whether both My Drive and shared drive items should be included in results.",
+                    "data_type": "boolean",
+                    "order": 5,
+                    "default": false,
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                }
             },
             "output": [
                 {
@@ -2036,7 +2036,7 @@
                 "supports_all_drives": {
                     "description": "Whether the requesting application supports both My Drives and shared drives.",
                     "data_type": "boolean",
-                    "order": 7,
+                    "order": 3,
                     "default": true,
                     "example_values": [
                         true,
@@ -2066,7 +2066,7 @@
                         "drive file id"
                     ],
                     "column_name": "Original File ID",
-                    "column_order": 1
+                    "column_order": 0
                 },
                 {
                     "data_path": "action_result.parameter.new_name",
@@ -2185,19 +2185,6 @@
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.parameter.supports_all_drives",
-                    "data_type": "boolean"
-                },
-                {
-                    "data_path": "action_result.parameter.file_id",
-                    "data_type": "string",
-                    "contains": [
-                        "drive file id"
-                    ],
-                    "column_name": "File ID",
-                    "column_order": 1
-                },
-                {
                     "contains": [
                         "email"
                     ],
@@ -2208,13 +2195,23 @@
                     "data_type": "string"
                 },
                 {
+                    "data_path": "action_result.parameter.file_id",
+                    "data_type": "string",
+                    "contains": [
+                        "drive file id"
+                    ],
+                    "column_name": "File ID",
+                    "column_order": 0
+                },
+
+                {
                     "data_path": "action_result.parameter.new_parent_id",
                     "data_type": "string",
                     "contains": [
                         "drive file id"
                     ],
                     "column_name": "New Frolder ID",
-                    "column_order": 2
+                    "column_order": 1
                 },
                 {
                     "data_path": "action_result.parameter.remove_parent_id",
@@ -2222,6 +2219,10 @@
                     "contains": [
                         "drive file id"
                     ]
+                },
+                {
+                    "data_path": "action_result.parameter.supports_all_drives",
+                    "data_type": "boolean"
                 },
                 {
                     "data_path": "action_result.message",
@@ -2333,7 +2334,7 @@
                 {
                     "data_path": "summary.total_objects_successful",
                     "data_type": "numeric"
-                },                
+                },
                 {
                     "data_path": "action_result.data",
                     "data_type": "string",
@@ -2418,17 +2419,17 @@
                     "data_path": "action_result.data.*.body.content.*.table.tableRows.*.tableCells.*.content.*.paragraph.elements.*.endIndex",
                     "data_type": "string",
                     "example_values": []
-                },                    
+                },
                 {
                     "data_path": "action_result.data.*.body.content.*.table.tableRows.*.tableCells.*.content.*.paragraph",
                     "data_type": "string",
                     "example_values": []
-                },                
+                },
                 {
                     "data_path": "action_result.data.*.body.content.*.table.tableRows.*.tableCells.*.content.*.paragraph.elements",
                     "data_type": "string",
                     "example_values": []
-                },                
+                },
                 {
                     "data_path": "action_result.data.*.body.content.*.table.tableRows.*.tableCells.*.content.*.paragraph.elements.*.textRun",
                     "data_type": "string",
@@ -2535,6 +2536,14 @@
                 {
                     "data_path": "action_result.data",
                     "data_type": "string"
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric"
                 }
             ],
             "versions": "EQ(*)",
@@ -2578,7 +2587,7 @@
                 "values": {
                     "description": "Values list. List of row data lists as shown [ ['row1_item1','row1_item2'],['row2_item1','row2_item2'] ] ",
                     "data_type": "string",
-                    "order": 2,
+                    "order": 3,
                     "required": false
                 }
             },
@@ -2636,6 +2645,14 @@
                 {
                     "data_path": "action_result.data.values",
                     "data_type": "string"
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric"
                 }
             ],
             "versions": "EQ(*)",
