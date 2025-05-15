@@ -392,17 +392,10 @@ class GoogleDriveConnector(BaseConnector):
 
         supportsAllDrives = param.get("supports_all_drives")
 
-        media = MediaFileUpload(
-            vault_file_metadata['path'],
-            mimetype=mime_type
-        )
+        media = MediaFileUpload(vault_file_metadata["path"], mimetype=mime_type)
 
         try:
-            resp = service.files().create(
-                body=file_metadata,
-                media_body=media,
-                supportsAllDrives=supportsAllDrives,
-                fields='id').execute()
+            resp = service.files().create(body=file_metadata, media_body=media, fields="id", supportsAllDrives=supportsAllDrives).execute()
         except Exception as e:
             error_message = str(e)
             self.debug_print(f"Exception message: {error_message}")
