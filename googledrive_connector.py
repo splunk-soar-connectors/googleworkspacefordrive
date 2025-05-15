@@ -391,26 +391,12 @@ class GoogleDriveConnector(BaseConnector):
         if folder_id:
             file_metadata["parents"] = [folder_id]
 
-<<<<<<< HEAD
         supportsAllDrives = param.get("supports_all_drives")
 
-        media = MediaFileUpload(
-            vault_file_metadata['path'],
-            mimetype=mime_type
-        )
-
-        try:
-            resp = service.files().create(
-                body=file_metadata,
-                media_body=media,
-                supportsAllDrives=supportsAllDrives,
-                fields='id').execute()
-=======
         media = MediaFileUpload(vault_file_metadata["path"], mimetype=mime_type)
 
         try:
-            resp = service.files().create(body=file_metadata, media_body=media, fields="id").execute()
->>>>>>> 26adb258a68ee7852a4785e3bf0fa6be2d6c97d6
+            resp = service.files().create(body=file_metadata, media_body=media, fields="id", supportsAllDrives=supportsAllDrives).execute()
         except Exception as e:
             error_message = str(e)
             self.debug_print(f"Exception message: {error_message}")
@@ -444,11 +430,7 @@ class GoogleDriveConnector(BaseConnector):
         supportsAllDrives = param.get("supports_all_drives")
 
         try:
-<<<<<<< HEAD
             resp = service.files().create(body=file_metadata, fields='id', supportsAllDrives=supportsAllDrives).execute()
-=======
-            resp = service.files().create(body=file_metadata, fields="id").execute()
->>>>>>> 26adb258a68ee7852a4785e3bf0fa6be2d6c97d6
         except Exception as e:
             return action_result.set_status(phantom.APP_ERROR, "Error adding folder to drive", e)
 
@@ -472,11 +454,7 @@ class GoogleDriveConnector(BaseConnector):
         supportsAllDrives = param.get("supports_all_drives")
 
         try:
-<<<<<<< HEAD
             service.files().get(fileId=file_id, fields="id", supportsAllDrives=supportsAllDrives).execute()  # noqa
-=======
-            service.files().get(fileId=file_id, fields="id").execute()
->>>>>>> 26adb258a68ee7852a4785e3bf0fa6be2d6c97d6
         except Exception:
             return action_result.set_status(phantom.APP_SUCCESS, "File doesn't exist or has already been deleted")
 
