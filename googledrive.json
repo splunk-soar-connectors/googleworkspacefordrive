@@ -10,73 +10,17 @@
     "product_version_regex": ".*",
     "publisher": "Splunk",
     "license": "Copyright (c) 2018-2025 Splunk Inc.",
-    "app_version": "2.2.1",
+    "app_version": "2.2.2",
     "python_version": "3",
     "latest_tested_versions": [
         "Cloud, July 2023"
     ],
-    "utctime_updated": "2023-11-29T20:43:51.000000Z",
+    "utctime_updated": "2025-05-06T16:37:26.155783Z",
     "package_name": "phantom_googledrive",
     "main_module": "googledrive_connector.py",
     "min_phantom_version": "6.1.0",
     "fips_compliant": true,
     "app_wizard_version": "1.0.0",
-    "pip_dependencies": {
-        "wheel": [
-            {
-                "module": "cachetools",
-                "input_file": "wheels/shared/cachetools-2.0.1-py2.py3-none-any.whl"
-            },
-            {
-                "module": "google_api_python_client",
-                "input_file": "wheels/shared/google_api_python_client-1.6.4-py2.py3-none-any.whl"
-            },
-            {
-                "module": "google_auth",
-                "input_file": "wheels/shared/google_auth-1.1.1-py2.py3-none-any.whl"
-            },
-            {
-                "module": "google_auth_httplib2",
-                "input_file": "wheels/shared/google_auth_httplib2-0.0.2-py2.py3-none-any.whl"
-            },
-            {
-                "module": "httplib2",
-                "input_file": "wheels/py3/httplib2-0.19.0-py3-none-any.whl"
-            },
-            {
-                "module": "oauth2client",
-                "input_file": "wheels/shared/oauth2client-4.1.2-py2.py3-none-any.whl"
-            },
-            {
-                "module": "pyasn1",
-                "input_file": "wheels/shared/pyasn1-0.3.3-py2.py3-none-any.whl"
-            },
-            {
-                "module": "pyasn1_modules",
-                "input_file": "wheels/shared/pyasn1_modules-0.1.1-py2.py3-none-any.whl"
-            },
-            {
-                "module": "pyparsing",
-                "input_file": "wheels/shared/pyparsing-2.4.7-py2.py3-none-any.whl"
-            },
-            {
-                "module": "python_magic",
-                "input_file": "wheels/shared/python_magic-0.4.18-py2.py3-none-any.whl"
-            },
-            {
-                "module": "rsa",
-                "input_file": "wheels/py3/rsa-4.7.2-py3-none-any.whl"
-            },
-            {
-                "module": "six",
-                "input_file": "wheels/shared/six-1.16.0-py2.py3-none-any.whl"
-            },
-            {
-                "module": "uritemplate",
-                "input_file": "wheels/shared/uritemplate-3.0.0-py2.py3-none-any.whl"
-            }
-        ]
-    },
     "configuration": {
         "login_email": {
             "description": "Login (Admin) email",
@@ -2699,5 +2643,57 @@
                 "type": "table"
             }
         }
-    ]
+    ],
+    "pip39_dependencies": {
+        "wheel": [
+            {
+                "module": "cachetools",
+                "input_file": "wheels/shared/cachetools-2.0.1-py2.py3-none-any.whl"
+            },
+            {
+                "module": "google_api_python_client",
+                "input_file": "wheels/shared/google_api_python_client-1.6.4-py2.py3-none-any.whl"
+            },
+            {
+                "module": "google_auth",
+                "input_file": "wheels/shared/google_auth-1.1.1-py2.py3-none-any.whl"
+            },
+            {
+                "module": "google_auth_httplib2",
+                "input_file": "wheels/shared/google_auth_httplib2-0.0.2-py2.py3-none-any.whl"
+            },
+            {
+                "module": "httplib2",
+                "input_file": "wheels/py3/httplib2-0.19.0-py3-none-any.whl"
+            },
+            {
+                "module": "oauth2client",
+                "input_file": "wheels/shared/oauth2client-4.1.2-py2.py3-none-any.whl"
+            },
+            {
+                "module": "pyasn1",
+                "input_file": "wheels/shared/pyasn1-0.3.3-py2.py3-none-any.whl"
+            },
+            {
+                "module": "pyasn1_modules",
+                "input_file": "wheels/shared/pyasn1_modules-0.1.1-py2.py3-none-any.whl"
+            },
+            {
+                "module": "pyparsing",
+                "input_file": "wheels/shared/pyparsing-2.4.7-py2.py3-none-any.whl"
+            },
+            {
+                "module": "python_magic",
+                "input_file": "wheels/shared/python_magic-0.4.18-py2.py3-none-any.whl"
+            },
+            {
+                "module": "rsa",
+                "input_file": "wheels/py3/rsa-4.7.2-py3-none-any.whl"
+            },
+            {
+                "module": "uritemplate",
+                "input_file": "wheels/shared/uritemplate-3.0.0-py2.py3-none-any.whl"
+            }
+        ]
+    }
 }

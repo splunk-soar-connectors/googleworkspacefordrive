@@ -1,7 +1,7 @@
 # G Suite for Drive
 
 Publisher: Splunk \
-Connector Version: 2.2.1 \
+Connector Version: 2.2.2 \
 Product Vendor: Google \
 Product Name: Google Drive \
 Minimum Product Version: 6.1.0
