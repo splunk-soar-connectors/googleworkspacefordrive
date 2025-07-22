@@ -11,7 +11,7 @@
     "publisher": "Splunk",
     "license": "Copyright (c) 2018-2025 Splunk Inc.",
     "app_version": "2.2.2",
-    "python_version": "3",
+    "python_version": ["3.9", "3.13"],
     "latest_tested_versions": [
         "Cloud, July 2023"
     ],
