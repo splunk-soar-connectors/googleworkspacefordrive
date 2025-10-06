@@ -1,9 +1,9 @@
 # G Suite for Drive
 
-Publisher: Splunk \
-Connector Version: 2.2.4 \
-Product Vendor: Google \
-Product Name: Google Drive \
+Publisher: Splunk <br>
+Connector Version: 2.2.4 <br>
+Product Vendor: Google <br>
+Product Name: Google Drive <br>
 Minimum Product Version: 6.1.0
 
 This app allows various file manipulation actions to be performed on Google Drive
@@ -79,19 +79,19 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 
 ### Supported Actions
 
-[test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using supplied configuration \
-[list users](#action-list-users) - Get the list of users \
-[delete file](#action-delete-file) - Delete a file \
-[create folder](#action-create-folder) - Create a new folder \
-[upload file](#action-upload-file) - Upload a file from the Vault to Drive \
-[get file](#action-get-file) - Get information about a file or download it to the Vault \
+[test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using supplied configuration <br>
+[list users](#action-list-users) - Get the list of users <br>
+[delete file](#action-delete-file) - Delete a file <br>
+[create folder](#action-create-folder) - Create a new folder <br>
+[upload file](#action-upload-file) - Upload a file from the Vault to Drive <br>
+[get file](#action-get-file) - Get information about a file or download it to the Vault <br>
 [list files](#action-list-files) - Get the list of files
 
 ## action: 'test connectivity'
 
 Validate the asset configuration for connectivity using supplied configuration
 
-Type: **test** \
+Type: **test** <br>
 Read only: **True**
 
 Action requires authorization with the following scope:<ul><li>https://www.googleapis.com/auth/admin.directory.user.readonly</li></ul>.
@@ -108,7 +108,7 @@ No Output
 
 Get the list of users
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 Action uses the Admin SDK API to get a list of users. Requires authorization with the following scope:<ul><li>https://www.googleapis.com/auth/admin.directory.user.readonly</li></ul><br>The action will limit the number of users returned to <b>max_items</b> or (if not specified) 500. If the system has any more users, a next page token will be returned in <b>action_result.summary.next_page_token</b>. Use this value as input to <b>next_page_token</b> in subsequent calls to <b>list users</b>.
@@ -169,7 +169,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Delete a file
 
-Type: **contain** \
+Type: **contain** <br>
 Read only: **False**
 
 Action requires authorization with the following scope:<ul><li>https://www.googleapis.com/auth/drive</li></ul>.
@@ -198,7 +198,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Create a new folder
 
-Type: **generic** \
+Type: **generic** <br>
 Read only: **False**
 
 Action requires authorization with the following scope:<ul><li>https://www.googleapis.com/auth/drive</li></ul>.
@@ -229,7 +229,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Upload a file from the Vault to Drive
 
-Type: **generic** \
+Type: **generic** <br>
 Read only: **False**
 
 If the Drive API does not support the conversion from the files original MIME type to <b>dest_mime_type</b>, the uploaded file will become a native Google Drive type (e.g. a Google document).<br>Action requires authorization with the following scope:<ul><li>https://www.googleapis.com/auth/drive</li></ul>.
@@ -268,7 +268,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Get information about a file or download it to the Vault
 
-Type: **generic** \
+Type: **generic** <br>
 Read only: **False**
 
 Action requires authorization with the following scope:<ul><li>https://www.googleapis.com/auth/drive.readonly</li></ul>.
@@ -386,7 +386,7 @@ action_result.parameter.ph | ph | | |
 
 Get the list of files
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 You can use the <b>query</b> parameter to filter the results. The full documentation on this parameter can be read <a href="https://developers.google.com/drive/v3/web/search-parameters">here</a>. Here are some examples:<ul><li><b>mimeType='application/vnd.google-apps.folder'</b>: show only folders</li><li><b>modifiedTime > '2018-01-05T12:00:00' and mimeType='application/vnd.google-apps.document'</b>: Show only documents which have been modified since the date</li></ul>.<br>Action requires authorization with the following scope:<ul><li>https://www.googleapis.com/auth/drive.readonly</li></ul>.
