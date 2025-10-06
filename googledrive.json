@@ -10,14 +10,14 @@
     "product_version_regex": ".*",
     "publisher": "Splunk",
     "license": "Copyright (c) 2018-2025 Splunk Inc.",
-    "app_version": "2.2.4",
+    "app_version": "2.2.5",
     "python_version": [
         "3.9"
     ],
     "latest_tested_versions": [
         "Cloud, July 2023"
     ],
-    "utctime_updated": "2025-08-01T00:18:38.761162Z",
+    "utctime_updated": "2025-10-06T20:19:36.570928Z",
     "package_name": "phantom_googledrive",
     "main_module": "googledrive_connector.py",
     "min_phantom_version": "6.1.0",
