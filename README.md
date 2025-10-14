@@ -4,7 +4,7 @@ Publisher: Splunk <br>
 Connector Version: 2.2.5 <br>
 Product Vendor: Google <br>
 Product Name: Google Drive <br>
-Minimum Product Version: 6.1.0
+Minimum Product Version: 6.3.0
 
 This app allows various file manipulation actions to be performed on Google Drive
 
@@ -85,7 +85,13 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 [create folder](#action-create-folder) - Create a new folder <br>
 [upload file](#action-upload-file) - Upload a file from the Vault to Drive <br>
 [get file](#action-get-file) - Get information about a file or download it to the Vault <br>
-[list files](#action-list-files) - Get the list of files
+[list files](#action-list-files) - Get the list of files <br>
+[copy file](#action-copy-file) - Copy existing file to specified folder <br>
+[rename file](#action-rename-file) - Rename an existing file using its identifier <br>
+[move file](#action-move-file) - Move existing file or folder to specified folder (Google Drive treats files and folders similarly <br>
+[read file](#action-read-file) - Read file contents and return as a json object <br>
+[get spreadsheet](#action-get-spreadsheet) - Get Spreadsheet values <br>
+[update spreadsheet](#action-update-spreadsheet) - Update Spreadsheet values
 
 ## action: 'test connectivity'
 
@@ -180,6 +186,7 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
 **email** | optional | Email (use this drive) | string | `email` |
 **id** | required | File ID | string | `drive file id` |
+**supports_all_drives** | optional | Whether the requesting application supports both My Drives and shared drives. | boolean | |
 
 #### Action Output
 
@@ -188,6 +195,7 @@ DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 action_result.status | string | | success failed |
 action_result.parameter.email | string | `email` | abc@gmail.com |
 action_result.parameter.id | string | `drive file id` | 12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt-vgy46DA |
+action_result.parameter.supports_all_drives | boolean | | |
 action_result.data | string | | |
 action_result.summary | string | | |
 action_result.message | string | | File doesn't exist or has already been deleted |
@@ -210,6 +218,8 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 **email** | optional | Email (use this drive) | string | `email` |
 **name** | required | Name of the new folder | string | |
 **folder_id** | optional | ID of the parent folder | string | `drive file id` |
+**driveid** | required | Drive ID where the folder is | string | `drive id` |
+**supports_all_drives** | optional | Whether the requesting application supports both My Drives and shared drives. | boolean | |
 
 #### Action Output
 
@@ -219,6 +229,8 @@ action_result.status | string | | success failed |
 action_result.parameter.email | string | `email` | abc@gmail.com |
 action_result.parameter.folder_id | string | `drive file id` | 1OPjWKnOCGlretd23P0lnW5mlLE2x8D |
 action_result.parameter.name | string | | NewFolder1 |
+action_result.parameter.driveid | string | `drive id` | |
+action_result.parameter.supports_all_drives | boolean | | |
 action_result.data | string | | |
 action_result.summary.new_folder_id | string | `drive file id` | 1OPjWKnOCGlretd23P0lnW5mlLE2x8D |
 action_result.message | string | | Successfully added new folder to Drive |
@@ -245,6 +257,7 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 **folder_id** | optional | ID of the parent folder | string | `drive file id` |
 **file_name** | optional | Set the file name in Drive | string | |
 **convert** | optional | Attempt to convert file to native Drive type. Will only have an effect if dest_mime_type is not set | boolean | |
+**supports_all_drives** | optional | Whether the requesting application supports both My Drives and shared drives. | boolean | |
 
 #### Action Output
 
@@ -258,6 +271,7 @@ action_result.parameter.file_name | string | | file1 |
 action_result.parameter.folder_id | string | `drive file id` | 1OPjWKnOCGlrePZ3cnLD0lnW5mlLE2x8D |
 action_result.parameter.source_mime_type | string | `mime type` | application/vnd.test-apps.spreadsheet |
 action_result.parameter.vault_id | string | `vault id` `sha1` | 82cbbb588ce83b5527e2f9f1d3bcba24f60c92cc |
+action_result.parameter.supports_all_drives | boolean | | |
 action_result.data | string | | |
 action_result.summary.new_file_id | string | `drive file id` | 12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt-vSJaLo1fA |
 action_result.message | string | | Successfully added new file to Drive |
@@ -282,6 +296,7 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 **download_file** | optional | Download the file to the Vault | boolean | |
 **mime_type** | optional | MIME Type for exported file. This will only have an effect if the original document is file type that needs to be exported (i.e. Google Docs / Sheets / Slides files) | string | `mime type` |
 **file_name** | optional | Set a new name for the file before adding it to the vault | string | |
+**supports_all_drives** | optional | Whether the requesting application supports both My Drives and shared drives. | boolean | |
 
 #### Action Output
 
@@ -293,6 +308,7 @@ action_result.parameter.email | string | `email` | abc@gmail.com |
 action_result.parameter.file_name | string | | file.pdf |
 action_result.parameter.id | string | `drive file id` | 12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt-vSJaLo1fA |
 action_result.parameter.mime_type | string | `mime type` | application/pdf |
+action_result.parameter.supports_all_drives | boolean | | |
 action_result.data.\*.capabilities.canAcceptOwnership | boolean | | True False |
 action_result.data.\*.capabilities.canAddChildren | boolean | | True False |
 action_result.data.\*.capabilities.canAddMyDriveParent | boolean | | True False |
@@ -399,6 +415,8 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 **max_results** | optional | Max Results | numeric | |
 **next_page_token** | optional | Next Page Token | string | |
 **query** | optional | Query | string | |
+**supports_all_drives** | optional | Whether the requesting application supports both My Drives and shared drives. | boolean | |
+**include_items_from_all_drives** | optional | Whether both My Drive and shared drive items should be included in results. | boolean | |
 
 #### Action Output
 
@@ -409,6 +427,8 @@ action_result.parameter.email | string | `email` | abc@gmail.com |
 action_result.parameter.max_results | numeric | | 2 |
 action_result.parameter.next_page_token | string | | ~!!~Tg45VCbmvPCnWK0UIxnjniVz68Lt8ZOsGim7uc5YxlceqS4ovMelh229zAeFmpmw1aoBTI4ZmcjNxMdAPHEE5nW8BKEx7TI4LzYmLlvpBGoKnyf3lPFenef25jRS7FSMDBb1prqjMEFzRlvZtfX4X9kZuYVDk_dwUcjiKDkEXC2DUPCPcKctAg2HN-VH9FGcSAcSBftVBfbrLwZu9AgnfHvz-8wkDK1PpwE4l1H_mkfvRm_Ckvq9dnLCFSu5W-YzF6nXuZSgmJx5WWMO-IHSLILAf8OXPwbxJbTqM_YCdLeYD71IeqEu_idn54UhYNUCBi3mxeQJzzfp4vHJa3q1wN4uUuCNshqkXvLDwuVIk4cYHHVcJ2-A4GJhPGkQ2SfuMrIigi0nGKEk8pTmJaeD5C825ALevDLf574abZ385Hu7d0NTpJxfDdJti0JdcyL66qYis2l_zxMZZ-ZcSFpl_FKuhip3AP97VIk0QUiYlh9nH55tCvjkw= |
 action_result.parameter.query | string | | modifiedTime > '2012-06-04T12:00:00' |
+action_result.parameter.supports_all_drives | boolean | | |
+action_result.parameter.include_items_from_all_drives | boolean | | |
 action_result.data.\*.id | string | `drive file id` | 1PJZ_cZKMbIZWOJdQQe3r41vdGj8 |
 action_result.data.\*.kind | string | | drive#file |
 action_result.data.\*.md5Checksum | string | `md5` | b99abc7a0e9da88f8636f0c48f924f63 |
@@ -422,6 +442,213 @@ action_result.summary.total_files_returned | numeric | | 47 |
 action_result.message | string | | Successfully retrieved 47 files |
 summary.total_objects | numeric | | 1 |
 summary.total_objects_successful | numeric | | 1 |
+
+## action: 'copy file'
+
+Copy existing file to specified folder
+
+Type: **generic** <br>
+Read only: **False**
+
+#### Action Parameters
+
+PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
+--------- | -------- | ----------- | ---- | --------
+**email** | optional | Email | string | `email` |
+**file_id** | required | ID of the file to be copied | string | `drive file id` |
+**parent_id** | required | ID of the parent folder where the file will be copied to | string | `drive file id` |
+**driveid** | required | Drive ID where the folder is | string | `drive id` |
+**supports_all_drives** | optional | Boolean value | boolean | |
+
+#### Action Output
+
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.status | string | | success |
+action_result.parameter.supports_all_drives | boolean | | |
+action_result.parameter.driveid | string | `drive id` | |
+action_result.parameter.parent_id | string | `drive file id` | |
+action_result.parameter.file_id | string | `drive file id` | |
+action_result.parameter.email | string | `email` | |
+action_result.summary.new_file_id | string | `drive file id` | |
+action_result.message | string | | Successfully copied file to folder |
+summary.total_objects | numeric | | 1 |
+summary.total_objects_successful | numeric | | 1 |
+action_result.data | string | | |
+
+## action: 'rename file'
+
+Rename an existing file using its identifier
+
+Type: **generic** <br>
+Read only: **False**
+
+#### Action Parameters
+
+PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
+--------- | -------- | ----------- | ---- | --------
+**email** | required | Email | string | `email` |
+**file_id** | required | ID of the file to be nenamed | string | `drive file id` |
+**new_name** | required | New name of this file | string | |
+**supports_all_drives** | optional | Whether the requesting application supports both My Drives and shared drives. | boolean | |
+
+#### Action Output
+
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.status | string | | success |
+action_result.parameter.email | string | `email` | |
+action_result.parameter.file_id | string | `drive file id` | |
+action_result.parameter.new_name | string | | |
+action_result.parameter.supports_all_drives | boolean | | True False |
+action_result.message | string | | Successfully copied file to folder |
+summary.total_objects | numeric | | 1 |
+summary.total_objects_successful | numeric | | 1 |
+action_result.summary | string | | |
+action_result.data | string | | |
+
+## action: 'move file'
+
+Move existing file or folder to specified folder (Google Drive treats files and folders similarly
+
+Type: **generic** <br>
+Read only: **False**
+
+#### Action Parameters
+
+PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
+--------- | -------- | ----------- | ---- | --------
+**email** | optional | Email | string | `email` |
+**file_id** | required | ID of the file or folder to be moved | string | `drive file id` |
+**new_parent_id** | required | ID of the parent folder where the file or folder will be moved to | string | `drive file id` |
+**remove_parent_id** | required | ID of the parent folder where the file or folder currently exists. | string | `drive file id` |
+**supports_all_drives** | optional | Whether the requesting application supports both My Drives and shared drives. | boolean | |
+
+#### Action Output
+
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.status | string | | success |
+action_result.parameter.email | string | `email` | abc@gmail.com |
+action_result.parameter.file_id | string | `drive file id` | |
+action_result.parameter.new_parent_id | string | `drive file id` | |
+action_result.parameter.remove_parent_id | string | `drive file id` | |
+action_result.parameter.supports_all_drives | boolean | | |
+action_result.message | string | | Successfully moved file to folder |
+summary.total_objects | numeric | | 1 |
+summary.total_objects_successful | numeric | | 1 |
+action_result.summary | string | | |
+action_result.data | string | | |
+
+## action: 'read file'
+
+Read file contents and return as a json object
+
+Type: **generic** <br>
+Read only: **True**
+
+#### Action Parameters
+
+PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
+--------- | -------- | ----------- | ---- | --------
+**email** | optional | User email to assume | string | `email` |
+**file_id** | required | Google Doc file ID | string | `drive file id` |
+
+#### Action Output
+
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.parameter.email | string | `email` | |
+action_result.parameter.file_id | string | `drive file id` | |
+action_result.status | string | | |
+action_result.message | string | | |
+action_result.summary | string | | |
+summary.total_objects | numeric | | |
+summary.total_objects_successful | numeric | | |
+action_result.data | string | | |
+action_result.data.\*.title | string | | |
+action_result.data.\*.body | string | | |
+action_result.data.\*.body.content | string | | |
+action_result.data.\*.body.content.\*.paragraph | string | | |
+action_result.data.\*.body.content.\*.paragraph.elements | string | | |
+action_result.data.\*.body.content.\*.paragraph.elements.\*.startIndex | string | | |
+action_result.data.\*.body.content.\*.paragraph.elements.\*.endIndex | string | | |
+action_result.data.\*.body.content.\*.paragraph.elements.\*.textRun | string | | |
+action_result.data.\*.body.content.\*.paragraph.elements.\*.textRun.content | string | | |
+action_result.data.\*.body.content.\*.table.tableRows | string | | |
+action_result.data.\*.body.content.\*.table.tableRows.\*.startIndex | string | | |
+action_result.data.\*.body.content.\*.table.tableRows.\*.endIndex | string | | |
+action_result.data.\*.body.content.\*.table.tableRows.\*.tableCells | string | | |
+action_result.data.\*.body.content.\*.table.tableRows.\*.tableCells.\*.content | string | | |
+action_result.data.\*.body.content.\*.table.tableRows.\*.tableCells.\*.content.\*.paragraph.elements.\*.startIndex | string | | |
+action_result.data.\*.body.content.\*.table.tableRows.\*.tableCells.\*.content.\*.paragraph.elements.\*.endIndex | string | | |
+action_result.data.\*.body.content.\*.table.tableRows.\*.tableCells.\*.content.\*.paragraph | string | | |
+action_result.data.\*.body.content.\*.table.tableRows.\*.tableCells.\*.content.\*.paragraph.elements | string | | |
+action_result.data.\*.body.content.\*.table.tableRows.\*.tableCells.\*.content.\*.paragraph.elements.\*.textRun | string | | |
+action_result.data.\*.body.content.\*.table.tableRows.\*.tableCells.\*.content.\*.paragraph.elements.\*.textRun.content | string | | |
+action_result.data.\*.body.content.\*.tableOfContents | string | | |
+action_result.data.\*.body.content.\*.tableOfContents.content | string | | |
+
+## action: 'get spreadsheet'
+
+Get Spreadsheet values
+
+Type: **generic** <br>
+Read only: **False**
+
+#### Action Parameters
+
+PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
+--------- | -------- | ----------- | ---- | --------
+**email** | optional | Email (use this drive) | string | `email` |
+**id** | required | The ID of the spreadsheet to retrieve data from | string | `drive file id` |
+**range** | optional | The A1 notation or R1C1 notation of the range to retrieve values from | string | |
+
+#### Action Output
+
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.status | string | | success failed |
+action_result.message | string | | |
+action_result.parameter.id | string | `drive file id` | 12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt-vSJaLo1fA 1_x--TqEi4liLds9ZXjSHpVXoPuKEI2tUU9t4enGvOps 1S09PXDLSIi4RiE7j5C86aB6Aj7ZeRR2z |
+action_result.parameter.email | string | `email` | abc@gmail.com |
+action_result.parameter.range | string | | |
+action_result.summary | string | | |
+action_result.data | string | | |
+summary.total_objects_successful | numeric | | |
+summary.total_objects | numeric | | |
+
+## action: 'update spreadsheet'
+
+Update Spreadsheet values
+
+Type: **generic** <br>
+Read only: **False**
+
+#### Action Parameters
+
+PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
+--------- | -------- | ----------- | ---- | --------
+**email** | optional | Email (use this drive) | string | `email` |
+**id** | required | The ID of the spreadsheet to retrieve data from | string | `drive file id` |
+**range** | optional | The A1 notation or R1C1 notation of the range to retrieve values from | string | |
+**values** | optional | Values list. List of row data lists as shown \[ ['row1_item1','row1_item2'],['row2_item1','row2_item2'] \] | string | |
+
+#### Action Output
+
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.status | string | | success failed |
+action_result.message | string | | |
+action_result.summary | string | | |
+action_result.parameter.id | string | `drive file id` | 12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt-vSJaLo1fA 1_x--TqEi4liLds9ZXjSHpVXoPuKEI2tUU9t4enGvOps 1S09PXDLSIi4RiE7j5C86aB6Aj7ZeRR2z |
+action_result.parameter.email | string | `email` | abc@gmail.com |
+action_result.parameter.range | string | | |
+action_result.parameter.values | string | | |
+action_result.data | string | | |
+action_result.data.values | string | | |
+summary.total_objects_successful | numeric | | |
+summary.total_objects | numeric | | |
 
 ______________________________________________________________________
 

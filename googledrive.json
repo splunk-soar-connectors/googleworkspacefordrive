@@ -20,7 +20,7 @@
     "utctime_updated": "2025-10-06T20:19:36.570928Z",
     "package_name": "phantom_googledrive",
     "main_module": "googledrive_connector.py",
-    "min_phantom_version": "6.1.0",
+    "min_phantom_version": "6.3.0",
     "fips_compliant": true,
     "app_wizard_version": "1.0.0",
     "configuration": {
@@ -405,6 +405,16 @@
                     "required": true,
                     "primary": true,
                     "order": 1
+                },
+                "supports_all_drives": {
+                    "description": "Whether the requesting application supports both My Drives and shared drives.",
+                    "data_type": "boolean",
+                    "order": 2,
+                    "default": true,
+                    "example_values": [
+                        true,
+                        false
+                    ]
                 }
             },
             "output": [
@@ -435,6 +445,10 @@
                     "example_values": [
                         "12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt-vgy46DA"
                     ]
+                },
+                {
+                    "data_path": "action_result.parameter.supports_all_drives",
+                    "data_type": "boolean"
                 },
                 {
                     "data_path": "action_result.data",
@@ -504,6 +518,27 @@
                     "contains": [
                         "drive file id"
                     ]
+                },
+                "driveid": {
+                    "required": true,
+                    "description": "Drive ID where the folder is",
+                    "data_type": "string",
+                    "value_list": [],
+                    "contains": [
+                        "drive id"
+                    ],
+                    "primary": true,
+                    "order": 3
+                },
+                "supports_all_drives": {
+                    "description": "Whether the requesting application supports both My Drives and shared drives.",
+                    "data_type": "boolean",
+                    "order": 4,
+                    "default": true,
+                    "example_values": [
+                        true,
+                        false
+                    ]
                 }
             },
             "output": [
@@ -541,6 +576,17 @@
                     "example_values": [
                         "NewFolder1"
                     ]
+                },
+                {
+                    "data_path": "action_result.parameter.driveid",
+                    "data_type": "string",
+                    "contains": [
+                        "drive id"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.supports_all_drives",
+                    "data_type": "boolean"
                 },
                 {
                     "data_path": "action_result.data",
@@ -650,6 +696,16 @@
                     "data_type": "boolean",
                     "order": 6,
                     "default": true
+                },
+                "supports_all_drives": {
+                    "description": "Whether the requesting application supports both My Drives and shared drives.",
+                    "data_type": "boolean",
+                    "order": 7,
+                    "default": true,
+                    "example_values": [
+                        true,
+                        false
+                    ]
                 }
             },
             "output": [
@@ -726,6 +782,10 @@
                         "vault id",
                         "sha1"
                     ]
+                },
+                {
+                    "data_path": "action_result.parameter.supports_all_drives",
+                    "data_type": "boolean"
                 },
                 {
                     "data_path": "action_result.data",
@@ -820,6 +880,16 @@
                     "description": "Set a new name for the file before adding it to the vault",
                     "data_type": "string",
                     "order": 5
+                },
+                "supports_all_drives": {
+                    "description": "Whether the requesting application supports both My Drives and shared drives.",
+                    "data_type": "boolean",
+                    "order": 6,
+                    "default": true,
+                    "example_values": [
+                        true,
+                        false
+                    ]
                 }
             },
             "output": [
@@ -875,6 +945,10 @@
                     "contains": [
                         "mime type"
                     ]
+                },
+                {
+                    "data_path": "action_result.parameter.supports_all_drives",
+                    "data_type": "boolean"
                 },
                 {
                     "data_path": "action_result.data.*.capabilities.canAcceptOwnership",
@@ -1600,6 +1674,26 @@
                     "description": "Query",
                     "data_type": "string",
                     "order": 3
+                },
+                "supports_all_drives": {
+                    "description": "Whether the requesting application supports both My Drives and shared drives.",
+                    "data_type": "boolean",
+                    "order": 4,
+                    "default": true,
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                },
+                "include_items_from_all_drives": {
+                    "description": "Whether both My Drive and shared drive items should be included in results.",
+                    "data_type": "boolean",
+                    "order": 5,
+                    "default": false,
+                    "example_values": [
+                        true,
+                        false
+                    ]
                 }
             },
             "output": [
@@ -1641,6 +1735,14 @@
                     "example_values": [
                         "modifiedTime > '2012-06-04T12:00:00'"
                     ]
+                },
+                {
+                    "data_path": "action_result.parameter.supports_all_drives",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.include_items_from_all_drives",
+                    "data_type": "boolean"
                 },
                 {
                     "data_path": "action_result.data.*.id",
@@ -1751,6 +1853,808 @@
                     "example_values": [
                         1
                     ]
+                }
+            ],
+            "versions": "EQ(*)",
+            "render": {
+                "type": "table"
+            }
+        },
+        {
+            "action": "copy file",
+            "identifier": "copy_file",
+            "description": "Copy existing file to specified folder",
+            "type": "generic",
+            "read_only": false,
+            "parameters": {
+                "email": {
+                    "contains": [
+                        "email"
+                    ],
+                    "description": "Email",
+                    "data_type": "string",
+                    "required": false,
+                    "primary": true,
+                    "order": 0
+                },
+                "file_id": {
+                    "required": true,
+                    "description": "ID of the file to be copied",
+                    "data_type": "string",
+                    "contains": [
+                        "drive file id"
+                    ],
+                    "primary": true,
+                    "order": 1
+                },
+                "parent_id": {
+                    "required": true,
+                    "description": "ID of the parent folder where the file will be copied to",
+                    "data_type": "string",
+                    "contains": [
+                        "drive file id"
+                    ],
+                    "primary": true,
+                    "order": 2
+                },
+                "driveid": {
+                    "required": true,
+                    "description": "Drive ID where the folder is",
+                    "data_type": "string",
+                    "value_list": [],
+                    "contains": [
+                        "drive id"
+                    ],
+                    "primary": true,
+                    "order": 3
+                },
+                "supports_all_drives": {
+                    "required": false,
+                    "description": "Boolean value",
+                    "data_type": "boolean",
+                    "default": true,
+                    "primary": false,
+                    "order": 4
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "example_values": [
+                        "success"
+                    ],
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.supports_all_drives",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.driveid",
+                    "data_type": "string",
+                    "contains": [
+                        "drive id"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.parent_id",
+                    "data_type": "string",
+                    "contains": [
+                        "drive file id"
+                    ],
+                    "column_name": "Parent Folder ID",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.parameter.file_id",
+                    "data_type": "string",
+                    "contains": [
+                        "drive file id"
+                    ],
+                    "column_name": "Original File ID",
+                    "column_order": 1
+                },
+                {
+                    "data_path": "action_result.parameter.email",
+                    "data_type": "string",
+                    "contains": [
+                        "email"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.new_file_id",
+                    "data_type": "string",
+                    "contains": [
+                        "drive file id"
+                    ],
+                    "column_name": "New File ID",
+                    "column_order": 2
+                },
+                {
+                    "data_path": "action_result.message",
+                    "example_values": [
+                        "Successfully copied file to folder"
+                    ],
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "example_values": [
+                        1
+                    ],
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "example_values": [
+                        1
+                    ],
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data",
+                    "data_type": "string"
+                }
+            ],
+            "versions": "EQ(*)",
+            "render": {
+                "type": "table"
+            }
+        },
+        {
+            "action": "rename file",
+            "identifier": "rename_file",
+            "type": "generic",
+            "read_only": false,
+            "description": "Rename an existing file using its identifier",
+            "parameters": {
+                "email": {
+                    "data_type": "string",
+                    "description": "Email",
+                    "contains": [
+                        "email"
+                    ],
+                    "required": true,
+                    "primary": true,
+                    "order": 0
+                },
+                "file_id": {
+                    "description": "ID of the file to be nenamed",
+                    "data_type": "string",
+                    "contains": [
+                        "drive file id"
+                    ],
+                    "required": true,
+                    "primary": true,
+                    "order": 1
+                },
+                "new_name": {
+                    "description": "New name of this file",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": true,
+                    "order": 2
+                },
+                "supports_all_drives": {
+                    "description": "Whether the requesting application supports both My Drives and shared drives.",
+                    "data_type": "boolean",
+                    "order": 3,
+                    "default": true,
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "example_values": [
+                        "success"
+                    ],
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.email",
+                    "data_type": "string",
+                    "contains": [
+                        "email"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.file_id",
+                    "data_type": "string",
+                    "contains": [
+                        "drive file id"
+                    ],
+                    "column_name": "Original File ID",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.parameter.new_name",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.supports_all_drives",
+                    "example_values": [
+                        true,
+                        false
+                    ],
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.message",
+                    "example_values": [
+                        "Successfully copied file to folder"
+                    ],
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "example_values": [
+                        1
+                    ],
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "example_values": [
+                        1
+                    ],
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data",
+                    "data_type": "string"
+                }
+            ],
+            "versions": "EQ(*)",
+            "render": {
+                "type": "table"
+            }
+        },
+        {
+            "action": "move file",
+            "identifier": "move_file",
+            "type": "generic",
+            "read_only": false,
+            "description": "Move existing file or folder to specified folder (Google Drive treats files and folders similarly",
+            "parameters": {
+                "email": {
+                    "contains": [
+                        "email"
+                    ],
+                    "description": "Email",
+                    "data_type": "string",
+                    "required": false,
+                    "primary": true,
+                    "order": 0
+                },
+                "file_id": {
+                    "required": true,
+                    "description": "ID of the file or folder to be moved",
+                    "data_type": "string",
+                    "contains": [
+                        "drive file id"
+                    ],
+                    "example_values": [
+                        "1xm8acSmXx650Gw5kBQi4j1GS1uN28S9daa-UpJmYFTs"
+                    ],
+                    "primary": true,
+                    "order": 1
+                },
+                "new_parent_id": {
+                    "required": true,
+                    "description": "ID of the parent folder where the file or folder will be moved to",
+                    "data_type": "string",
+                    "contains": [
+                        "drive file id"
+                    ],
+                    "primary": true,
+                    "order": 2
+                },
+                "remove_parent_id": {
+                    "required": true,
+                    "description": "ID of the parent folder where the file or folder currently exists.",
+                    "data_type": "string",
+                    "contains": [
+                        "drive file id"
+                    ],
+                    "primary": true,
+                    "order": 3
+                },
+                "supports_all_drives": {
+                    "description": "Whether the requesting application supports both My Drives and shared drives.",
+                    "data_type": "boolean",
+                    "order": 4,
+                    "default": true,
+                    "example_values": [
+                        true,
+                        false
+                    ]
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "example_values": [
+                        "success"
+                    ],
+                    "data_type": "string"
+                },
+                {
+                    "contains": [
+                        "email"
+                    ],
+                    "data_path": "action_result.parameter.email",
+                    "example_values": [
+                        "abc@gmail.com"
+                    ],
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.file_id",
+                    "data_type": "string",
+                    "contains": [
+                        "drive file id"
+                    ],
+                    "column_name": "File ID",
+                    "column_order": 0
+                },
+
+                {
+                    "data_path": "action_result.parameter.new_parent_id",
+                    "data_type": "string",
+                    "contains": [
+                        "drive file id"
+                    ],
+                    "column_name": "New Frolder ID",
+                    "column_order": 1
+                },
+                {
+                    "data_path": "action_result.parameter.remove_parent_id",
+                    "data_type": "string",
+                    "contains": [
+                        "drive file id"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.supports_all_drives",
+                    "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.message",
+                    "example_values": [
+                        "Successfully moved file to folder"
+                    ],
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "example_values": [
+                        1
+                    ],
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "example_values": [
+                        1
+                    ],
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data",
+                    "data_type": "string"
+                }
+            ],
+            "versions": "EQ(*)",
+            "render": {
+                "type": "table"
+            }
+        },
+        {
+            "action": "read file",
+            "identifier": "read_file",
+            "description": "Read file contents and return as a json object",
+            "verbose": "",
+            "type": "generic",
+            "read_only": true,
+            "parameters": {
+                "email": {
+                    "description": "User email to assume",
+                    "data_type": "string",
+                    "required": false,
+                    "primary": true,
+                    "contains": [
+                        "email"
+                    ],
+                    "value_list": [],
+                    "default": "",
+                    "order": 0,
+                    "name": "email"
+                },
+                "file_id": {
+                    "description": "Google Doc file ID",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": true,
+                    "contains": [
+                        "drive file id"
+                    ],
+                    "value_list": [],
+                    "default": "",
+                    "order": 1,
+                    "name": "file_id"
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.parameter.email",
+                    "data_type": "string",
+                    "contains": [
+                        "email"
+                    ],
+                    "column_name": "email",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.parameter.file_id",
+                    "data_type": "string",
+                    "contains": [
+                        "drive file id"
+                    ],
+                    "column_name": "id",
+                    "column_order": 1
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "column_name": "status",
+                    "column_order": 2
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "action_result.data",
+                    "data_type": "string",
+                    "example_values": []
+                },
+                {
+                    "data_path": "action_result.data.*.title",
+                    "data_type": "string",
+                    "example_values": []
+                },
+                {
+                    "data_path": "action_result.data.*.body",
+                    "data_type": "string",
+                    "example_values": []
+                },
+                {
+                    "data_path": "action_result.data.*.body.content",
+                    "data_type": "string",
+                    "example_values": []
+                },
+                {
+                    "data_path": "action_result.data.*.body.content.*.paragraph",
+                    "data_type": "string",
+                    "example_values": []
+                },
+                {
+                    "data_path": "action_result.data.*.body.content.*.paragraph.elements",
+                    "data_type": "string",
+                    "example_values": []
+                },
+                {
+                    "data_path": "action_result.data.*.body.content.*.paragraph.elements.*.startIndex",
+                    "data_type": "string",
+                    "example_values": []
+                },
+                {
+                    "data_path": "action_result.data.*.body.content.*.paragraph.elements.*.endIndex",
+                    "data_type": "string",
+                    "example_values": []
+                },
+                {
+                    "data_path": "action_result.data.*.body.content.*.paragraph.elements.*.textRun",
+                    "data_type": "string",
+                    "example_values": []
+                },
+                {
+                    "data_path": "action_result.data.*.body.content.*.paragraph.elements.*.textRun.content",
+                    "data_type": "string",
+                    "example_values": []
+                },
+                {
+                    "data_path": "action_result.data.*.body.content.*.table.tableRows",
+                    "data_type": "string",
+                    "example_values": []
+                },
+                {
+                    "data_path": "action_result.data.*.body.content.*.table.tableRows.*.startIndex",
+                    "data_type": "string",
+                    "example_values": []
+                },
+                {
+                    "data_path": "action_result.data.*.body.content.*.table.tableRows.*.endIndex",
+                    "data_type": "string",
+                    "example_values": []
+                },
+                {
+                    "data_path": "action_result.data.*.body.content.*.table.tableRows.*.tableCells",
+                    "data_type": "string",
+                    "example_values": []
+                },
+                {
+                    "data_path": "action_result.data.*.body.content.*.table.tableRows.*.tableCells.*.content",
+                    "data_type": "string",
+                    "example_values": []
+                },
+                {
+                    "data_path": "action_result.data.*.body.content.*.table.tableRows.*.tableCells.*.content.*.paragraph.elements.*.startIndex",
+                    "data_type": "string",
+                    "example_values": []
+                },
+                {
+                    "data_path": "action_result.data.*.body.content.*.table.tableRows.*.tableCells.*.content.*.paragraph.elements.*.endIndex",
+                    "data_type": "string",
+                    "example_values": []
+                },
+                {
+                    "data_path": "action_result.data.*.body.content.*.table.tableRows.*.tableCells.*.content.*.paragraph",
+                    "data_type": "string",
+                    "example_values": []
+                },
+                {
+                    "data_path": "action_result.data.*.body.content.*.table.tableRows.*.tableCells.*.content.*.paragraph.elements",
+                    "data_type": "string",
+                    "example_values": []
+                },
+                {
+                    "data_path": "action_result.data.*.body.content.*.table.tableRows.*.tableCells.*.content.*.paragraph.elements.*.textRun",
+                    "data_type": "string",
+                    "example_values": []
+                },
+                {
+                    "data_path": "action_result.data.*.body.content.*.table.tableRows.*.tableCells.*.content.*.paragraph.elements.*.textRun.content",
+                    "data_type": "string",
+                    "example_values": []
+                },
+                {
+                    "data_path": "action_result.data.*.body.content.*.tableOfContents",
+                    "data_type": "string",
+                    "example_values": []
+                },
+                {
+                    "data_path": "action_result.data.*.body.content.*.tableOfContents.content",
+                    "data_type": "string",
+                    "example_values": []
+                }
+            ],
+            "render": {
+                "type": "table"
+            },
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "get spreadsheet",
+            "identifier": "get_spreadsheet",
+            "description": "Get Spreadsheet values",
+            "type": "generic",
+            "read_only": false,
+            "parameters": {
+                "email": {
+                    "description": "Email (use this drive)",
+                    "data_type": "string",
+                    "order": 0,
+                    "primary": true,
+                    "contains": [
+                        "email"
+                    ]
+                },
+                "id": {
+                    "description": "The ID of the spreadsheet to retrieve data from",
+                    "data_type": "string",
+                    "contains": [
+                        "drive file id"
+                    ],
+                    "required": true,
+                    "primary": true,
+                    "order": 1
+                },
+                "range": {
+                    "description": "The A1 notation or R1C1 notation of the range to retrieve values from",
+                    "data_type": "string",
+                    "order": 2,
+                    "required": false,
+                    "default": "A1:Z1001"
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.id",
+                    "data_type": "string",
+                    "contains": [
+                        "drive file id"
+                    ],
+                    "example_values": [
+                        "12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt-vSJaLo1fA",
+                        "1_x--TqEi4liLds9ZXjSHpVXoPuKEI2tUU9t4enGvOps",
+                        "1S09PXDLSIi4RiE7j5C86aB6Aj7ZeRR2z"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.email",
+                    "data_type": "string",
+                    "contains": [
+                        "email"
+                    ],
+                    "example_values": [
+                        "abc@gmail.com"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.range",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric"
+                }
+            ],
+            "versions": "EQ(*)",
+            "render": {
+                "type": "table"
+            }
+        },
+        {
+            "action": "update spreadsheet",
+            "identifier": "update_spreadsheet",
+            "description": "Update Spreadsheet values",
+            "type": "generic",
+            "read_only": false,
+            "parameters": {
+                "email": {
+                    "description": "Email (use this drive)",
+                    "data_type": "string",
+                    "order": 0,
+                    "primary": true,
+                    "contains": [
+                        "email"
+                    ]
+                },
+                "id": {
+                    "description": "The ID of the spreadsheet to retrieve data from",
+                    "data_type": "string",
+                    "contains": [
+                        "drive file id"
+                    ],
+                    "required": true,
+                    "primary": true,
+                    "order": 1
+                },
+                "range": {
+                    "description": "The A1 notation or R1C1 notation of the range to retrieve values from",
+                    "data_type": "string",
+                    "order": 2,
+                    "required": false,
+                    "default": "A1:Z1001"
+                },
+                "values": {
+                    "description": "Values list. List of row data lists as shown [ ['row1_item1','row1_item2'],['row2_item1','row2_item2'] ] ",
+                    "data_type": "string",
+                    "order": 3,
+                    "required": false
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success",
+                        "failed"
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.summary",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.id",
+                    "data_type": "string",
+                    "contains": [
+                        "drive file id"
+                    ],
+                    "example_values": [
+                        "12wNhYsdgesIzNyXfXZqI7l9GCs4yjoeZt-vSJaLo1fA",
+                        "1_x--TqEi4liLds9ZXjSHpVXoPuKEI2tUU9t4enGvOps",
+                        "1S09PXDLSIi4RiE7j5C86aB6Aj7ZeRR2z"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.email",
+                    "data_type": "string",
+                    "contains": [
+                        "email"
+                    ],
+                    "example_values": [
+                        "abc@gmail.com"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.range",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.values",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.values",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric"
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric"
                 }
             ],
             "versions": "EQ(*)",
