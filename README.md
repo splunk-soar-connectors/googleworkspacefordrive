@@ -4,7 +4,7 @@ Publisher: Splunk <br>
 Connector Version: 2.2.5 <br>
 Product Vendor: Google <br>
 Product Name: Google Drive <br>
-Minimum Product Version: 6.1.0
+Minimum Product Version: 6.3.0
 
 This app allows various file manipulation actions to be performed on Google Drive
 
@@ -85,7 +85,13 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 [create folder](#action-create-folder) - Create a new folder <br>
 [upload file](#action-upload-file) - Upload a file from the Vault to Drive <br>
 [get file](#action-get-file) - Get information about a file or download it to the Vault <br>
-[list files](#action-list-files) - Get the list of files
+[list files](#action-list-files) - Get the list of files <br>
+[copy file](#action-copy-file) - Copy existing file to specified folder <br>
+[rename file](#action-rename-file) - Rename an existing file using its identifier <br>
+[move file](#action-move-file) - Move existing file or folder to specified folder (Google Drive treats files and folders similarly <br>
+[read file](#action-read-file) - Read file contents and return as a json object <br>
+[get spreadsheet](#action-get-spreadsheet) - Get Spreadsheet values <br>
+[update spreadsheet](#action-update-spreadsheet) - Update Spreadsheet values
 
 ## action: 'test connectivity'
 
@@ -441,7 +447,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Copy existing file to specified folder
 
-Type: **generic** \
+Type: **generic** <br>
 Read only: **False**
 
 #### Action Parameters
@@ -474,7 +480,7 @@ action_result.data | string | | |
 
 Rename an existing file using its identifier
 
-Type: **generic** \
+Type: **generic** <br>
 Read only: **False**
 
 #### Action Parameters
@@ -505,7 +511,7 @@ action_result.data | string | | |
 
 Move existing file or folder to specified folder (Google Drive treats files and folders similarly
 
-Type: **generic** \
+Type: **generic** <br>
 Read only: **False**
 
 #### Action Parameters
@@ -538,7 +544,7 @@ action_result.data | string | | |
 
 Read file contents and return as a json object
 
-Type: **generic** \
+Type: **generic** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -587,7 +593,7 @@ action_result.data.\*.body.content.\*.tableOfContents.content | string | | |
 
 Get Spreadsheet values
 
-Type: **generic** \
+Type: **generic** <br>
 Read only: **False**
 
 #### Action Parameters
@@ -616,7 +622,7 @@ summary.total_objects | numeric | | |
 
 Update Spreadsheet values
 
-Type: **generic** \
+Type: **generic** <br>
 Read only: **False**
 
 #### Action Parameters
