@@ -88,7 +88,11 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 [list files](#action-list-files) - Get the list of files <br>
 [copy file](#action-copy-file) - Copy existing file to specified folder <br>
 [rename file](#action-rename-file) - Rename an existing file using its identifier <br>
+<<<<<<< HEAD
 [move file](#action-move-file) - Move existing file or folder to specified folder (Google Drive treats files and folders similarly) <br>
+=======
+[move file](#action-move-file) - Move existing file or folder to specified folder (Google Drive treats files and folders similarly <br>
+>>>>>>> e63ea76 (chore(README): updated readme docs from generated outputs)
 [read file](#action-read-file) - Read file contents and return as a json object <br>
 [get spreadsheet](#action-get-spreadsheet) - Get Spreadsheet values <br>
 [update spreadsheet](#action-update-spreadsheet) - Update Spreadsheet values
@@ -447,7 +451,7 @@ summary.total_objects_successful | numeric | | 1 |
 
 Copy existing file to specified folder
 
-Type: **generic** \
+Type: **generic** <br>
 Read only: **False**
 
 #### Action Parameters
@@ -480,7 +484,7 @@ action_result.data | string | | |
 
 Rename an existing file using its identifier
 
-Type: **generic** \
+Type: **generic** <br>
 Read only: **False**
 
 #### Action Parameters
@@ -511,7 +515,7 @@ action_result.data | string | | |
 
 Move existing file or folder to specified folder (Google Drive treats files and folders similarly
 
-Type: **generic** \
+Type: **generic** <br>
 Read only: **False**
 
 #### Action Parameters
@@ -544,7 +548,7 @@ action_result.data | string | | |
 
 Read file contents and return as a json object
 
-Type: **generic** \
+Type: **generic** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -593,7 +597,7 @@ action_result.data.\*.body.content.\*.tableOfContents.content | string | | |
 
 Get Spreadsheet values
 
-Type: **generic** \
+Type: **generic** <br>
 Read only: **False**
 
 #### Action Parameters
@@ -622,7 +626,7 @@ summary.total_objects | numeric | | |
 
 Update Spreadsheet values
 
-Type: **generic** \
+Type: **generic** <br>
 Read only: **False**
 
 #### Action Parameters
