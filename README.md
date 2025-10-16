@@ -4,7 +4,7 @@ Publisher: Splunk <br>
 Connector Version: 2.2.5 <br>
 Product Vendor: Google <br>
 Product Name: Google Drive <br>
-Minimum Product Version: 6.1.0
+Minimum Product Version: 6.3.0
 
 This app allows various file manipulation actions to be performed on Google Drive
 
