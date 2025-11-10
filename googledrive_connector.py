@@ -28,6 +28,8 @@ import phantom.rules as ph_rules
 import phantom.utils as ph_utils
 import requests
 from google.oauth2 import service_account
+from googleapiclient import discovery
+from googleapiclient.http import MediaFileUpload, MediaIoBaseDownload
 from phantom.action_result import ActionResult
 from phantom.base_connector import BaseConnector
 from phantom.vault import Vault
@@ -52,9 +54,6 @@ try:
 except:
     pass
 sys.argv = [""]
-
-import apiclient
-from googleapiclient.http import MediaFileUpload, MediaIoBaseDownload
 
 
 class RetVal2(tuple):
@@ -114,7 +113,7 @@ class GoogleDriveConnector(BaseConnector):
                 return RetVal2(action_result.set_status(phantom.APP_ERROR, "Failed to create delegated credentials", e), None)
 
         try:
-            service = apiclient.discovery.build(api_name, api_version, credentials=credentials)
+            service = discovery.build(api_name, api_version, credentials=credentials)
         except Exception as e:
             return RetVal2(
                 action_result.set_status(
