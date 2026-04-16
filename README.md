@@ -431,8 +431,8 @@ action_result.parameter.next_page_token | string | | ~!!~Tg45VCbmvPCnWK0UIxnjniV
 action_result.parameter.query | string | | modifiedTime > '2012-06-04T12:00:00' |
 action_result.parameter.supports_all_drives | boolean | | |
 action_result.parameter.include_items_from_all_drives | boolean | | |
-action_result.parameter.corpora | string | | allDrives drive |
-action_result.parameter.drive_id | string | `drive file id` | 0AJKAcU2T6x2Uk9PVA |
+action_result.parameter.corpora | string | | |
+action_result.parameter.drive_id | string | `drive file id` | |
 action_result.data.\*.id | string | `drive file id` | 1PJZ_cZKMbIZWOJdQQe3r41vdGj8 |
 action_result.data.\*.kind | string | | drive#file |
 action_result.data.\*.md5Checksum | string | `md5` | b99abc7a0e9da88f8636f0c48f924f63 |
