@@ -217,13 +217,35 @@ class GoogleDriveConnector(BaseConnector):
             kwargs.update({"pageToken": page_token})
 
         supportsAllDrives = param.get("supports_all_drives")
-        if supportsAllDrives:
+        if supportsAllDrives is not None:
             kwargs.update({"supportsAllDrives": supportsAllDrives})
 
+        corpora = param.get("corpora")
+        valid_corpora = ("user", "domain", "drive", "allDrives")
+        if corpora:
+            if corpora not in valid_corpora:
+                return action_result.set_status(
+                    phantom.APP_ERROR,
+                    "Invalid 'corpora' value. Allowed values are: {}".format(", ".join(valid_corpora)),
+                )
+            kwargs.update({"corpora": corpora})
+
+        drive_id = param.get("drive_id")
+        if drive_id:
+            if corpora != "drive":
+                return action_result.set_status(phantom.APP_ERROR, "Parameter 'drive_id' is only supported when 'corpora' is set to 'drive'")
+            kwargs.update({"driveId": drive_id})
+        elif corpora == "drive":
+            return action_result.set_status(phantom.APP_ERROR, "Missing required parameter 'drive_id' when 'corpora' is set to 'drive'")
+
         includeItemsFromAllDrives = param.get("include_items_from_all_drives")
-        if includeItemsFromAllDrives:
+        if corpora in ("drive", "allDrives"):
+            # Drive API shared-drive query modes require includeItemsFromAllDrives=true.
+            kwargs.update({"includeItemsFromAllDrives": True})
+        elif includeItemsFromAllDrives is not None:
             kwargs.update({"includeItemsFromAllDrives": includeItemsFromAllDrives})
-            kwargs.update({"corpora": "allDrives"})  # TODO: test needed here.
+            if includeItemsFromAllDrives and not corpora:
+                kwargs.update({"corpora": "allDrives"})
 
         try:
             resp = service.files().list(**kwargs).execute()
@@ -241,6 +263,13 @@ class GoogleDriveConnector(BaseConnector):
         next_page = resp.get("nextPageToken")
         if next_page:
             summary["next_page_token"] = next_page
+
+        incomplete_search = resp.get("incompleteSearch", False)
+        if incomplete_search:
+            summary["incomplete_search"] = True
+            self.save_progress(
+                "Warning: Google Drive returned incompleteSearch=true. Results may be incomplete. Consider narrowing query corpus."
+            )
 
         self.save_progress("Handle list files succeeded")
         return action_result.set_status(phantom.APP_SUCCESS, "Successfully retrieved {} file{}".format(num_files, "" if num_files == 1 else "s"))

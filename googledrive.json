@@ -1691,6 +1691,25 @@
                         true,
                         false
                     ]
+                },
+                "corpora": {
+                    "description": "Corpora to search. Supported values: user, domain, drive, allDrives.",
+                    "data_type": "string",
+                    "order": 6,
+                    "value_list": [
+                        "user",
+                        "domain",
+                        "drive",
+                        "allDrives"
+                    ]
+                },
+                "drive_id": {
+                    "description": "ID of the shared drive to search. Required when corpora is set to drive.",
+                    "data_type": "string",
+                    "order": 7,
+                    "contains": [
+                        "drive file id"
+                    ]
                 }
             },
             "output": [
@@ -1740,6 +1759,17 @@
                 {
                     "data_path": "action_result.parameter.include_items_from_all_drives",
                     "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.parameter.corpora",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.parameter.drive_id",
+                    "data_type": "string",
+                    "contains": [
+                        "drive file id"
+                    ]
                 },
                 {
                     "data_path": "action_result.data.*.id",
@@ -1828,6 +1858,13 @@
                     "data_type": "numeric",
                     "example_values": [
                         47
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.incomplete_search",
+                    "data_type": "boolean",
+                    "example_values": [
+                        true
                     ]
                 },
                 {

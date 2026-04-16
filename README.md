@@ -417,6 +417,8 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 **query** | optional | Query | string | |
 **supports_all_drives** | optional | Whether the requesting application supports both My Drives and shared drives. | boolean | |
 **include_items_from_all_drives** | optional | Whether both My Drive and shared drive items should be included in results. | boolean | |
+**corpora** | optional | Corpora to search. Supported values: user, domain, drive, allDrives. | string | |
+**drive_id** | optional | ID of the shared drive to search. Required when corpora is set to drive. | string | `drive file id` |
 
 #### Action Output
 
@@ -429,6 +431,8 @@ action_result.parameter.next_page_token | string | | ~!!~Tg45VCbmvPCnWK0UIxnjniV
 action_result.parameter.query | string | | modifiedTime > '2012-06-04T12:00:00' |
 action_result.parameter.supports_all_drives | boolean | | |
 action_result.parameter.include_items_from_all_drives | boolean | | |
+action_result.parameter.corpora | string | | allDrives drive |
+action_result.parameter.drive_id | string | `drive file id` | 0AJKAcU2T6x2Uk9PVA |
 action_result.data.\*.id | string | `drive file id` | 1PJZ_cZKMbIZWOJdQQe3r41vdGj8 |
 action_result.data.\*.kind | string | | drive#file |
 action_result.data.\*.md5Checksum | string | `md5` | b99abc7a0e9da88f8636f0c48f924f63 |
@@ -439,6 +443,7 @@ action_result.data.\*.webContentLink | string | `url` | https://drive.test.com/a
 action_result.data.\*.webViewLink | string | `url` | https://drive.test.com/drive/folders/1tfCbCKJ3d122RFSHxuVyDCx0a29dzJ-B |
 action_result.summary.next_page_token | string | | ~!!~Td57GCbmvPCnWK0UIxnjniVz68Lt8ZOsGim7uc5YxlceqS4ovMelh229zAeFmpmw1aoBTI4ZmcjNxMdAPHEE5nW8BKEx7TI4LzYmLlvpBGoKnyf3lPFenef25jRS7FSMDBb1prqjMEFzRlvZtfX4X9kZuYVDk_dwUcjiKDkEXC2DUPCPcKctAg2HN-VH9FGcSAcSBftVBfbrLwZu9AgnfHvz-8wkDK1PpwE4l1H_mkfvRm_Ckvq9dnLCFSu5W-YzF6nXuZSgmJx5WWMO-IHSLILAf8OXPwbxJbTqM_YCdLeYD71IeqEu_idn54UhYNUCBi3mxeQJzzfp4vHJa3q1wN4uUuCNshqkXvLDwuVIk4cYHHVcJ2-A4GJhPGkQ2SfuMrIigi0nGKEk8pTmJaeD5C825ALevDLf574abZ385Hu7d0NTpJxfDdJti0JdcyL66qYis2l_zxMZZ-ZcSFpl_FKuhip3AP97VIk0QUiYlh9nH55tCvjkw= |
 action_result.summary.total_files_returned | numeric | | 47 |
+action_result.summary.incomplete_search | boolean | | True |
 action_result.message | string | | Successfully retrieved 47 files |
 summary.total_objects | numeric | | 1 |
 summary.total_objects_successful | numeric | | 1 |
