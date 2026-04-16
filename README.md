@@ -88,11 +88,7 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 [list files](#action-list-files) - Get the list of files <br>
 [copy file](#action-copy-file) - Copy existing file to specified folder <br>
 [rename file](#action-rename-file) - Rename an existing file using its identifier <br>
-<<<<<<< HEAD
 [move file](#action-move-file) - Move existing file or folder to specified folder (Google Drive treats files and folders similarly) <br>
-=======
-[move file](#action-move-file) - Move existing file or folder to specified folder (Google Drive treats files and folders similarly <br>
->>>>>>> e63ea76 (chore(README): updated readme docs from generated outputs)
 [read file](#action-read-file) - Read file contents and return as a json object <br>
 [get spreadsheet](#action-get-spreadsheet) - Get Spreadsheet values <br>
 [update spreadsheet](#action-update-spreadsheet) - Update Spreadsheet values
@@ -222,7 +218,7 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 **email** | optional | Email (use this drive) | string | `email` |
 **name** | required | Name of the new folder | string | |
 **folder_id** | optional | ID of the parent folder | string | `drive file id` |
-**driveid** | required | Drive ID where the folder is | string | `drive id` |
+**driveid** | optional | Drive ID where the folder is | string | `drive id` |
 **supports_all_drives** | optional | Whether the requesting application supports both My Drives and shared drives. | boolean | |
 
 #### Action Output
@@ -460,9 +456,9 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
 **email** | optional | Email | string | `email` |
 **file_id** | required | ID of the file to be copied | string | `drive file id` |
-**parent_id** | required | ID of the parent folder where the file will be copied to | string | `drive file id` |
-**driveid** | required | Drive ID where the folder is | string | `drive id` |
-**supports_all_drives** | optional | Boolean value | boolean | |
+**parent_id** | optional | ID of the parent folder where the file will be copied to | string | `drive file id` |
+**new_name** | optional | Name to assign to the copied file | string | |
+**supports_all_drives** | optional | Whether the requesting application supports both My Drives and shared drives. | boolean | |
 
 #### Action Output
 
@@ -470,11 +466,12 @@ DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
 action_result.status | string | | success |
 action_result.parameter.supports_all_drives | boolean | | |
-action_result.parameter.driveid | string | `drive id` | |
 action_result.parameter.parent_id | string | `drive file id` | |
+action_result.parameter.new_name | string | | |
 action_result.parameter.file_id | string | `drive file id` | |
 action_result.parameter.email | string | `email` | |
 action_result.summary.new_file_id | string | `drive file id` | |
+action_result.summary.new_file_name | string | | |
 action_result.message | string | | Successfully copied file to folder |
 summary.total_objects | numeric | | 1 |
 summary.total_objects_successful | numeric | | 1 |
@@ -491,8 +488,8 @@ Read only: **False**
 
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
-**email** | required | Email | string | `email` |
-**file_id** | required | ID of the file to be nenamed | string | `drive file id` |
+**email** | optional | Email | string | `email` |
+**file_id** | required | ID of the file to be renamed | string | `drive file id` |
 **new_name** | required | New name of this file | string | |
 **supports_all_drives** | optional | Whether the requesting application supports both My Drives and shared drives. | boolean | |
 
@@ -500,12 +497,13 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 
 DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
 --------- | ---- | -------- | --------------
-action_result.status | string | | success |
+action_result.status | string | | success failed |
 action_result.parameter.email | string | `email` | |
 action_result.parameter.file_id | string | `drive file id` | |
 action_result.parameter.new_name | string | | |
 action_result.parameter.supports_all_drives | boolean | | True False |
-action_result.message | string | | Successfully copied file to folder |
+action_result.summary.updated_name | string | | |
+action_result.message | string | | Successfully renamed file |
 summary.total_objects | numeric | | 1 |
 summary.total_objects_successful | numeric | | 1 |
 action_result.summary | string | | |
@@ -513,7 +511,7 @@ action_result.data | string | | |
 
 ## action: 'move file'
 
-Move existing file or folder to specified folder (Google Drive treats files and folders similarly
+Move existing file or folder to specified folder (Google Drive treats files and folders similarly)
 
 Type: **generic** <br>
 Read only: **False**
@@ -525,7 +523,6 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 **email** | optional | Email | string | `email` |
 **file_id** | required | ID of the file or folder to be moved | string | `drive file id` |
 **new_parent_id** | required | ID of the parent folder where the file or folder will be moved to | string | `drive file id` |
-**remove_parent_id** | required | ID of the parent folder where the file or folder currently exists. | string | `drive file id` |
 **supports_all_drives** | optional | Whether the requesting application supports both My Drives and shared drives. | boolean | |
 
 #### Action Output
@@ -536,8 +533,8 @@ action_result.status | string | | success |
 action_result.parameter.email | string | `email` | abc@gmail.com |
 action_result.parameter.file_id | string | `drive file id` | |
 action_result.parameter.new_parent_id | string | `drive file id` | |
-action_result.parameter.remove_parent_id | string | `drive file id` | |
 action_result.parameter.supports_all_drives | boolean | | |
+action_result.summary.file_name | string | | |
 action_result.message | string | | Successfully moved file to folder |
 summary.total_objects | numeric | | 1 |
 summary.total_objects_successful | numeric | | 1 |
@@ -598,7 +595,7 @@ action_result.data.\*.body.content.\*.tableOfContents.content | string | | |
 Get Spreadsheet values
 
 Type: **generic** <br>
-Read only: **False**
+Read only: **True**
 
 #### Action Parameters
 
@@ -636,7 +633,7 @@ PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 **email** | optional | Email (use this drive) | string | `email` |
 **id** | required | The ID of the spreadsheet to retrieve data from | string | `drive file id` |
 **range** | optional | The A1 notation or R1C1 notation of the range to retrieve values from | string | |
-**values** | optional | Values list. List of row data lists as shown \[ ['row1_item1','row1_item2'],['row2_item1','row2_item2'] \] | string | |
+**values** | required | Values list. List of row data lists as shown \[ ['row1_item1','row1_item2'],['row2_item1','row2_item2'] \] | string | |
 
 #### Action Output
 
@@ -658,7 +655,7 @@ ______________________________________________________________________
 
 Auto-generated Splunk SOAR Connector documentation.
 
-Copyright 2025 Splunk Inc.
+Copyright 2026 Splunk Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

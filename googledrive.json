@@ -9,7 +9,7 @@
     "product_name": "Google Drive",
     "product_version_regex": ".*",
     "publisher": "Splunk",
-    "license": "Copyright (c) 2018-2025 Splunk Inc.",
+    "license": "Copyright (c) 2018-2026 Splunk Inc.",
     "app_version": "2.2.6",
     "python_version": "3.9, 3.13",
     "latest_tested_versions": [
@@ -518,10 +518,9 @@
                     ]
                 },
                 "driveid": {
-                    "required": true,
+                    "required": false,
                     "description": "Drive ID where the folder is",
                     "data_type": "string",
-                    "value_list": [],
                     "contains": [
                         "drive id"
                     ],
@@ -1886,7 +1885,7 @@
                     "order": 1
                 },
                 "parent_id": {
-                    "required": true,
+                    "required": false,
                     "description": "ID of the parent folder where the file will be copied to",
                     "data_type": "string",
                     "contains": [
@@ -1895,20 +1894,16 @@
                     "primary": true,
                     "order": 2
                 },
-                "driveid": {
-                    "required": true,
-                    "description": "Drive ID where the folder is",
+                "new_name": {
+                    "required": false,
+                    "description": "Name to assign to the copied file",
                     "data_type": "string",
-                    "value_list": [],
-                    "contains": [
-                        "drive id"
-                    ],
                     "primary": true,
                     "order": 3
                 },
                 "supports_all_drives": {
                     "required": false,
-                    "description": "Boolean value",
+                    "description": "Whether the requesting application supports both My Drives and shared drives.",
                     "data_type": "boolean",
                     "default": true,
                     "primary": false,
@@ -1928,13 +1923,6 @@
                     "data_type": "boolean"
                 },
                 {
-                    "data_path": "action_result.parameter.driveid",
-                    "data_type": "string",
-                    "contains": [
-                        "drive id"
-                    ]
-                },
-                {
                     "data_path": "action_result.parameter.parent_id",
                     "data_type": "string",
                     "contains": [
@@ -1942,6 +1930,10 @@
                     ],
                     "column_name": "Parent Folder ID",
                     "column_order": 0
+                },
+                {
+                    "data_path": "action_result.parameter.new_name",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.parameter.file_id",
@@ -1967,6 +1959,10 @@
                     ],
                     "column_name": "New File ID",
                     "column_order": 2
+                },
+                {
+                    "data_path": "action_result.summary.new_file_name",
+                    "data_type": "string"
                 },
                 {
                     "data_path": "action_result.message",
@@ -2012,12 +2008,12 @@
                     "contains": [
                         "email"
                     ],
-                    "required": true,
+                    "required": false,
                     "primary": true,
                     "order": 0
                 },
                 "file_id": {
-                    "description": "ID of the file to be nenamed",
+                    "description": "ID of the file to be renamed",
                     "data_type": "string",
                     "contains": [
                         "drive file id"
@@ -2048,7 +2044,8 @@
                 {
                     "data_path": "action_result.status",
                     "example_values": [
-                        "success"
+                        "success",
+                        "failed"
                     ],
                     "data_type": "string"
                 },
@@ -2081,9 +2078,15 @@
                     "data_type": "boolean"
                 },
                 {
+                    "data_path": "action_result.summary.updated_name",
+                    "data_type": "string",
+                    "column_name": "Updated Name",
+                    "column_order": 1
+                },
+                {
                     "data_path": "action_result.message",
                     "example_values": [
-                        "Successfully copied file to folder"
+                        "Successfully renamed file"
                     ],
                     "data_type": "string"
                 },
@@ -2120,7 +2123,7 @@
             "identifier": "move_file",
             "type": "generic",
             "read_only": false,
-            "description": "Move existing file or folder to specified folder (Google Drive treats files and folders similarly",
+            "description": "Move existing file or folder to specified folder (Google Drive treats files and folders similarly)",
             "parameters": {
                 "email": {
                     "contains": [
@@ -2155,20 +2158,10 @@
                     "primary": true,
                     "order": 2
                 },
-                "remove_parent_id": {
-                    "required": true,
-                    "description": "ID of the parent folder where the file or folder currently exists.",
-                    "data_type": "string",
-                    "contains": [
-                        "drive file id"
-                    ],
-                    "primary": true,
-                    "order": 3
-                },
                 "supports_all_drives": {
                     "description": "Whether the requesting application supports both My Drives and shared drives.",
                     "data_type": "boolean",
-                    "order": 4,
+                    "order": 3,
                     "default": true,
                     "example_values": [
                         true,
@@ -2203,26 +2196,24 @@
                     "column_name": "File ID",
                     "column_order": 0
                 },
-
                 {
                     "data_path": "action_result.parameter.new_parent_id",
                     "data_type": "string",
                     "contains": [
                         "drive file id"
                     ],
-                    "column_name": "New Frolder ID",
+                    "column_name": "New Folder ID",
                     "column_order": 1
-                },
-                {
-                    "data_path": "action_result.parameter.remove_parent_id",
-                    "data_type": "string",
-                    "contains": [
-                        "drive file id"
-                    ]
                 },
                 {
                     "data_path": "action_result.parameter.supports_all_drives",
                     "data_type": "boolean"
+                },
+                {
+                    "data_path": "action_result.summary.file_name",
+                    "data_type": "string",
+                    "column_name": "File Name",
+                    "column_order": 2
                 },
                 {
                     "data_path": "action_result.message",
@@ -2275,10 +2266,7 @@
                     "contains": [
                         "email"
                     ],
-                    "value_list": [],
-                    "default": "",
-                    "order": 0,
-                    "name": "email"
+                    "order": 0
                 },
                 "file_id": {
                     "description": "Google Doc file ID",
@@ -2288,10 +2276,7 @@
                     "contains": [
                         "drive file id"
                     ],
-                    "value_list": [],
-                    "default": "",
-                    "order": 1,
-                    "name": "file_id"
+                    "order": 1
                 }
             },
             "output": [
@@ -2461,7 +2446,7 @@
             "identifier": "get_spreadsheet",
             "description": "Get Spreadsheet values",
             "type": "generic",
-            "read_only": false,
+            "read_only": true,
             "parameters": {
                 "email": {
                     "description": "Email (use this drive)",
@@ -2588,7 +2573,7 @@
                     "description": "Values list. List of row data lists as shown [ ['row1_item1','row1_item2'],['row2_item1','row2_item2'] ] ",
                     "data_type": "string",
                     "order": 3,
-                    "required": false
+                    "required": true
                 }
             },
             "output": [
@@ -2669,7 +2654,7 @@
             },
             {
                 "module": "google_api_core",
-                "input_file": "wheels/py3/google_api_core-2.30.2-py3-none-any.whl"
+                "input_file": "wheels/py3/google_api_core-2.30.3-py3-none-any.whl"
             },
             {
                 "module": "google_api_python_client",
@@ -2729,7 +2714,7 @@
             },
             {
                 "module": "google_api_core",
-                "input_file": "wheels/py3/google_api_core-2.30.2-py3-none-any.whl"
+                "input_file": "wheels/py3/google_api_core-2.30.3-py3-none-any.whl"
             },
             {
                 "module": "google_api_python_client",

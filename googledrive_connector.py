@@ -1,6 +1,6 @@
 # File: googledrive_connector.py
 #
-# Copyright (c) 2018-2025 Splunk Inc.
+# Copyright (c) 2018-2026 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -89,7 +89,7 @@ class GoogleDriveConnector(BaseConnector):
         self._login_email = login_email
 
         try:
-            username, _, self._domain = login_email.partition("@")
+            _username, _, self._domain = login_email.partition("@")
         except Exception as e:
             return self.set_status(phantom.APP_ERROR, "Unable to extract domain from login_email", e)
 
@@ -223,8 +223,7 @@ class GoogleDriveConnector(BaseConnector):
         includeItemsFromAllDrives = param.get("include_items_from_all_drives")
         if includeItemsFromAllDrives:
             kwargs.update({"includeItemsFromAllDrives": includeItemsFromAllDrives})
-
-        kwargs.update({"corpora": "allDrives"})
+            kwargs.update({"corpora": "allDrives"})  # TODO: test needed here.
 
         try:
             resp = service.files().list(**kwargs).execute()
@@ -292,7 +291,7 @@ class GoogleDriveConnector(BaseConnector):
         done = False
         try:
             while done is False:
-                status, done = downloader.next_chunk()
+                _status, done = downloader.next_chunk()
         except Exception as e:
             return action_result.set_status(phantom.APP_ERROR, "Error downloading file", e)
 
@@ -422,10 +421,6 @@ class GoogleDriveConnector(BaseConnector):
         if folder_id:
             file_metadata["parents"] = [folder_id]
 
-        driveid = param.get("driveid")
-        if driveid:
-            file_metadata["driveId"] = driveid
-
         supportsAllDrives = param.get("supports_all_drives")
 
         try:
@@ -458,7 +453,7 @@ class GoogleDriveConnector(BaseConnector):
             return action_result.set_status(phantom.APP_SUCCESS, "File doesn't exist or has already been deleted")
 
         try:
-            resp = service.files().delete(fileId=file_id).execute()
+            _ = service.files().delete(fileId=file_id, supportsAllDrives=supportsAllDrives).execute()
         except Exception as e:
             return action_result.set_status(phantom.APP_ERROR, "Error deleting file", e)
 
@@ -470,6 +465,7 @@ class GoogleDriveConnector(BaseConnector):
         scopes = [GOOGLE_SCOPE_DRIVE]
         login_email = param.get("email", self._login_email)
 
+        self.save_progress("Querying handle copy file")
         ret_val, service = self._create_service(action_result, scopes, "drive", "v3", login_email)
         if phantom.is_fail(ret_val):
             return ret_val
@@ -480,11 +476,14 @@ class GoogleDriveConnector(BaseConnector):
         if parent_id:
             file_metadata["parents"] = [parent_id]
 
-        driveid = param.get("driveid")
-        if driveid:
-            file_metadata["driveId"] = driveid
+        new_name = param.get("new_name")
+        if new_name is not None:
+            new_name = new_name.strip()
+            if not new_name:
+                return action_result.set_status(phantom.APP_ERROR, "Parameter 'new_name' cannot be empty")
+            file_metadata["name"] = new_name
 
-        file_id = param.get("file_id")
+        file_id = param["file_id"]
 
         supportsAllDrives = param.get("supports_all_drives")
 
@@ -495,7 +494,7 @@ class GoogleDriveConnector(BaseConnector):
                     fileId=file_id,
                     body=file_metadata,
                     supportsAllDrives=supportsAllDrives,
-                    fields="id",
+                    fields="id,name",
                 )
                 .execute()
             )
@@ -503,6 +502,8 @@ class GoogleDriveConnector(BaseConnector):
             return action_result.set_status(phantom.APP_ERROR, "Error copying file to folder", e)
 
         action_result.update_summary({"new_file_id": resp["id"]})
+        if "name" in resp:
+            action_result.update_summary({"new_file_name": resp["name"]})
 
         return action_result.set_status(phantom.APP_SUCCESS, "Successfully copied file to folder")
 
@@ -518,10 +519,16 @@ class GoogleDriveConnector(BaseConnector):
         file_metadata = {}
 
         new_name = param.get("new_name")
-        if new_name:
-            file_metadata["name"] = [new_name]
+        if new_name is None:
+            return action_result.set_status(phantom.APP_ERROR, "Missing required parameter 'new_name'")
 
-        file_id = param.get("file_id")
+        new_name = new_name.strip()
+        if not new_name:
+            return action_result.set_status(phantom.APP_ERROR, "Parameter 'new_name' cannot be empty")
+
+        file_metadata["name"] = new_name
+
+        file_id = param["file_id"]
 
         supportsAllDrives = param.get("supports_all_drives")
 
@@ -554,28 +561,33 @@ class GoogleDriveConnector(BaseConnector):
 
         new_parent_id = param.get("new_parent_id")
 
-        remove_parent_id = param.get("remove_parent_id")
-
-        file_id = param.get("file_id")
+        file_id = param["file_id"]
 
         supportsAllDrives = param.get("supports_all_drives")
 
         try:
-            resp = (
-                service.files()
-                .update(
-                    fileId=file_id,
-                    addParents=new_parent_id,
-                    removeParents=remove_parent_id,
-                    supportsAllDrives=supportsAllDrives,
-                    enforceSingleParent=True,
-                )
-                .execute()
-            )
+            file_metadata = service.files().get(fileId=file_id, fields="parents", supportsAllDrives=supportsAllDrives).execute()
         except Exception as e:
-            return action_result.set_status(phantom.APP_ERROR, "Error copying file to folder", e)
+            return action_result.set_status(phantom.APP_ERROR, "Error retrieving current file parents", e)
 
-        action_result.update_summary({"new_folder_name": resp["name"]})
+        remove_parent_ids = file_metadata.get("parents", [])
+        remove_parent_id = ",".join(remove_parent_ids)
+
+        update_kwargs = {
+            "fileId": file_id,
+            "addParents": new_parent_id,
+            "supportsAllDrives": supportsAllDrives,
+            "fields": "name",
+        }
+        if remove_parent_id:
+            update_kwargs["removeParents"] = remove_parent_id
+
+        try:
+            resp = service.files().update(**update_kwargs).execute()
+        except Exception as e:
+            return action_result.set_status(phantom.APP_ERROR, "Error moving file", e)
+
+        action_result.update_summary({"file_name": resp["name"]})
 
         return action_result.set_status(phantom.APP_SUCCESS, "Successfully moved to new folder")
 
@@ -603,7 +615,7 @@ class GoogleDriveConnector(BaseConnector):
 
     def _handle_get_spreadsheet(self, param):
         action_result = self.add_action_result(ActionResult(dict(param)))
-        scopes = [GOOGLE_SCOPE_DRIVE]
+        scopes = [GOOGLE_SCOPE_SPREADSHEETS_READONLY]
 
         login_email = param.get("email", self._login_email)
 
@@ -618,7 +630,7 @@ class GoogleDriveConnector(BaseConnector):
         try:
             sheet_values = service.spreadsheets().values().get(spreadsheetId=file_id, range=range_values).execute()
         except Exception as e:
-            return action_result.set_status(phantom.APP_ERROR, "Failed to get file metadata \n" + str(e))
+            return action_result.set_status(phantom.APP_ERROR, "Failed to get spreadsheet values", e)
 
         action_result.add_data(sheet_values)
 
@@ -626,7 +638,7 @@ class GoogleDriveConnector(BaseConnector):
 
     def _handle_update_spreadsheet(self, param):
         action_result = self.add_action_result(ActionResult(dict(param)))
-        scopes = [GOOGLE_SCOPE_DRIVE]
+        scopes = [GOOGLE_SCOPE_SPREADSHEETS]
 
         login_email = param.get("email", self._login_email)
 
@@ -634,7 +646,10 @@ class GoogleDriveConnector(BaseConnector):
 
         range_values = param.get("range", "A1:Z1001")
 
-        values = json.loads(param.get("values"))
+        try:
+            values = json.loads(param.get("values"))
+        except (TypeError, json.JSONDecodeError) as e:
+            return action_result.set_status(phantom.APP_ERROR, "Invalid or missing 'values' parameter", e)
 
         ret_val, service = self._create_service(action_result, scopes, "sheets", "v4", login_email)
         if phantom.is_fail(ret_val):
@@ -654,7 +669,7 @@ class GoogleDriveConnector(BaseConnector):
                 .execute()
             )
         except Exception as e:
-            return action_result.set_status(phantom.APP_ERROR, "Failed to update spreadsheet values\n" + str(e))
+            return action_result.set_status(phantom.APP_ERROR, "Failed to update spreadsheet values", e)
         action_result.add_data(response)
         return action_result.set_status(phantom.APP_SUCCESS, "Successfully updates Spreadsheet values information")
 
