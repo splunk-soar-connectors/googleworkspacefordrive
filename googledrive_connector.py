@@ -534,6 +534,7 @@ class GoogleDriveConnector(BaseConnector):
         if "name" in resp:
             action_result.update_summary({"new_file_name": resp["name"]})
 
+        self.save_progress("Handle copy file succeeded")
         return action_result.set_status(phantom.APP_SUCCESS, "Successfully copied file to folder")
 
     def _handle_rename_file(self, param):
@@ -589,6 +590,12 @@ class GoogleDriveConnector(BaseConnector):
             return ret_val
 
         new_parent_id = param.get("new_parent_id")
+        if new_parent_id is None:
+            return action_result.set_status(phantom.APP_ERROR, "Missing required parameter 'new_parent_id'")
+
+        new_parent_id = new_parent_id.strip()
+        if not new_parent_id:
+            return action_result.set_status(phantom.APP_ERROR, "Parameter 'new_parent_id' cannot be empty")
 
         file_id = param["file_id"]
 
@@ -700,7 +707,7 @@ class GoogleDriveConnector(BaseConnector):
         except Exception as e:
             return action_result.set_status(phantom.APP_ERROR, "Failed to update spreadsheet values", e)
         action_result.add_data(response)
-        return action_result.set_status(phantom.APP_SUCCESS, "Successfully updates Spreadsheet values information")
+        return action_result.set_status(phantom.APP_SUCCESS, "Successfully updated Spreadsheet values information")
 
     def handle_action(self, param):
         ret_val = phantom.APP_SUCCESS

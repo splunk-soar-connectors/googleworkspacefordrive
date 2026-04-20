@@ -408,7 +408,7 @@
                     "description": "Whether the requesting application supports both My Drives and shared drives.",
                     "data_type": "boolean",
                     "order": 2,
-                    "default": true,
+                    "default": false,
                     "example_values": [
                         true,
                         false
@@ -531,7 +531,7 @@
                     "description": "Whether the requesting application supports both My Drives and shared drives.",
                     "data_type": "boolean",
                     "order": 4,
-                    "default": true,
+                    "default": false,
                     "example_values": [
                         true,
                         false
@@ -698,7 +698,7 @@
                     "description": "Whether the requesting application supports both My Drives and shared drives.",
                     "data_type": "boolean",
                     "order": 7,
-                    "default": true,
+                    "default": false,
                     "example_values": [
                         true,
                         false
@@ -882,7 +882,7 @@
                     "description": "Whether the requesting application supports both My Drives and shared drives.",
                     "data_type": "boolean",
                     "order": 6,
-                    "default": true,
+                    "default": false,
                     "example_values": [
                         true,
                         false
@@ -1676,7 +1676,7 @@
                     "description": "Whether the requesting application supports both My Drives and shared drives.",
                     "data_type": "boolean",
                     "order": 4,
-                    "default": true,
+                    "default": false,
                     "example_values": [
                         true,
                         false
