@@ -31,9 +31,12 @@ To enable scopes please complete the following steps:
   (key named **client_id** ).
 - In the **One or More API Scopes** field enter the list of scopes that you wish to grant access
   to the App. For example, to enable all the scopes required by this app enter:
-  https://www.googleapis.com/auth/admin.directory.user.readonly,
-  https://www.googleapis.com/auth/drive.readonly, https://www.googleapis.com/auth/drive
+  https://www.googleapis.com/auth/admin.directory.user.readonly, https://www.googleapis.com/auth/drive.readonly,
+  https://www.googleapis.com/auth/drive, https://www.googleapis.com/auth/documents.readonly, https://www.googleapis.com/auth/spreadsheets.readonly, https://www.googleapis.com/auth/spreadsheets
 - Click **Authorize** .
+
+- For Shared Drive access, ensure the impersonated user (**login_email** or action **email**) is a member of the target Shared Drive with the required role.
+- For Shared Drive actions, set **supports_all_drives=true**; for listing across drives, also set **include_items_from_all_drives=true**.
 
 ### MIME Types
 
