@@ -1,6 +1,6 @@
 # File: googledrive_consts.py
 #
-# Copyright (c) 2018-2025 Splunk Inc.
+# Copyright (c) 2018-2026 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,6 +17,9 @@
 GOOGLE_SCOPE_USER_READONLY = "https://www.googleapis.com/auth/admin.directory.user.readonly"
 GOOGLE_SCOPE_DRIVE_READONLY = "https://www.googleapis.com/auth/drive.readonly"
 GOOGLE_SCOPE_DRIVE = "https://www.googleapis.com/auth/drive"
+GOOGLE_SCOPE_DOCUMENTS_READONLY = "https://www.googleapis.com/auth/documents.readonly"
+GOOGLE_SCOPE_SPREADSHEETS_READONLY = "https://www.googleapis.com/auth/spreadsheets.readonly"
+GOOGLE_SCOPE_SPREADSHEETS = "https://www.googleapis.com/auth/spreadsheets"
 
 LIST_RESP_FIELDS = "nextPageToken, files(id, name, kind, mimeType, webContentLink, webViewLink, parents, md5Checksum)"
 
