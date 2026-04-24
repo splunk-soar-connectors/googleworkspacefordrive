@@ -1,4 +1,1 @@
 **Unreleased**
-
-* - Added shared drive support improvements across supported Drive actions (including `supports_all_drives` handling and move behavior updates).
-* - Added new actions: `copy file`, `rename file`, `move file`, `read file`, `get spreadsheet`, and `update spreadsheet`.
