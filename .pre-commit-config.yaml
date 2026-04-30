@@ -60,7 +60,7 @@ repos:
         exclude: "README.md"
   # Central hooks
   - repo: https://github.com/phantomcyber/dev-cicd-tools
-    rev: v2.0.9
+    rev: fix_precommit_failure
     hooks:
       - id: build-docs
         language: python
