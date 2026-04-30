@@ -50,7 +50,7 @@ repos:
   - repo: https://github.com/returntocorp/semgrep
     rev: v1.89.0
     hooks:
-      - id: semgrep
+      - id: semgrep-docker
   - repo: https://github.com/Yelp/detect-secrets
     rev: v1.5.0
     hooks:
@@ -60,7 +60,7 @@ repos:
         exclude: "README.md"
   # Central hooks
   - repo: https://github.com/phantomcyber/dev-cicd-tools
-    rev: 626dcbbe7a7052c65d6d0fac389057aee9e68519
+    rev: 39061700c58e68afe0f59577a713e5f075fe2887
     hooks:
       - id: build-docs
         language: python
