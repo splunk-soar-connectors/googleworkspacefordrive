@@ -29,6 +29,7 @@ import phantom.utils as ph_utils
 import requests
 from google.oauth2 import service_account
 from googleapiclient import discovery
+from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaFileUpload, MediaIoBaseDownload
 from phantom.action_result import ActionResult
 from phantom.base_connector import BaseConnector
@@ -478,8 +479,12 @@ class GoogleDriveConnector(BaseConnector):
 
         try:
             service.files().get(fileId=file_id, fields="id", supportsAllDrives=supportsAllDrives).execute()
-        except Exception:
-            return action_result.set_status(phantom.APP_SUCCESS, "File doesn't exist or has already been deleted")
+        except HttpError as e:
+            if e.resp.status == 404:
+                return action_result.set_status(phantom.APP_SUCCESS, "File doesn't exist or has already been deleted")
+            return action_result.set_status(phantom.APP_ERROR, "Error checking whether file exists", e)
+        except Exception as e:
+            return action_result.set_status(phantom.APP_ERROR, "Error checking whether file exists", e)
 
         try:
             _ = service.files().delete(fileId=file_id, supportsAllDrives=supportsAllDrives).execute()
