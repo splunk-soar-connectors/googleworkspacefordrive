@@ -2691,7 +2691,7 @@
             },
             {
                 "module": "google_api_core",
-                "input_file": "wheels/py3/google_api_core-2.30.3-py3-none-any.whl"
+                "input_file": "wheels/py3/google_api_core-2.32.0-py3-none-any.whl"
             },
             {
                 "module": "google_api_python_client",
@@ -2707,7 +2707,7 @@
             },
             {
                 "module": "googleapis_common_protos",
-                "input_file": "wheels/py3/googleapis_common_protos-1.74.0-py3-none-any.whl"
+                "input_file": "wheels/py3/googleapis_common_protos-1.75.0-py3-none-any.whl"
             },
             {
                 "module": "httplib2",
@@ -2715,11 +2715,11 @@
             },
             {
                 "module": "proto_plus",
-                "input_file": "wheels/py3/proto_plus-1.27.2-py3-none-any.whl"
+                "input_file": "wheels/py3/proto_plus-1.28.1-py3-none-any.whl"
             },
             {
                 "module": "protobuf",
-                "input_file": "wheels/py3/protobuf-7.34.1-cp310-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
+                "input_file": "wheels/py3/protobuf-7.35.1-cp310-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
             },
             {
                 "module": "pyasn1",
@@ -2767,7 +2767,7 @@
             },
             {
                 "module": "googleapis_common_protos",
-                "input_file": "wheels/py3/googleapis_common_protos-1.74.0-py3-none-any.whl"
+                "input_file": "wheels/py3/googleapis_common_protos-1.75.0-py3-none-any.whl"
             },
             {
                 "module": "httplib2",
