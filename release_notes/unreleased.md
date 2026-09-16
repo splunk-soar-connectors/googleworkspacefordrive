@@ -1,1 +1,3 @@
 **Unreleased**
+
+* - Updated the bundled httplib2 dependency to 0.32.0.
