@@ -2691,7 +2691,7 @@
             },
             {
                 "module": "google_api_core",
-                "input_file": "wheels/py3/google_api_core-2.32.0-py3-none-any.whl"
+                "input_file": "wheels/py3/google_api_core-2.37.0-py3-none-any.whl"
             },
             {
                 "module": "google_api_python_client",
@@ -2707,19 +2707,23 @@
             },
             {
                 "module": "googleapis_common_protos",
-                "input_file": "wheels/py3/googleapis_common_protos-1.75.0-py3-none-any.whl"
+                "input_file": "wheels/py3/googleapis_common_protos-1.75.3-py3-none-any.whl"
             },
             {
                 "module": "httplib2",
                 "input_file": "wheels/py3/httplib2-0.19.0-py3-none-any.whl"
             },
             {
+                "module": "opentelemetry_api",
+                "input_file": "wheels/py3/opentelemetry_api-1.44.0-py3-none-any.whl"
+            },
+            {
                 "module": "proto_plus",
-                "input_file": "wheels/py3/proto_plus-1.28.1-py3-none-any.whl"
+                "input_file": "wheels/py3/proto_plus-1.28.4-py3-none-any.whl"
             },
             {
                 "module": "protobuf",
-                "input_file": "wheels/py3/protobuf-7.35.1-cp310-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
+                "input_file": "wheels/py3/protobuf-7.36.1-cp310-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl"
             },
             {
                 "module": "pyasn1",
@@ -2736,6 +2740,10 @@
             {
                 "module": "rsa",
                 "input_file": "wheels/py3/rsa-4.9-py3-none-any.whl"
+            },
+            {
+                "module": "typing_extensions",
+                "input_file": "wheels/py3/typing_extensions-4.16.0-py3-none-any.whl"
             },
             {
                 "module": "uritemplate",
